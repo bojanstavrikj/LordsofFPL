@@ -1,0 +1,344 @@
+/*body {
+	font-family: 'Open Sans', sans-serif;
+	font-size: 11px;
+	font-weight: 300;
+	fill: #242424;
+	text-align: center;
+	text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+	cursor: default;
+}*/
+.navbar-custom{
+	background-color: #360F39;
+}
+
+.tooltip {
+	fill: #333333;
+}
+
+.col{
+	text-align: center;
+	margin-top: 3px;
+	padding:0;
+	margin-bottom: 3px;
+}
+
+/*.radaralign{
+	height: 90%;
+	display: flex;
+    align-items: center; 
+}*/
+
+#p1-fitness, #p2-fitness{
+	margin-left:30%;
+	margin-top: 3px;
+	padding:0;
+	margin-bottom: 3px;	
+}
+
+.col-md-3{
+	text-align: center;
+	/*background-color: lightgrey;*/
+}
+
+#select-menu {
+	margin: 10px;
+}
+
+.nopadding {
+  padding: 5 !important;
+  margin: 0 !important;
+}
+
+#p1-info, #p2-info{
+	font-size: 10px;
+}
+
+#p1-color hr, #p2-color hr{
+	color:#CC333F;
+	background-color: #CC333F;
+	width:25%;
+	height:4px !important;
+	margin-top: 0;
+	margin-bottom:2px;
+	border-radius: 99px;
+}
+#p2-color hr{
+	color:#2DA8B6;
+	background-color: #2DA8B6;
+}
+div.tooltip {
+  position: absolute;
+  background-color: white;
+  max-width: 200px;
+  height: auto;
+  padding: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  border-width: 1px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+/*.past_games {
+	text-align: justify
+	width:300px;
+}*/
+/* 
+Generic Styling, for Desktops/Laptops 
+*/
+table.past_games tr:last-child td:first-child { visibility:collapse; }
+table.past_games tr:nth-last-child(2) td:first-child {visibility: collapse;}
+
+table.past_games tr:last-child, table.past_games tr:nth-last-child(2){
+	font-weight: bold;
+	background-color:#19AD59;
+	color:white;
+	word-wrap: break-word;
+}
+table { 
+	width: 80%; 
+	border-collapse: collapse;
+	margin: 0 auto;
+	font-size:10px;
+}
+/* Zebra striping */
+tr:nth-of-type(odd) { 
+	background: #eee; 
+}
+th { 
+	background: #360F39; 
+	color: white; 
+	font-weight: bold; 
+	background-repeat: no-repeat;
+    background-position: 3% center;
+}
+td, th { 
+	padding: 3px; 
+	border: 1px solid #ccc; 
+	text-align: center; 
+}
+
+
+table .table_fx { 
+	width: 80%; 
+	border-collapse: collapse;
+	margin: 0 auto;
+	font-size:10px;
+}
+/* Zebra striping */
+.table_fx tr:nth-of-type(odd) { 
+	background: #eee; 
+}
+.table_fx th { 
+	background: #360F39; 
+	color: white; 
+	font-weight: bold; 
+	background-repeat: no-repeat;
+    background-position: 3% center;
+}
+.table_fx td, .table_fx th { 
+	padding: 3px; 
+	border: 1px solid #ccc; 
+	text-align: center; 
+}
+
+.table_fx .easy {
+    background-color: #29F27C;
+}
+
+.table_fx .mid {
+    background-color: #FDAA33;
+}
+
+.table_fx .diff {
+    background-color: #FC1F55;
+}
+
+.table_fx .vdiff {
+    background-color: #7F0B2E;
+}
+
+.table_nx tr:nth-of-type(odd) { 
+	background: #eee; 
+}
+.table_nx th { 
+	background: #360F39; 
+	color: white; 
+	font-weight: bold; 
+	background-repeat: no-repeat;
+    background-position: 3% center;
+}
+.table_nx td, .table_nx th { 
+	padding: 3px; 
+	border: 1px solid #ccc; 
+	text-align: center; 
+}
+
+
+.y-axis line {
+  stroke: black;
+}
+
+.annual-growth {
+  fill: black;
+}
+
+.bar-label,
+.x-axis {
+  font-size: 8px;
+}
+
+.domain,
+.tick line {
+  opacity: 0.5;
+}
+
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #360F39;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "R";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #19AD59;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #19AD59;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+  content:"D";
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+.col_white_amrc { color:#FFF;}
+footer { width:100%; background-color:#360F39; min-height:250px; padding:10px 0px 25px 0px ;}
+.pt2 { padding-top:40px ; margin-bottom:20px ;}
+footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
+.mb10 { padding-bottom:15px; text-align:justify;}
+.footer_ul_amrc { margin:0px ; list-style-type:none ; font-size:14px; padding:0px 0px 10px 0px ; }
+.footer_ul_amrc li {padding:0px 0px 5px 0px;}
+.footer_ul_amrc li a{ color:#CCC;}
+.footer_ul_amrc li a:hover{ color:#fff; text-decoration:none;}
+.fleft { float:left;}
+.padding-right { padding-right:10px; }
+
+.footer_ul2_amrc {margin:0px; list-style-type:none; padding:0px;}
+.footer_ul2_amrc li p { display:table; }
+.footer_ul2_amrc li a:hover { text-decoration:none;}
+.footer_ul2_amrc li i { margin-top:5px;}
+
+.bottom_border { border-bottom:1px solid #323f45; padding-bottom:20px;}
+.foote_bottom_ul_amrc {
+  list-style-type:none;
+  padding:0px;
+  display:table;
+  margin-top: 10px;
+  margin-right: auto;
+  margin-bottom: 10px;
+  margin-left: auto;
+}
+.foote_bottom_ul_amrc li { display:inline;}
+.foote_bottom_ul_amrc li a { color:#999; margin:0 12px;}
+
+/*.social_footer_ul { display:table; margin:15px auto 0 auto; list-style-type:none;  }
+.social_footer_ul li { padding-left:20px; padding-top:10px; float:left; }
+.social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
+.social_footer_ul li i {  width:20px; height:20px; text-align:center;}*/
+
+.col-sm-4, .col-sm-4 a{
+	text-align: center;
+	color:white;
+}
+
+.col-sm-8 a{
+  color:white;
+}
+
+.menu {
+  background-color:lightgrey;
+  margin:0; 
+}
+
+#about{
+	margin:auto;
+	width:70%;
+	padding:20px;
+}
+
+#about p{
+	text-align: justify;
+}
+
+.contact{
+    width:300px;;
+    margin:auto;
+    overflow:hidden;
+    text-align: center;
+}
+
+.contact h2{
+    color:#1d3557;
+    text-align:center;
+}
+
+#contactform{
+    text-align:center;
+    background-color:#360F39;
+    color:white;
+    padding:10px;
+    border-radius:10px;
+}
+#button{
+    background-color:#360F39;
+    color:white;
+    border-radius: 10%;
+    border-color:#19AD59;
+    text-align:center;
+    cursor:pointer;
+}
