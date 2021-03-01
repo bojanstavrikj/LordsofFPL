@@ -1,88 +1,79 @@
 finished,event,team_a_score,team_h_score,team_h_difficulty,team_a_difficulty,team_a_name,team_a_short_name,team_h_name,team_h_short_name,date
-False,26.0,,,3,5,West Ham,WHU,Man City,MCI,2021-02-27
-False,26.0,,,2,2,Brighton,BHA,West Brom,WBA,2021-02-27
-False,26.0,,,3,3,Aston Villa,AVL,Leeds,LEE,2021-02-27
-False,26.0,,,3,3,Wolves,WOL,Newcastle,NEW,2021-02-27
-False,26.0,,,2,3,Fulham,FUL,Crystal Palace,CRY,2021-02-28
-False,26.0,,,3,4,Arsenal,ARS,Leicester,LEI,2021-02-28
-False,26.0,,,2,4,Burnley,BUR,Spurs,TOT,2021-02-28
-False,26.0,,,4,4,Man Utd,MUN,Chelsea,CHE,2021-02-28
-False,26.0,,,4,2,Liverpool,LIV,Sheffield Utd,SHU,2021-02-28
-False,26.0,,,3,3,Southampton,SOU,Everton,EVE,2021-03-01
+False,26.0,,,2,3,Southampton,SOU,Everton,EVE,2021-03-01
 False,26.0,,,3,5,Wolves,WOL,Man City,MCI,2021-03-02
 False,26.0,,,4,2,Leicester,LEI,Burnley,BUR,2021-03-03
 False,26.0,,,3,2,Aston Villa,AVL,Sheffield Utd,SHU,2021-03-03
 False,26.0,,,4,3,Man Utd,MUN,Crystal Palace,CRY,2021-03-03
-False,26.0,,,4,2,Spurs,TOT,Fulham,FUL,2021-03-04
-False,26.0,,,3,2,Everton,EVE,West Brom,WBA,2021-03-04
-False,26.0,,,4,5,Chelsea,CHE,Liverpool,LIV,2021-03-04
+False,26.0,,,3,2,Spurs,TOT,Fulham,FUL,2021-03-04
+False,26.0,,,4,2,Everton,EVE,West Brom,WBA,2021-03-04
+False,26.0,,,4,4,Chelsea,CHE,Liverpool,LIV,2021-03-04
 False,27.0,,,3,2,Arsenal,ARS,Burnley,BUR,2021-03-06
-False,27.0,,,3,2,Southampton,SOU,Sheffield Utd,SHU,2021-03-06
+False,27.0,,,2,2,Southampton,SOU,Sheffield Utd,SHU,2021-03-06
 False,27.0,,,3,3,Wolves,WOL,Aston Villa,AVL,2021-03-06
 False,27.0,,,4,2,Leicester,LEI,Brighton,BHA,2021-03-06
 False,27.0,,,2,2,Newcastle,NEW,West Brom,WBA,2021-03-07
-False,27.0,,,2,5,Fulham,FUL,Liverpool,LIV,2021-03-07
+False,27.0,,,2,4,Fulham,FUL,Liverpool,LIV,2021-03-07
 False,27.0,,,4,5,Man Utd,MUN,Man City,MCI,2021-03-07
 False,27.0,,,3,4,Crystal Palace,CRY,Spurs,TOT,2021-03-07
-False,27.0,,,3,4,Everton,EVE,Chelsea,CHE,2021-03-08
-False,27.0,,,2,3,Leeds,LEE,West Ham,WHU,2021-03-08
-False,27.0,,,3,5,Southampton,SOU,Man City,MCI,2021-03-10
+False,27.0,,,4,4,Everton,EVE,Chelsea,CHE,2021-03-08
+False,27.0,,,3,4,Leeds,LEE,West Ham,WHU,2021-03-08
+False,27.0,,,2,5,Southampton,SOU,Man City,MCI,2021-03-10
+False,28.0,,,3,3,Aston Villa,AVL,Newcastle,NEW,2021-03-12
 False,28.0,,,4,3,Chelsea,CHE,Leeds,LEE,2021-03-13
 False,28.0,,,2,3,West Brom,WBA,Crystal Palace,CRY,2021-03-13
-False,28.0,,,4,2,Man City,MCI,Fulham,FUL,2021-03-13
-False,28.0,,,2,4,Sheffield Utd,SHU,Leicester,LEI,2021-03-13
-False,28.0,,,3,4,West Ham,WHU,Man Utd,MUN,2021-03-13
-False,28.0,,,3,3,Aston Villa,AVL,Newcastle,NEW,2021-03-13
-False,28.0,,,2,3,Brighton,BHA,Southampton,SOU,2021-03-13
-False,28.0,,,2,3,Burnley,BUR,Everton,EVE,2021-03-14
-False,28.0,,,4,3,Spurs,TOT,Arsenal,ARS,2021-03-14
+False,28.0,,,2,3,Burnley,BUR,Everton,EVE,2021-03-13
+False,28.0,,,5,2,Man City,MCI,Fulham,FUL,2021-03-13
+False,28.0,,,3,3,Brighton,BHA,Southampton,SOU,2021-03-14
+False,28.0,,,2,4,Sheffield Utd,SHU,Leicester,LEI,2021-03-14
+False,28.0,,,3,3,Spurs,TOT,Arsenal,ARS,2021-03-14
+False,28.0,,,4,4,West Ham,WHU,Man Utd,MUN,2021-03-14
 False,28.0,,,4,3,Liverpool,LIV,Wolves,WOL,2021-03-15
-False,29.0,,,2,2,Leeds,LEE,Fulham,FUL,2021-03-19
+False,29.0,,,3,2,Leeds,LEE,Fulham,FUL,2021-03-19
 False,29.0,,,2,2,Newcastle,NEW,Brighton,BHA,2021-03-20
-False,29.0,,,3,3,Arsenal,ARS,West Ham,WHU,2021-03-21
-False,29.0,,,4,3,Spurs,TOT,Aston Villa,AVL,2021-03-21
+False,29.0,,,3,4,Arsenal,ARS,West Ham,WHU,2021-03-21
+False,29.0,,,3,3,Spurs,TOT,Aston Villa,AVL,2021-03-21
 False,30.0,,,4,3,Liverpool,LIV,Arsenal,ARS,2021-04-03
 False,30.0,,,2,3,Fulham,FUL,Aston Villa,AVL,2021-04-03
 False,30.0,,,2,4,West Brom,WBA,Chelsea,CHE,2021-04-03
 False,30.0,,,3,3,Crystal Palace,CRY,Everton,EVE,2021-04-03
 False,30.0,,,2,3,Sheffield Utd,SHU,Leeds,LEE,2021-04-03
-False,30.0,,,4,4,Man City,MCI,Leicester,LEI,2021-04-03
-False,30.0,,,2,4,Brighton,BHA,Man Utd,MUN,2021-04-03
-False,30.0,,,4,3,Spurs,TOT,Newcastle,NEW,2021-04-03
+False,30.0,,,5,4,Man City,MCI,Leicester,LEI,2021-04-03
+False,30.0,,,3,4,Brighton,BHA,Man Utd,MUN,2021-04-03
+False,30.0,,,3,3,Spurs,TOT,Newcastle,NEW,2021-04-03
 False,30.0,,,2,3,Burnley,BUR,Southampton,SOU,2021-04-03
-False,30.0,,,3,3,West Ham,WHU,Wolves,WOL,2021-04-03
-False,31.0,,,3,2,Everton,EVE,Brighton,BHA,2021-04-10
+False,30.0,,,4,3,West Ham,WHU,Wolves,WOL,2021-04-03
+False,31.0,,,4,2,Everton,EVE,Brighton,BHA,2021-04-10
 False,31.0,,,2,2,Newcastle,NEW,Burnley,BUR,2021-04-10
 False,31.0,,,4,3,Chelsea,CHE,Crystal Palace,CRY,2021-04-10
 False,31.0,,,3,2,Wolves,WOL,Fulham,FUL,2021-04-10
-False,31.0,,,3,5,Aston Villa,AVL,Liverpool,LIV,2021-04-10
-False,31.0,,,2,5,Leeds,LEE,Man City,MCI,2021-04-10
+False,31.0,,,3,4,Aston Villa,AVL,Liverpool,LIV,2021-04-10
+False,31.0,,,3,5,Leeds,LEE,Man City,MCI,2021-04-10
 False,31.0,,,3,2,Arsenal,ARS,Sheffield Utd,SHU,2021-04-10
 False,31.0,,,4,4,Man Utd,MUN,Spurs,TOT,2021-04-10
-False,31.0,,,3,2,Southampton,SOU,West Brom,WBA,2021-04-10
-False,31.0,,,4,3,Leicester,LEI,West Ham,WHU,2021-04-10
+False,31.0,,,2,2,Southampton,SOU,West Brom,WBA,2021-04-10
+False,31.0,,,4,4,Leicester,LEI,West Ham,WHU,2021-04-10
 False,32.0,,,2,3,Fulham,FUL,Arsenal,ARS,2021-04-17
-False,32.0,,,4,3,Man City,MCI,Aston Villa,AVL,2021-04-17
-False,32.0,,,2,4,Brighton,BHA,Chelsea,CHE,2021-04-17
-False,32.0,,,4,3,Spurs,TOT,Everton,EVE,2021-04-17
+False,32.0,,,5,3,Man City,MCI,Aston Villa,AVL,2021-04-17
+False,32.0,,,3,4,Brighton,BHA,Chelsea,CHE,2021-04-17
+False,32.0,,,3,3,Spurs,TOT,Everton,EVE,2021-04-17
 False,32.0,,,4,3,Liverpool,LIV,Leeds,LEE,2021-04-17
 False,32.0,,,2,4,West Brom,WBA,Leicester,LEI,2021-04-17
 False,32.0,,,2,4,Burnley,BUR,Man Utd,MUN,2021-04-17
-False,32.0,,,3,3,West Ham,WHU,Newcastle,NEW,2021-04-17
+False,32.0,,,4,3,West Ham,WHU,Newcastle,NEW,2021-04-17
 False,32.0,,,3,3,Crystal Palace,CRY,Southampton,SOU,2021-04-17
 False,32.0,,,2,3,Sheffield Utd,SHU,Wolves,WOL,2021-04-17
-False,33.0,,,3,3,Everton,EVE,Arsenal,ARS,2021-04-24
+False,33.0,,,4,3,Everton,EVE,Arsenal,ARS,2021-04-24
 False,33.0,,,2,3,West Brom,WBA,Aston Villa,AVL,2021-04-24
 False,33.0,,,4,3,Man Utd,MUN,Leeds,LEE,2021-04-24
 False,33.0,,,3,4,Crystal Palace,CRY,Leicester,LEI,2021-04-24
-False,33.0,,,2,5,Newcastle,NEW,Liverpool,LIV,2021-04-24
-False,33.0,,,2,2,Brighton,BHA,Sheffield Utd,SHU,2021-04-24
-False,33.0,,,4,3,Chelsea,CHE,West Ham,WHU,2021-04-24
+False,33.0,,,2,4,Newcastle,NEW,Liverpool,LIV,2021-04-24
+False,33.0,,,3,2,Brighton,BHA,Sheffield Utd,SHU,2021-04-24
+False,33.0,,,4,4,Chelsea,CHE,West Ham,WHU,2021-04-24
 False,33.0,,,2,3,Burnley,BUR,Wolves,WOL,2021-04-24
-False,34.0,,,2,2,Leeds,LEE,Brighton,BHA,2021-05-01
-False,34.0,,,3,2,West Ham,WHU,Burnley,BUR,2021-05-01
+False,34.0,,,3,2,Leeds,LEE,Brighton,BHA,2021-05-01
+False,34.0,,,4,2,West Ham,WHU,Burnley,BUR,2021-05-01
 False,34.0,,,2,4,Fulham,FUL,Chelsea,CHE,2021-05-01
-False,34.0,,,4,3,Man City,MCI,Crystal Palace,CRY,2021-05-01
+False,34.0,,,5,3,Man City,MCI,Crystal Palace,CRY,2021-05-01
 False,34.0,,,3,3,Aston Villa,AVL,Everton,EVE,2021-05-01
 False,34.0,,,4,4,Liverpool,LIV,Man Utd,MUN,2021-05-01
 False,34.0,,,3,3,Arsenal,ARS,Newcastle,NEW,2021-05-01
@@ -92,40 +83,40 @@ False,34.0,,,3,2,Wolves,WOL,West Brom,WBA,2021-05-01
 False,35.0,,,2,3,West Brom,WBA,Arsenal,ARS,2021-05-08
 False,35.0,,,4,3,Man Utd,MUN,Aston Villa,AVL,2021-05-08
 False,35.0,,,2,2,Burnley,BUR,Fulham,FUL,2021-05-08
-False,35.0,,,4,3,Spurs,TOT,Leeds,LEE,2021-05-08
+False,35.0,,,3,3,Spurs,TOT,Leeds,LEE,2021-05-08
 False,35.0,,,2,4,Newcastle,NEW,Leicester,LEI,2021-05-08
-False,35.0,,,3,5,Southampton,SOU,Liverpool,LIV,2021-05-08
+False,35.0,,,2,4,Southampton,SOU,Liverpool,LIV,2021-05-08
 False,35.0,,,4,5,Chelsea,CHE,Man City,MCI,2021-05-08
 False,35.0,,,3,2,Crystal Palace,CRY,Sheffield Utd,SHU,2021-05-08
-False,35.0,,,3,3,Everton,EVE,West Ham,WHU,2021-05-08
-False,35.0,,,2,3,Brighton,BHA,Wolves,WOL,2021-05-08
-False,36.0,,,3,2,West Ham,WHU,Brighton,BHA,2021-05-11
-False,36.0,,,2,2,Leeds,LEE,Burnley,BUR,2021-05-11
+False,35.0,,,4,4,Everton,EVE,West Ham,WHU,2021-05-08
+False,35.0,,,3,3,Brighton,BHA,Wolves,WOL,2021-05-08
+False,36.0,,,4,2,West Ham,WHU,Brighton,BHA,2021-05-11
+False,36.0,,,3,2,Leeds,LEE,Burnley,BUR,2021-05-11
 False,36.0,,,2,3,Sheffield Utd,SHU,Everton,EVE,2021-05-11
 False,36.0,,,3,3,Aston Villa,AVL,Crystal Palace,CRY,2021-05-11
 False,36.0,,,4,4,Leicester,LEI,Man Utd,MUN,2021-05-11
 False,36.0,,,4,2,Liverpool,LIV,West Brom,WBA,2021-05-11
 False,36.0,,,3,4,Arsenal,ARS,Chelsea,CHE,2021-05-12
-False,36.0,,,4,3,Man City,MCI,Newcastle,NEW,2021-05-12
+False,36.0,,,5,3,Man City,MCI,Newcastle,NEW,2021-05-12
 False,36.0,,,2,3,Fulham,FUL,Southampton,SOU,2021-05-12
 False,36.0,,,3,4,Wolves,WOL,Spurs,TOT,2021-05-12
-False,37.0,,,4,2,Man City,MCI,Brighton,BHA,2021-05-15
+False,37.0,,,5,2,Man City,MCI,Brighton,BHA,2021-05-15
 False,37.0,,,4,2,Liverpool,LIV,Burnley,BUR,2021-05-15
 False,37.0,,,4,4,Leicester,LEI,Chelsea,CHE,2021-05-15
 False,37.0,,,3,3,Arsenal,ARS,Crystal Palace,CRY,2021-05-15
 False,37.0,,,3,3,Wolves,WOL,Everton,EVE,2021-05-15
 False,37.0,,,2,4,Fulham,FUL,Man Utd,MUN,2021-05-15
 False,37.0,,,2,3,Sheffield Utd,SHU,Newcastle,NEW,2021-05-15
-False,37.0,,,2,3,Leeds,LEE,Southampton,SOU,2021-05-15
+False,37.0,,,3,3,Leeds,LEE,Southampton,SOU,2021-05-15
 False,37.0,,,3,4,Aston Villa,AVL,Spurs,TOT,2021-05-15
-False,37.0,,,3,2,West Ham,WHU,West Brom,WBA,2021-05-15
-False,38.0,,,2,3,Brighton,BHA,Arsenal,ARS,2021-05-23
+False,37.0,,,4,2,West Ham,WHU,West Brom,WBA,2021-05-15
+False,38.0,,,3,3,Brighton,BHA,Arsenal,ARS,2021-05-23
 False,38.0,,,4,3,Chelsea,CHE,Aston Villa,AVL,2021-05-23
 False,38.0,,,2,2,Newcastle,NEW,Fulham,FUL,2021-05-23
 False,38.0,,,2,3,West Brom,WBA,Leeds,LEE,2021-05-23
-False,38.0,,,4,4,Spurs,TOT,Leicester,LEI,2021-05-23
-False,38.0,,,3,5,Crystal Palace,CRY,Liverpool,LIV,2021-05-23
-False,38.0,,,3,5,Everton,EVE,Man City,MCI,2021-05-23
+False,38.0,,,3,4,Spurs,TOT,Leicester,LEI,2021-05-23
+False,38.0,,,3,4,Crystal Palace,CRY,Liverpool,LIV,2021-05-23
+False,38.0,,,4,5,Everton,EVE,Man City,MCI,2021-05-23
 False,38.0,,,2,2,Burnley,BUR,Sheffield Utd,SHU,2021-05-23
-False,38.0,,,3,3,Southampton,SOU,West Ham,WHU,2021-05-23
+False,38.0,,,2,4,Southampton,SOU,West Ham,WHU,2021-05-23
 False,38.0,,,4,3,Man Utd,MUN,Wolves,WOL,2021-05-23

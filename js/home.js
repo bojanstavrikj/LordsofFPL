@@ -645,6 +645,7 @@ function update (data,chart_type) {
 		var fixtures_p2  = fix.filter(d =>{
 			return d.team_a_short_name == current_p2[0].team_short || d.team_h_short_name == current_p2[0].team_short
 		})
+
 		insert_fixture_table (fixtures_p1, current_p1,"#fixturesp1")
 		insert_fixture_table (fixtures_p2, current_p2,"#fixturesp2")
 
