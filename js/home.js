@@ -2,6 +2,13 @@
 		width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
 		height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
+	d3.csv("/data/timestamp.txt", function(error, data) {
+		if (error) throw error;
+		console.log(data)
+
+		$("#timestamp")[0].innerHTML = data.columns[0] + ", " + data.columns[1]
+	}) 
+
 	var color = d3.scale.ordinal()
 		.range(["#CC333F","#00A0B0","#00A0B0"]);
 		
