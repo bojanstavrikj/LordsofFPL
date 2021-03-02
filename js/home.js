@@ -641,17 +641,24 @@ function update (data,chart_type) {
 
 		fix.forEach(d => {
 		    d.event = Number(d.event)
-		    d.team_a_difficulty = Number(d.team_a_difficulty)
-		    d.team_h_difficulty = Number(d.team_h_difficulty)
+		    d.team_a_difficulty == "(blank)"? d.team_a_difficulty : Number(d.team_a_difficulty)
+		    d.team_h_difficulty == "(blank)"? d.team_h_difficulty : Number(d.team_h_difficulty)
 		});
 		
 		var fixtures_p1  = fix.filter(d =>{
 			return d.team_a_short_name == current_p1[0].team_short || d.team_h_short_name == current_p1[0].team_short
 		})
+		fixtures_p1.sort(function(a, b) {
+		    return a.event-b.event;
+		});
 
 		var fixtures_p2  = fix.filter(d =>{
 			return d.team_a_short_name == current_p2[0].team_short || d.team_h_short_name == current_p2[0].team_short
 		})
+
+		fixtures_p2.sort(function(a, b) {
+		    return a.event-b.event;
+		});
 
 		insert_fixture_table (fixtures_p1, current_p1,"#fixturesp1")
 		insert_fixture_table (fixtures_p2, current_p2,"#fixturesp2")
@@ -952,12 +959,13 @@ function Nan_rep (number) {
 };
 
 function insert_fixture_table (data, current,id) {
+	console.log(data)
 	next_gws = []
 	for (i=0; i<data.length; i++){
 		if (data[i].team_a_short_name == current[0].team_short) {
-			next_gws.push({'GW':data[i].event,'opponent':`${data[i].team_h_short_name} (A)`, 'difficulty':data[i].team_a_difficulty, 'team':data[i].team_h_short_name})
+			next_gws.push({'GW':data[i].event,'opponent':data[i].team_a_difficulty == "(blank)" ? "" : `${data[i].team_h_short_name} (A)`, 'difficulty':data[i].team_a_difficulty == "(blank)" ? data[i].team_a_difficulty : (d3.format(".0f"))(data[i].team_a_difficulty), 'team':data[i].team_h_short_name})
 		} if (data[i].team_h_short_name == current[0].team_short) {
-			next_gws.push({'GW':data[i].event,'opponent':`${data[i].team_a_short_name} (H)`, 'difficulty':data[i].team_h_difficulty, 'team':data[i].team_a_short_name})
+			next_gws.push({'GW':data[i].event,'opponent':data[i].team_h_difficulty == "(blank)" ? "" : `${data[i].team_a_short_name} (H)`, 'difficulty':data[i].team_h_difficulty == "(blank)" ? data[i].team_h_difficulty : (d3.format(".0f"))(data[i].team_h_difficulty), 'team':data[i].team_a_short_name})
 		}
 	}
 	gw_list = []
