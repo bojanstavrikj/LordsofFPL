@@ -90,7 +90,7 @@
 	   $("#info1").on("click", function(){ 
 	       $( "#p1-full-table" ).dialog({
 	          height: window.innerHeight-100,
-	          width: window.innerWidth/2,
+	          width: window.innerWidth/1.5,
 	          modal: true
 	        });
 	       $("#p1-full-table").show();
@@ -850,7 +850,7 @@ function insert_next_games (data,fixtures,current,id) {
 function diverging_chart(data,stat) {
 	var margin_bar = { top_bar: 40, right_bar: 50, bottom_bar: 60, left_bar: 50 };
 
-    var width_bar = 600 - margin_bar.left_bar - margin_bar.right_bar,
+    var width_bar = Math.min(600, window.innerWidth - 10) - margin_bar.left_bar - margin_bar.right_bar,
         height_bar = 500 - margin_bar.top_bar - margin_bar.bottom_bar;
 
 	var svg_bar = d3.select(".radarChart")
