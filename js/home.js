@@ -705,11 +705,11 @@ function popup_full_table (data,id) {
 	  var table_pl = d3.select(id).append('table').attr("class","table_pl");;
 	  // var titles_pl = d3.keys(data[0]);
 	  
-	  titles_pl = ["round", "team", "opponent", "was_home","team_h_score", "team_a_score","minutes","total_points", 
+	  titles_pl = ["round", "value", "team", "opponent", "was_home","team_h_score", "team_a_score","minutes","total_points", 
 	  "shots", "xG","goals_scored", "npxG", "npg", "xA", "assists", "xGChain", "xGBuildup", "key_passes", "clean_sheets",
 	  "goals_conceded","own_goals", "penalties_saved", "penalties_missed", "yellow_cards", "red_cards", "saves", 
-	  "bonus", "bps", "influence", "creativity", "threat", "ict_index", "value", "transfers_balance", 
-	  "selected", "transfers_in", "transfers_out", "selected_by_percent", "corners_and_indirect_freekicks_order", 
+	  "bonus", "bps", "influence", "creativity", "threat", "ict_index", "transfers_balance", 
+	  "selected", "transfers_in", "transfers_out", "corners_and_indirect_freekicks_order", 
 	  "direct_freekicks_order", "penalties_order"]
 
 	  var headers_pl = table_pl.append('thead').append('tr')
