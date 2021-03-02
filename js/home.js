@@ -443,10 +443,10 @@ function update (data,chart_type) {
     	// tot_varsp2.push(`p2Tot${features[i]}`)
     	// window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
     	// window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
-    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/90)/(eval(tot_varsp1[i])/90+eval(tot_varsp2[i])/90)), "actual":`<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/90)}`,"player":0,"real":eval(tot_varsp1[i])/90})
-    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/90)/(eval(tot_varsp1[i])/90+eval(tot_varsp2[i])/90)), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/90)}`,"player":1,"real":eval(tot_varsp2[i])/90})
+    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
+    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
     };
-
+    console.log(eval(tot_varsp1[1])/90)
     var pos = `${filtered_p1[0].position_short} ${filtered_p2[0].position_short}`
 
     
@@ -706,13 +706,11 @@ function popup_full_table (data,id) {
 	  // var titles_pl = d3.keys(data[0]);
 	  
 	  titles_pl = ["round", "team", "opponent", "was_home","team_h_score", "team_a_score","minutes","total_points", 
-	  "shots", "xG", "xA", "key_passes", "npg", "npxG", "xGChain", "xGBuildup",
-	  "goals_scored", "assists", "clean_sheets","goals_conceded", "own_goals", "penalties_saved",
-	  "penalties_missed", "yellow_cards", "red_cards", "saves", "bonus", "bps", "influence", 
-	  "creativity", "threat", "ict_index", "value", "transfers_balance", 
+	  "shots", "xG","goals_scored", "npxG", "npg", "xA", "assists", "xGChain", "xGBuildup", "key_passes", "clean_sheets",
+	  "goals_conceded","own_goals", "penalties_saved", "penalties_missed", "yellow_cards", "red_cards", "saves", 
+	  "bonus", "bps", "influence", "creativity", "threat", "ict_index", "value", "transfers_balance", 
 	  "selected", "transfers_in", "transfers_out", "selected_by_percent", "corners_and_indirect_freekicks_order", 
-	  "direct_freekicks_order", "penalties_order", "chance_playing_tr", "chance_playing_nx"
-	  ]
+	  "direct_freekicks_order", "penalties_order"]
 
 	  var headers_pl = table_pl.append('thead').append('tr')
            .selectAll('th')
