@@ -107,6 +107,29 @@
 	       $("#p2-full-table").show();
 	    });
 	 });
+
+	$(function() {
+	   $("#full_fix1").on("click", function(){ 
+	       $( "#p1-full-fixtures" ).dialog({
+	          height: window.innerHeight-100,
+	          width: window.innerWidth/1.5,
+	          modal: true
+	        });
+	       $("#p1-full-fixtures").show();
+	    });
+	 });
+
+	$(function() {
+	   $("#full_fix2").on("click", function(){ 
+	       $( "#p2-full-fixtures" ).dialog({
+	          height: window.innerHeight-100,
+	          width: window.innerWidth/1.5,
+	          modal: true
+	        });
+	       $("#p2-full-fixtures").show();
+	    });
+	 });
+
 	var pos_pos1 = ["MID MID", "MID FWD", "FWD FWD", "FWD MID"]
 	var pos_pos2 = ["GKP DEF", "DEF GKP"]
 	var pos_pos3 = ["DEF MID", "MID DEF"]
@@ -630,6 +653,7 @@ function update (data,chart_type) {
 	
 
     d3.selectAll("table").remove()
+    d3.selectAll("#blank_text").remove()
    
 	insert_table(filtered_p1,"#p1-past-games",data.filter(d => {return d.element == player1}))
 	insert_table(filtered_p2,"#p2-past-games",data.filter(d => {return d.element == player2}))
@@ -660,8 +684,11 @@ function update (data,chart_type) {
 		    return a.event-b.event;
 		});
 
-		insert_fixture_table (fixtures_p1, current_p1,"#fixturesp1")
-		insert_fixture_table (fixtures_p2, current_p2,"#fixturesp2")
+		insert_fixture_table (fixtures_p1, current_p1,"#fixturesp1","sliced")
+		insert_fixture_table (fixtures_p2, current_p2,"#fixturesp2","sliced")
+
+		insert_fixture_table (fixtures_p1, current_p1,"#p1-full-fixtures","full")
+		insert_fixture_table (fixtures_p2, current_p2,"#p2-full-fixtures","full")
 
 		$(function() {
 		    $('tr > td').each(function(index) {
@@ -751,6 +778,7 @@ function popup_full_table (data,id) {
 }
 
 function insert_next_games (data,fixtures,current,id) {
+
 	for (i=0;i<2;i++){
 		if (fixtures[i].team_a_short_name == current[0].team_short) {
 			to_insert_fixtures = data.filter(d=> {return d.team_short == fixtures[i].team_h_short_name})
@@ -759,97 +787,107 @@ function insert_next_games (data,fixtures,current,id) {
 		}
 
 		next_gws_team = []
-		for (j=0; j<to_insert_fixtures.length; j++){
-			next_gws_team.push({'team':`${to_insert_fixtures[j].team_short}`, 'xGA':to_insert_fixtures[j].xGA,'GA':to_insert_fixtures[j].missed, 'xG':to_insert_fixtures[j].xG,'G':to_insert_fixtures[j].scored}) 
-		}
-		next_gws_team_L4 = next_gws_team.slice(Math.max(next_gws_team.length - 4, 0))
-		next_gws_team_L6 = next_gws_team.slice(Math.max(next_gws_team.length - 6, 0))
-		total_L4 = {}
-		total_L4['stat'] = `Last 4`;
-		
-		next_gws_team_L4.forEach(function(d) {
-		    ["team","xGA","GA","xG","G"].forEach(function(k) {
-		        if (k !== "team") {
-		            if (k in total_L4) {
-		                total_L4[k] += d[k];
-		            } else {
-		                total_L4[k] = d[k];
-		            }
-		        }
-		    });
-		});
-		
-		total_L6 = {}
-		total_L6['stat'] = `Last 6`;
-		next_gws_team_L6.forEach(function(d) {
-		    ["team","xGA","GA","xG","G"].forEach(function(k) {
-		        if (k !== "team") {
-		            if (k in total_L6) {
-		                total_L6[k] += d[k];
-		            } else {
-		                total_L6[k] = d[k];
-		            }
-		        }
-		    });
-		});
-		
-		total_S = {}
-		total_S['stat'] = `Season`;
-		next_gws_team.forEach(function(d) {
-		    ["team","xGA","GA","xG","G"].forEach(function(k) {
-		        if (k !== "team") {
-		            if (k in total_S) {
-		                total_S[k] += d[k];
-		            } else {
-		                total_S[k] = d[k];
-		            }
-		        }
-		    });
-		});
 
-		trial = [total_S,total_L4,total_L6]
-
-		var table_nx = d3.select(id).append('table').attr("class","table_nx");
-
-
-		var headers_nx = table_nx.append('thead').append('tr')
-	       .selectAll('th')
-	       .data([`${next_gws_team[0].team}`,"xGA","GA","xG","G"]).enter()
-	       .append('th')
-	       .text(function (d) {
-	            return d;
-	        })
-		    .on('mouseover.tooltip', function(d) {
-			    tooltip.transition()
-			      .duration(300)
-			      .style("opacity", 1);
-			    tooltip.html(`${var_explanation[d]}`)
-			      .style("left", (d3.event.pageX) + "px")
-			      .style("top", (d3.event.pageY - 30) + "px");
-			  })
-			.on("mouseout.tooltip", function() {
-			    tooltip.transition()
-			      .duration(100)
-			      .style("opacity", 0);
-			  })
-
-		var rows_nx = table_nx.append('tbody').selectAll('tr')
-	       .data(trial).enter()
-	       .append('tr');
-		rows_nx.selectAll('td')
-			.data(function (d) {
-			return ["stat","xGA","GA","xG","G"].map(function (k) {
-				return { 'value': d[k], 'name': k};
+		if (to_insert_fixtures.length == 0){
+			blank_gw = d3.select(id).append('text')
+				.attr("id","blank_text")
+				.text(`${fixtures[i].team_h_short_name} blanks in GW ${fixtures[i].event}`)
+		} else {
+			for (j=0; j<to_insert_fixtures.length; j++){
+				next_gws_team.push({'team':`${to_insert_fixtures[j].team_short}`, 'xGA':to_insert_fixtures[j].xGA,'GA':to_insert_fixtures[j].missed, 'xG':to_insert_fixtures[j].xG,'G':to_insert_fixtures[j].scored}) 
+			}
+			next_gws_team_L4 = next_gws_team.slice(Math.max(next_gws_team.length - 4, 0))
+			next_gws_team_L6 = next_gws_team.slice(Math.max(next_gws_team.length - 6, 0))
+			total_L4 = {}
+			total_L4['stat'] = `Last 4`;
+			
+			next_gws_team_L4.forEach(function(d) {
+			    ["team","xGA","GA","xG","G"].forEach(function(k) {
+			        if (k !== "team") {
+			            if (k in total_L4) {
+			                total_L4[k] += d[k];
+			            } else {
+			                total_L4[k] = d[k];
+			            }
+			        }
+			    });
 			});
-		}).enter()
-		.append('td')
-		.attr('data-th', function (d) {
-			return d.name;
-		})
-		.text(function (d) {
-			return d.name != "stat" ? (d3.format(".0f"))(d.value) : d.value;
-		});
-	}
+			
+			total_L6 = {}
+			total_L6['stat'] = `Last 6`;
+			next_gws_team_L6.forEach(function(d) {
+			    ["team","xGA","GA","xG","G"].forEach(function(k) {
+			        if (k !== "team") {
+			            if (k in total_L6) {
+			                total_L6[k] += d[k];
+			            } else {
+			                total_L6[k] = d[k];
+			            }
+			        }
+			    });
+			});
+			
+			total_S = {}
+			total_S['stat'] = `Season`;
+			next_gws_team.forEach(function(d) {
+			    ["team","xGA","GA","xG","G"].forEach(function(k) {
+			        if (k !== "team") {
+			            if (k in total_S) {
+			                total_S[k] += d[k];
+			            } else {
+			                total_S[k] = d[k];
+			            }
+			        }
+			    });
+			});
+
+			trial = [total_S,total_L4,total_L6]
+
+			var table_nx = d3.select(id).append('table').attr("class","table_nx");
+
+			console.log(next_gws_team)
+			var headers_nx = table_nx.append('thead').append('tr')
+		       .selectAll('th')
+		       .data([`${next_gws_team[0].team}`,"xGA","GA","xG","G"]).enter()
+		       .append('th')
+		       .text(function (d) {
+		            return d;
+		        })
+			    .on('mouseover.tooltip', function(d) {
+				    tooltip.transition()
+				      .duration(300)
+				      .style("opacity", 1);
+				    tooltip.html(`${var_explanation[d]}`)
+				      .style("left", (d3.event.pageX) + "px")
+				      .style("top", (d3.event.pageY - 30) + "px");
+				  })
+				.on("mouseout.tooltip", function() {
+				    tooltip.transition()
+				      .duration(100)
+				      .style("opacity", 0);
+				  })
+
+			var rows_nx = table_nx.append('tbody').selectAll('tr')
+		       .data(trial).enter()
+		       .append('tr');
+			rows_nx.selectAll('td')
+				.data(function (d) {
+				return ["stat","xGA","GA","xG","G"].map(function (k) {
+					return { 'value': d[k], 'name': k};
+				});
+			}).enter()
+			.append('td')
+			.attr('data-th', function (d) {
+				return d.name;
+			})
+			.text(function (d) {
+				return d.name != "stat" ? (d3.format(".0f"))(d.value) : d.value;
+			});
+		}
+		}
+		
+
+		
 }
 
 function diverging_chart(data,stat) {
@@ -956,7 +994,7 @@ function Nan_rep (number) {
 		return number
 };
 
-function insert_fixture_table (data, current,id) {
+function insert_fixture_table (data, current,id,slice) {
 	console.log(data)
 	next_gws = []
 	for (i=0; i<data.length; i++){
@@ -971,9 +1009,13 @@ function insert_fixture_table (data, current,id) {
 		gw_list.push(d.gw)
 	})
 
-	    
 	// next_gws = next_gws.slice(Math.max(next_gws.length - 5, 0))
-	next_gws = next_gws.slice(0,5)
+	if (slice == "sliced") {
+		next_gws = next_gws.slice(0,5)
+	} else {
+		next_gws = next_gws
+	}
+	
 	var table_fx = d3.select(id).append('table').attr("class","table_fx");
 	
 	

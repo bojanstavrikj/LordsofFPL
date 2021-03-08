@@ -346,3 +346,13 @@ footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
 #timestamp-div{
   font-size:10px;
 }
+
+.fa-info-circle:hover {
+  color:gray !important;
+  cursor:pointer;
+}
+
+.fa-plus-square:hover{
+  color:green !important;
+  cursor:pointer; 
+}
