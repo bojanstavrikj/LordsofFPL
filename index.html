@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	<!-- CSS -->
 	<link href='/css/select2.min.css' rel='stylesheet' type='text/css'>
-	<link rel="icon"  href="/data/futbol-solid.svg">
+	<link rel="icon"  href="/data/img/futbol-solid.svg">
 	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5R14EDGSG"></script>
 	<script>
@@ -56,7 +56,72 @@
 	        </ul>
 	    </div>
 	</nav>
+	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;">
+		<div class="row">
+			<div class="col">
+				<h2 >Transfer Planner</h2>	
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="row" id="user-team-select">
+					<div class="col">
+						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br> 
+						<input type="text" name="team_id" id="team_id">
+						<button id="team_id_button">Submit</button>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Bank</strong>
+						<div id="bank"></div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Transfer Cost</strong>
+						<div> <a id="transfer_cost"></a> pts</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Free Transfers</strong>
+						<div><a id="free_transfers"></a> free transfers</div>
+					</div>
+					<!-- <div class="col user_transfers">
+						<strong>Color codes</strong>
+						<div id="legend"></div>
+					</div> -->	
+				</div>
+			</div>
+			<div class="col-md-4" height="500px">
+				<div class="row">
+					<div class="col" id="transfer_planner">
+						<div id="pitch"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" id="add_player">
+				<div class="col">
+
+					<select id="search-select" >
+						<option selected value=name>Name</option>
+						<option value=position>Position</option>
+						<option value=team>Team</option>
+					</select>
+					<input type="text" id="search_player" onkeyup="myFunction()" placeholder="Search for names..">
+					<i style ='margin-top:5px;' id="table-select-info" class="fas fa-info-circle"></i>
+					<div id="select-player-table"></div>
+				</div>
+			</div>
+			<div class="col">
+				<div id="actions-popup" title="actions" style="display:none"><button id="add_team">Add to my team.</button><button id="add_comparison1">Compare in slot 1</button><button id="add_comparison2">Compare in slot 2</button></div>
+			</div>
+		</div>
+	</div>
 	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
+		<div class="row">
+			<div class="col">
+				<h2>Player Comparison</h2>	
+			</div>
+		</div>
 		<div class="row" id="select-menu">
 			<div class="col" style='width: 300px;'>
 				<label>GW slider: Gameweeks <span id="top-gws"></span> shown</label><br>
@@ -64,7 +129,7 @@
 		    </div>
 		</div>
 	</div>
-	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;">
+	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;" id="comparison_div">
 		<div class="row">
 			<div id="timestamp-div" class="col">Latest update: <span id="timestamp"></span> (GMT)</div>
 		</div>
@@ -77,7 +142,7 @@
 					<div class="w-100"></div>
 					<div class="col" id="p1-fitness">
 						<i style ='margin-top:5px;' id="info1" class="fas fa-info-circle"></i>
-					</div>			
+					</div>
 					<div class="w-100"></div>
 					<div class="col">
 						<img id="pl1" width=25%>
@@ -167,7 +232,7 @@
 						<div id="p2-full-fixtures" title="Remaining fixtures" style="display:none"></div>
 						<h6>Upcoming Fixtures</h6>
 						<div  id="fixturesp2"></div>
-						<i style ='margin-top:5px;color:grey;' id="full_fix2" class="fas fa-plus-square"></i>
+						<i style ='margin-top:5px; color:grey;' id="full_fix2" class="fas fa-plus-square"></i>
 					</div>
 					<div class="w-100"></div>
 					<div class="col">

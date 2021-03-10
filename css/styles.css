@@ -69,7 +69,7 @@
 div.tooltip {
   position: absolute;
   background-color: white;
-  max-width: 200px;
+  max-width: 500px;
   height: auto;
   padding: 1px;
   border-style: solid;
@@ -77,6 +77,83 @@ div.tooltip {
   border-width: 1px;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
   pointer-events: none;
+}
+
+div.tooltip_actions{
+  position: absolute;
+  background-color: white;
+  max-width: 300px;
+  padding: 30px;
+  border-style: solid;
+  border-radius: 4px;
+  border-width: 1px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, .5);
+  pointer-events: none;
+}
+button#add_to_team, button#add_p1, button#add_p2{
+  width:200px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50;
+}
+
+button#team_id_button{
+  width:100px;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  /*padding: 8px 16px;*/
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50; 
+}
+
+button#team_id_button:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button#add_to_team:hover, button#add_p1:hover, button#add_p2:hover {
+  background-color: #4CAF50;
+  color: white;
+}
+
+button#close{
+  background-color: white;
+  border:none;
+}
+
+button#close:hover{
+  color:red;
+  cursor:pointer;
+}
+
+button#closeplayer:hover{
+  color:red;
+  cursor:pointer;
+}
+
+button#closeplayer{
+  background-color: white;
+  border:none;
 }
 /*.past_games {
 	text-align: justify
@@ -355,4 +432,48 @@ footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
 .fa-plus-square:hover{
   color:green !important;
   cursor:pointer; 
+}
+
+/*#pitch {
+  display:block;
+  margin:auto;
+  margin-top:10%;
+}*/
+#pitch svg{
+  /*display:block;
+  position:absolute;*/
+  /*top:50%;*/
+  /*margin-top:500px;*/
+  /*left:65%;*/
+}
+
+
+#user-team-select{
+  width: 80%; 
+  margin:auto;
+  /*margin-top:10%;*/
+}
+
+#select-player-table{
+  height:500px;
+  overflow-y: scroll;
+}
+.select_table_rows:hover {
+  cursor:pointer;
+}
+
+th.des:after {
+  content: "\21E9";
+}
+
+th.aes:after {
+  content: "\21E7";
+}
+
+#select_table_header:hover {
+  cursor:s-resize;
+}
+.user_transfers{
+  border-bottom:1px solid #cecece;
+  border-top:1px solid #cecece;
 }
