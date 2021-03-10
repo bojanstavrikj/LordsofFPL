@@ -1,25 +1,24 @@
 finished,event,team_h_difficulty,team_a_difficulty,team_a_name,team_a_short_name,team_h_name,team_h_short_name,date
-False,27.0,2.0,5,Southampton,SOU,Man City,MCI,2021-03-10
-False,28.0,4.0,4,West Ham,WHU,Man Utd,MUN,2021-03-14
-False,28.0,3.0,3,Spurs,TOT,Arsenal,ARS,2021-03-14
-False,28.0,2.0,4,Sheffield Utd,SHU,Leicester,LEI,2021-03-14
-False,28.0,3.0,3,Brighton,BHA,Southampton,SOU,2021-03-14
-False,28.0,4.0,3,Liverpool,LIV,Wolves,WOL,2021-03-15
-False,28.0,2.0,3,Burnley,BUR,Everton,EVE,2021-03-13
-False,28.0,2.0,3,West Brom,WBA,Crystal Palace,CRY,2021-03-13
-False,28.0,4.0,3,Chelsea,CHE,Leeds,LEE,2021-03-13
 False,28.0,3.0,3,Aston Villa,AVL,Newcastle,NEW,2021-03-12
+False,28.0,4.0,3,Chelsea,CHE,Leeds,LEE,2021-03-13
+False,28.0,2.0,3,West Brom,WBA,Crystal Palace,CRY,2021-03-13
+False,28.0,2.0,3,Burnley,BUR,Everton,EVE,2021-03-13
 False,28.0,5.0,2,Man City,MCI,Fulham,FUL,2021-03-13
-False,29.0,(blank),(blank),(blank),(blank),Wolves,WOL,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Crystal Palace,CRY,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Everton,EVE,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Leicester,LEI,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Liverpool,LIV,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Man City,MCI,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Man Utd,MUN,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Sheffield Utd,SHU,(blank)
-False,29.0,(blank),(blank),(blank),(blank),Southampton,SOU,(blank)
+False,28.0,3.0,3,Brighton,BHA,Southampton,SOU,2021-03-14
+False,28.0,2.0,4,Sheffield Utd,SHU,Leicester,LEI,2021-03-14
+False,28.0,3.0,3,Spurs,TOT,Arsenal,ARS,2021-03-14
+False,28.0,4.0,4,West Ham,WHU,Man Utd,MUN,2021-03-14
+False,28.0,4.0,3,Liverpool,LIV,Wolves,WOL,2021-03-15
 False,29.0,(blank),(blank),(blank),(blank),West Brom,WBA,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Southampton,SOU,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Sheffield Utd,SHU,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Man Utd,MUN,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Crystal Palace,CRY,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Liverpool,LIV,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Leicester,LEI,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Everton,EVE,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Wolves,WOL,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Man City,MCI,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Chelsea,CHE,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Burnley,BUR,(blank)
 False,29.0,3.0,2,Leeds,LEE,Fulham,FUL,2021-03-19

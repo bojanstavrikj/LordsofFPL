@@ -104,49 +104,7 @@
 	  $("#player2").select2();
 	  $("#stat").select2();
 	});
-	$(function() {
-	   $("#info1").on("click", function(){ 
-	       $( "#p1-full-table" ).dialog({
-	          height: window.innerHeight-100,
-	          width: window.innerWidth/1.5,
-	          modal: true
-	        });
-	       $("#p1-full-table").show();
-	    });
-	 });
-
-	$(function() {
-	   $("#info2").on("click", function(){ 
-	       $( "#p2-full-table" ).dialog({
-	          height: window.innerHeight-100,
-	          width: window.innerWidth/2,
-	          modal: true
-	        });
-	       $("#p2-full-table").show();
-	    });
-	 });
-
-	$(function() {
-	   $("#full_fix1").on("click", function(){ 
-	       $( "#p1-full-fixtures" ).dialog({
-	          height: window.innerHeight-100,
-	          width: window.innerWidth/1.5,
-	          modal: true
-	        });
-	       $("#p1-full-fixtures").show();
-	    });
-	 });
-
-	$(function() {
-	   $("#full_fix2").on("click", function(){ 
-	       $( "#p2-full-fixtures" ).dialog({
-	          height: window.innerHeight-100,
-	          width: window.innerWidth/1.5,
-	          modal: true
-	        });
-	       $("#p2-full-fixtures").show();
-	    });
-	 });
+	
 
 	var pos_pos1 = ["MID MID", "MID FWD", "FWD FWD", "FWD MID"]
 	var pos_pos2 = ["GKP DEF", "DEF GKP"]
@@ -334,6 +292,56 @@
 	    .on("change", () => {
 	      update(data)
 	    })
+
+	    $(function() {
+		   $("#info1").on("click", function(){ 
+		   		update(data)
+		       $( "#p1-full-table" ).dialog({
+		          height: window.innerHeight-100,
+		          width: window.innerWidth/1.5,
+		          modal: true
+		        });
+		       $("#p1-full-table").show();
+
+		    });
+		 });
+
+		$(function() {
+		   $("#info2").on("click", function(){ 
+		   		update(data)
+		       $( "#p2-full-table" ).dialog({
+		          height: window.innerHeight-100,
+		          width: window.innerWidth/2,
+		          modal: true
+		        });
+
+		       $("#p2-full-table").show();
+		    });
+		 });
+
+		$(function() {
+		   $("#full_fix1").on("click", function(){
+		   	update(data)
+		       $( "#p1-full-fixtures" ).dialog({
+		          height: window.innerHeight-100,
+		          width: window.innerWidth/1.5,
+		          modal: true
+		        });
+		       $("#p1-full-fixtures").show();
+		    });
+		 });
+
+		$(function() {
+		   $("#full_fix2").on("click", function(){ 
+		   	update(data)
+		       $( "#p2-full-fixtures" ).dialog({
+		          height: window.innerHeight-100,
+		          width: window.innerWidth/1.5,
+		          modal: true
+		        });
+		       $("#p2-full-fixtures").show();
+		    });
+		 });
 	
 
 		// $('input[name=check]').change(function() {
@@ -669,6 +677,10 @@ function update (data,chart_type) {
 	
 
     d3.select("#comparison_div").selectAll("table").remove()
+    // d3.select("#comparison_div").selectAll("table").remove()
+    d3.select("#p2-full-table").selectAll("table").remove()
+    d3.select("#p1-full-table").selectAll("table").remove()
+    
     d3.selectAll("#blank_text").remove()
    
 	insert_table(filtered_p1,"#p1-past-games",data.filter(d => {return d.element == player1}))
@@ -1750,26 +1762,32 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 							console.log(my_picks_team)
 					   	})
 						d3.select("#add_p1").on("click",function() {
-							window.location="#player1"
+							// window.location="#player1"
+						    // d3.select("#comparison_div").selectAll("table").remove()
+						    // $("#comparison_div").empty()
 						    tooltip_actions.transition()
 						    	.duration(100)
 						      	.style("opacity", 0)
 						      	.style("pointer-events", "none")
 						    $("#player1").val(d.id);
         					$('#player1').trigger('change');
+        					
 						})
 
 						d3.select("#add_p2").on("click",function() {
-						    window.location="#player2"
+						    // window.location="#player2"
 						    tooltip_actions.transition()
 						    	.duration(100)
 						      	.style("opacity", 0)
 						      	.style("pointer-events", "none")
 						    $("#player2").val(d.id);
         					$('#player2').trigger('change');
+
 						})
 
 						d3.select("button#closeplayer").on("click",function() {
+							// d3.select("#comparison_div").selectAll("table").remove()
+
 						    tooltip_actions.transition()
 						      .duration(100)
 						      .style("opacity", 0)
