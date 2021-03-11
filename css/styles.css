@@ -368,7 +368,7 @@ footer p { font-size:13px; color:#CCC; padding-bottom:0px; margin-bottom:8px;}
 .social_footer_ul li a { color:#CCC; border:1px solid #CCC; padding:8px;border-radius:50%;}
 .social_footer_ul li i {  width:20px; height:20px; text-align:center;}*/
 
-.col-sm-4, .col-sm-4 a{
+.col-sm-6, .col-sm-6 a{
 	text-align: center;
 	color:white;
 }
@@ -486,4 +486,9 @@ th.aes:after {
 #next_gw_fixtures{
   height:300px;
   overflow-y: scroll;
+}
+
+#fpl_link:hover{
+  color:white;
+  font-weight: bold;
 }

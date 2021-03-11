@@ -1239,673 +1239,681 @@ var tooltip_actions = d3.select("body")
     .style("opacity", 0);
 
 function update_players (team_id) {
-	$("#pitch").empty()
+		$("#pitch").empty()
 
-var scale = d3.scale.linear()
-  .domain([0, 100])
-  .range([0, 500]);
+	var scale = d3.scale.linear()
+		.domain([0, 100])
+		.range([0, 500]);
 
-var pitch = {
-  width: 80,
-  length: 100,
-  centerCircleRadius: 10,
-  penaltyArea: {
-    width: 36,
-    height: 18
-  },
-  padding: {
-    top: 2,
-    right: 2,
-    bottom: 2,
-    left: 2
-  },
-  paintColor: "#FFF",
-  grassColor: "#1CB960",
+	var pitch = {
+		width: 80,
+		length: 100,
+		centerCircleRadius: 10,
+	penaltyArea: {
+		width: 36,
+		height: 18
+	},
+		padding: {
+		top: 2,
+		right: 2,
+		bottom: 2,
+		left: 2
+	},
+		paintColor: "#FFF",
+		grassColor: "#1CB960",
+	};
+
+	var svg = d3.select("#pitch").append("svg")
+		.attr("width", scale(pitch.width + pitch.padding.left + pitch.padding.right))
+		.attr("height", scale(pitch.length + pitch.padding.top + pitch.padding.bottom))
+		.attr("style", "background:"+pitch.grassColor+";margin-left:-" + 0.01 * scale(pitch.width + pitch.padding.left + pitch.padding.right) + "");;
+
+
+
+	var pitchElement = svg.append("g")
+		.attr("transform", "translate(" +scale(pitch.padding.left) + "," + scale(pitch.padding.top) + ")")
+
+	var pitchOutline = pitchElement.append("rect")
+		.attr("x", 0)
+		.attr("y", 0)
+		.attr("width", scale(pitch.width))
+		.attr("height", scale(pitch.length))
+		.attr("stroke", pitch.paintColor)
+		.attr("fill", "none")
+
+	var centerSpot = pitchElement.append("circle")
+		.attr("cx", scale(pitch.width/2))
+		.attr("cy", scale(pitch.length/2))
+		.attr("r", 1)
+		.attr("fill", pitch.paintColor)
+
+	var centerCircle = pitchElement.append("circle")
+		.attr("cx", scale(pitch.width/2))
+		.attr("cy", scale(pitch.length/2))
+		.attr("r", scale(pitch.centerCircleRadius))
+		.attr("fill", 'none')
+		.attr("stroke", pitch.paintColor)
+
+	var halfwayLine = pitchElement.append("line")
+		.attr("y1", scale(pitch.length/2))
+		.attr("y2", scale(pitch.length/2))
+		.attr("x1", 0)
+		.attr("x2", scale(pitch.width))
+		.attr("stroke", pitch.paintColor)
+
+	// corners
+	function addPath(pathData, parentElement){
+		parentElement.append("path")
+		.attr("d", pathData)
+		.attr("stroke", pitch.paintColor)
+		.attr("fill", "none") 
+	}
+
+	// top left
+	var pathData = "M0," + scale(1) + "A " + scale(1) +" " + scale(1) + " 45 0 0" + scale(1) + ",0";
+	addPath(pathData, pitchElement);
+
+	// top right
+	var pathData = "M"+scale(pitch.width - 1)+",0 A " + scale(1) +" " + scale(1) + " 45 0 0" + scale(pitch.width) + ","+ scale(1);
+	addPath(pathData, pitchElement);
+
+	// bottom left
+	var pathData = "M0," + scale(pitch.length-1) + "A " + scale(1) +" " + scale(1) + " 45 0 1" + scale(1) + "," + scale(pitch.length);
+	addPath(pathData, pitchElement);
+
+	// top right
+	var pathData = "M"+scale(pitch.width - 1)+","+scale(pitch.length)+" A " + scale(1) +" " + scale(1) + " 45 0 1" + scale(pitch.width) + ","+ scale(pitch.length-1);
+	addPath(pathData, pitchElement);
+
+	// Top Penalty Area
+	var penaltyAreaTop = pitchElement.append("g");
+	var pathData = "M" + scale(pitch.width/2 - 4 - 18) +",0L" + scale(pitch.width/2 - 4 - 18) + "," + scale(18) + "h" + scale(44) + "V0";
+	addPath(pathData, penaltyAreaTop);
+
+	// Top Penalty Area
+	var pathData = "M" + scale(pitch.width/2 - 4 - 6) +",0L" + scale(pitch.width/2 - 4 - 6) + "," + scale(6) + "h" + scale(20) + "V0";
+	addPath(pathData, penaltyAreaTop);
+
+	// Top D
+	var pathData = "M" + scale(pitch.width/2 - 8) +","+scale(18)+"A "+scale(10)+" "+ scale(10) +" 5 0 0 " + scale(pitch.width/2 + 8) +","+scale(18);
+	addPath(pathData, penaltyAreaTop);
+
+	// Top Penalty Spot
+	var penaltySpotTop = penaltyAreaTop.append("circle")
+		.attr("cx", scale(pitch.width/2))
+		.attr("cy", scale(12))
+		.attr("r", 1)
+		.attr("fill", pitch.paintColor)
+		.attr("stroke", pitch.paintColor)
+
+	penaltyAreaBottom = pitchElement.append("g");
+	penaltyAreaBottom.html(penaltyAreaTop.html());
+	penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.width)+",-"+scale(pitch.length)+")")
+
+	
+
+	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
+    	if (error) throw error;
+
+    	// console.log(player_data.events.filter(d=>{return d.is_current == true})[0].id)
+    	var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
+		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
+	
+		d3.json(url, function(error, data) {
+		  	if (error) throw error;
+		  	// console.log(data)
+
+	    	d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
+	      		d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
+
+		      	// console.log(transfer_data)
+		        my_picks = []
+		        data.picks.forEach(d=>{
+	        		my_picks.push(d.element)
+		        })
+		        
+		        // freet = d3.select("#free_transfers").append("text")
+		        // point_cost = d3.select("#transfer_cost").append("text").text(0)
+		        $("#transfer_cost")[0].innerHTML = String(0)
+		        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+
+		        
+				if (transfer_data.filter(d=>{return d.event == 27}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
+					// freet.text(2)
+					$("#free_transfers")[0].innerHTML = String(2)
+					free_trans = 2
+				} if (transfer_data.filter(d=>{return d.event == 27}).length >= 1) {
+					// freet.text(1)
+					$("#free_transfers")[0].innerHTML = String(1)
+					free_trans = 1
+				} if (data.active_chip == "freehit") {
+					// freet.text(1)
+					$("#free_transfers")[0].innerHTML = String(1)
+					free_trans = 1
+				} if (data.active_chip == "wildcard") {
+					// freet.text(1)
+				$("#free_transfers")[0].innerHTML = String(1)
+					free_trans = 1
+				}
+
+				var user_data = []
+				for (i=0; i<player_data.elements.length; i++) {
+					player_data.elements[i].element_type == 1 ? pos = "GKP" : player_data.elements[i].element_type == 2 ? pos="DEF" :player_data.elements[i].element_type == 3 ? pos ="MID" : pos="FWD"
+
+					user_data.push({"id":player_data.elements[i].id, "code":player_data.elements[i].code, "chance_of_playing_next_round":player_data.elements[i].chance_of_playing_next_round,"value":player_data.elements[i].now_cost/10,"name":player_data.elements[i].web_name,"position":pos,"team":player_data.elements[i].team})
+				}
+		        // console.log(player_data.elements)
+		        // console.log(user_data)
+
+		        var images_load = []
+		        elements = []
+		        my_picks_team = []
+		        // console.log(my_picks)
+		        // console.log(data.picks)
+
+				for (let i=0; i < data.picks.length; i++){
+					elements.push(data.picks[i].element)
+					var img_code = user_data.filter(d=> {return d.id == data.picks[i].element})[0].code
+					var position_name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].position
+					var name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].name
+					var ch_play = user_data.filter(d=> {return d.id == data.picks[i].element})[0].chance_of_playing_next_round
+					var price_now = user_data.filter(d=> {return d.id == data.picks[i].element})[0].value
+					
+					if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
+						price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
+					} else {
+						price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
+					}
+					
+					var team = user_data.filter(d=> {return d.id == data.picks[i].element})[0].team
+					team_name = player_data.teams.filter(d => {return d.id == team})[0].short_name
+
+					var url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${img_code}.png`
+
+					images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name})
+				}
+
+		        gkp = images_load.filter(d => {return d.position_name =="GKP"})
+		        def = images_load.filter(d => {return d.position_name =="DEF"})
+		        mid = images_load.filter(d => {return d.position_name =="MID"})
+		        fwd = images_load.filter(d => {return d.position_name =="FWD"})
+		        
+		        player_order = [gkp,def,mid,fwd]
+		        formation_images_load = []
+		        
+				m = 1
+				for (let j=0; j<player_order.length;j++){
+				  	for (let i=0; i < player_order[j].length; i++) {
+				    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team})
+
+				  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
+				    	m++
+				  	}
+				}
+		        // console.log(m)
+		        // console.log(my_picks_team)
+
+		        // bank = d3.select("#bank").append("text")
+		        var bank_number = data.entry_history.bank/10
+
+		        // team_value = d3.select("#team_value").append("text")
+		        
+		        // console.log(images_load)
+		        // console.log(formation_images_load)
+		    
+		        var playerPositions =[
+					{x:30, y:10, pos:1,posn:"GKP"},
+					{x:50, y:10, pos:2,posn:"GKP"},
+					{x:75, y:30, pos:3,posn:"DEF"},
+					{x:57.5, y:30, pos:4,posn:"DEF"},
+					{x:40, y:30, pos:5,posn:"DEF"},
+					{x:22.5, y:30, pos:6,posn:"DEF"},
+					{x:5, y:30, pos:7,posn:"DEF"},
+					{x:75, y:60, pos:8,posn:"MID"},
+					{x:57.5, y:60, pos:9,posn:"MID"},
+					{x:40, y:60, pos:10,posn:"MID"},
+					{x:22.5, y:60, pos:11,posn:"MID"},
+					{x:5, y:60, pos:12,posn:"MID"},
+					{x:20, y:85, pos:13,posn:"FWD"},
+					{x:40, y:85, pos:14,posn:"FWD"},
+					{x:60, y:85, pos:15,posn:"FWD"}]
+
+		        var playersContainer = pitchElement.append("g")
+		          	.attr("class", "players")
+
+		        var player_picks = pitchElement.append("g")
+		          	.attr("class","picks")
+
+		        var remove_player = pitchElement.append("g")
+		          	.attr("class","x_icon")
+
+		        var player_info = pitchElement.append("g")
+		          	.attr("class","player_info")
+
+		        var player_name = pitchElement.append("g")
+		          	.attr("class","player_name")
+
+		        
+		        var missing_players = []
+		        // console.log(missing_players)
+		        var unique_positions_missing = []
+		        var all_uniq_trans = []
+
+				remove_player.selectAll("image")
+					.data(playerPositions)
+					.enter()
+					.append("image")
+						.attr("id",function(d){return `position_${d.pos}_remove`})
+						.attr("xlink:href", "/data/img/times-solid.svg")
+						.attr("x", function(d){
+							return scale(d.x + 4);
+						})
+						.attr("y", function(d){
+							return scale(d.y - 10);
+						})
+						.style("margin-right","20px")
+						.attr("width", 15)
+						.attr("height", 15)
+						.attr("text-anchor","middle")
+						.on("mouseover", function(d) {
+							d3.select(this).style("cursor", "pointer")
+						})                  
+						.on("mouseout", function(d) {
+							d3.select(this).style("cursor", "default")
+						})
+						.on("click",function(d){
+							bank_number += Number(d3.select(`#value_${d.pos}`).text())
+							$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+							element_color("bank",bank_number,"bank")
+
+
+							d3.select(`#position_${d.pos}_pick`).remove()
+							d3.select(`#rect_${d.pos}`).remove()
+							d3.select(`#value_${d.pos}`).remove()
+							d3.select(`#name_${d.pos}`).remove()
+
+							my_picks_team = my_picks_team.filter(i =>{return i.position != d.pos})
+
+							// console.log(my_picks_team)
+
+							missing_players.push(d)
+							// console.log(d)
+
+							missing_players.forEach(m => { unique_positions_missing.push(m.pos)})
+							unique_positions_missing = unique_positions_missing.filter(onlyUnique)
+							// console.log(unique_positions_missing)
+
+							for (let i=0; i < unique_positions_missing.length; i++){
+								if (all_uniq_trans.includes(unique_positions_missing[i])) {
+									// all_uniq_trans = all_uniq_trans.filter(d=>{return d != unique_positions_missing[i]})
+									console.log(unique_positions_missing[i])
+								} else {
+									all_uniq_trans.push(unique_positions_missing[i])
+									console.log(all_uniq_trans)
+								}
+							}
+
+							// console.log(all_uniq_trans)
+
+							tot_trans = free_trans - all_uniq_trans.length
+							tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+							tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+
+							element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+
+						});
+
+		        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
+		        
+					player_picks.selectAll("image")
+						.data(playerPositions)
+						.enter()
+						.append("image")
+							.attr("id",function(d){return `position_${d.pos}_pick`})
+							.attr("xlink:href", function(d){return formation_images_load.filter(i =>{return i.position == d.pos})[0].url})
+							.attr("x", function(d){
+							  	return scale(d.x - 6);
+							})
+							.attr("y", function(d){
+							  	return scale(d.y - 10);
+							})
+							.attr("width", 60)
+							.attr("height", 60)
+							.attr("text-anchor","middle");
+							// .on("click",function(d){
+								   // d3.select(this).remove();
+							// });
+
+					var info_rect = playersContainer.selectAll("rect")
+						.data(playerPositions)
+						.enter()
+						.append("rect")
+						.attr("id",function(d){return `rect_${d.pos}`})
+						.attr("x", function(d){
+							return scale(d.x-6);
+						})
+						.attr("y", function(d){
+			  				return scale(d.y+3);
+						})
+						.attr("width", 60)
+						.attr("height", 30)
+						.attr("fill", function(d){
+						  	color_rect = formation_images_load.filter(i =>{return i.position == d.pos})[0].ch_play
+						  	color_rect >= 75 ? fill = "#0FA121" : color_rect >= 50 ? fill = "#E29019" : fill="#E33939"
+						  	
+						  	return fill
+					});
+
+					player_info.selectAll("text")
+						.data(playerPositions)
+						.enter().append("text")
+							.attr("id",function(d){return `value_${d.pos}`})
+							.attr("x", function(d){
+								return scale(d.x);
+							})
+							.attr("y", function(d){
+								return scale(d.y+5);
+							})
+							.style("text-anchor", "middle")
+							.style("font-size", 10)
+							.text(function(d){ 
+								purch_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value_purchase
+								curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
+								diff = (curr_val - purch_val)*0.5
+								return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+							});
+
+					player_name.selectAll("text")
+						.data(playerPositions)
+						.enter().append("text")
+							.attr("id",function(d){return `name_${d.pos}`})
+							.attr("x", function(d){
+								return scale(d.x);
+							})
+							.attr("y", function(d){
+								return scale(d.y+8);
+							})
+							.style("text-anchor", "middle")
+							.style("font-size", 10)
+							.text(function(d){ 
+							
+								return formation_images_load.filter(i =>{return i.position == d.pos})[0].name
+							});
+		            
+		            var clickable_table = d3.select("#select-player-table").select("tbody").selectAll("tr");
+		            
+		            clickable_table
+		            	.on('click.tooltip_actions', function(d) {
+						    tooltip_actions.transition()
+								.duration(300)
+								.style("opacity", 1)
+								.style("pointer-events", "auto");
+						    tooltip_actions.html(
+						    	`<button type="button" id="closeplayer" style="float:right;">X</button>
+						    	<br>
+						    	<button type="button" id="add_to_team">Add to my team.</button><br>
+							    <button type="button" id="add_p1">Add for comparison (p1).</button><br>
+							    <button type="button" id="add_p2">Add for comparison (p2).</button><br>`)
+							.style("left", (d3.event.pageX) + "px")
+							.style("top", (d3.event.pageY - 120) + "px");
+
+						    d3.select("#add_to_team").on("click",function() {
+							    tooltip_actions.transition()
+							    	.duration(100)
+							      	.style("opacity", 0)
+							      	.style("pointer-events", "none")
+							    
+							    var attrs = missing_players[0]
+
+							    if (attrs.posn == d.position){
+									// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
+									max_team = my_picks_team.filter(t=>{return t.team == d.team})
+									
+									if (max_team.length >= 3){
+										alert("You already have 3 players from the same team")
+									} else {
+										player_picks.append("image")
+							                .attr("id",`position_${attrs.pos}_pick`)
+							                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
+							                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
+							                .attr("x",scale(attrs.x - 6))
+							                .attr("y",scale(attrs.y - 10))
+							                .attr("width", 60)
+							                .attr("height", 60)
+							                .attr("text-anchor","middle");
+
+										player_info.append("text")
+											.attr("id",`value_${attrs.pos}`)
+											.attr("x", scale(attrs.x))
+											.attr("y", scale(attrs.y + 5))
+											.style("text-anchor", "middle")
+											.style("font-size", 10)
+											.text(function(){ 
+												in_team = formation_images_load.filter(i =>{return i.player_id == d.id})
+												if(in_team.length > 0){
+													purch_val = in_team[0].value_purchase
+													curr_val = in_team[0].value
+													diff = (curr_val - purch_val)*0.5
+													bank_number -= floor10((curr_val - diff),-1)
+													$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+													element_color("bank",bank_number,"bank")
+
+													// tot_trans += 1
+													if (all_uniq_trans.includes(attrs.pos)) {
+									              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
+
+									              	} else {
+									              		// all_uniq_trans.push(unique_positions_missing[i])
+									              		// console.log(all_uniq_trans)
+									              	}
+													// free_trans += unique_positions_missing.length
+													tot_trans = free_trans - all_uniq_trans.length
+													tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+													tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+													element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+													
+
+													return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+												} else {
+													bank_number -= d.value
+													$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
+													element_color("bank",bank_number,"bank")
+
+													// if (all_uniq_trans.includes(attrs.pos)) {
+									              		
+									    //           	} else {
+									    //           		// all_uniq_trans.push(unique_positions_missing[i])
+									    //           		// console.log(all_uniq_trans)
+									    //           	}
+									              	tot_trans = free_trans - all_uniq_trans.length
+													tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+													tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+													element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+													
+													return d.value
+												}
+											})
+
+							            player_name.append("text")
+											.attr("id",`name_${attrs.pos}`)
+											.attr("x", scale(attrs.x))
+											.attr("y", scale(attrs.y + 8))
+											.style("text-anchor", "middle")
+											.style("font-size", 10)
+											.text(d.name)
+
+							            playersContainer.append("rect")
+											.attr("id",`rect_${attrs.pos}`)
+											.attr("x", scale(attrs.x - 6))
+											.attr("y", scale(attrs.y + 3))
+											.attr("width", 60)
+											.attr("height", 30)
+											.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
+
+						              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
+
+						              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
+
+						              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
+									}
+									
+					              	
+								} else {
+									alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
+								}
+								// console.log(my_picks_team)
+						   	})
+							d3.select("#add_p1").on("click",function() {
+								// window.location="#player1"
+							    // d3.select("#comparison_div").selectAll("table").remove()
+							    // $("#comparison_div").empty()
+							    tooltip_actions.transition()
+							    	.duration(100)
+							      	.style("opacity", 0)
+							      	.style("pointer-events", "none")
+							    $("#player1").val(d.id);
+	        					$('#player1').trigger('change');
+	        					
+							})
+
+							d3.select("#add_p2").on("click",function() {
+							    // window.location="#player2"
+							    tooltip_actions.transition()
+							    	.duration(100)
+							      	.style("opacity", 0)
+							      	.style("pointer-events", "none")
+							    $("#player2").val(d.id);
+	        					$('#player2').trigger('change');
+
+							})
+
+							d3.select("button#closeplayer").on("click",function() {
+								// d3.select("#comparison_div").selectAll("table").remove()
+
+							    tooltip_actions.transition()
+							      .duration(100)
+							      .style("opacity", 0)
+							      .style("pointer-events", "none");
+							  })	
+						})
+
+		            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+		            element_color("bank",bank_number,"bank")
+
+		      	})
+		    })
+	  	})
+	})
 };
 
-var svg = d3.select("#pitch").append("svg")
-    .attr("width", scale(pitch.width + pitch.padding.left + pitch.padding.right))
-    .attr("height", scale(pitch.length + pitch.padding.top + pitch.padding.bottom))
-    .attr("style", "background:"+pitch.grassColor+";margin-left:-" + 0.01 * scale(pitch.width + pitch.padding.left + pitch.padding.right) + "");;
+function replaceSpecialChars(str){
+    str = str.replace(/[ÀÁÂÃÄÅÆĀ]/,"A");
+    str = str.replace(/[àáâãäåæā]/,"a");
+    str = str.replace(/[ÈÉÊËèéêëēėę]/,"E");
+    str = str.replace(/[ÇĆČ]/,"C");
+    str = str.replace(/[çčč]/,"c");
+    str = str.replace(/[ûüùúūÛÜÙÚŪ]/,"u");
+    str = str.replace(/[ôöòóœøōõÔÖÒÓŒØŌÕ]/,"o");
+    str = str.replace(/[ÿŸ]/,"y");
+    str = str.replace(/[îïíīįìÎÏÍĪĮÌ]/,"i");
+    str = str.replace(/[ßśšŚŠ]/,"s");
+    str = str.replace(/[žźżŽŹŻ]/,"z");
+    str = str.replace(/[ñńÑŃ]/,"n");
 
+    // o resto
 
-	
-var pitchElement = svg.append("g")
-    .attr("transform", "translate(" +scale(pitch.padding.left) + "," + scale(pitch.padding.top) + ")")
-  
-var pitchOutline = pitchElement.append("rect")
-  .attr("x", 0)
-  .attr("y", 0)
-  .attr("width", scale(pitch.width))
-  .attr("height", scale(pitch.length))
-  .attr("stroke", pitch.paintColor)
-  .attr("fill", "none")
-
-var centerSpot = pitchElement.append("circle")
-  .attr("cx", scale(pitch.width/2))
-  .attr("cy", scale(pitch.length/2))
-  .attr("r", 1)
-  .attr("fill", pitch.paintColor)
-
-var centerCircle = pitchElement.append("circle")
-  .attr("cx", scale(pitch.width/2))
-  .attr("cy", scale(pitch.length/2))
-  .attr("r", scale(pitch.centerCircleRadius))
-  .attr("fill", 'none')
-  .attr("stroke", pitch.paintColor)
-
-var halfwayLine = pitchElement.append("line")
-  .attr("y1", scale(pitch.length/2))
-  .attr("y2", scale(pitch.length/2))
-  .attr("x1", 0)
-  .attr("x2", scale(pitch.width))
-  .attr("stroke", pitch.paintColor)
-
-// corners
-function addPath(pathData, parentElement){
- parentElement.append("path")
-  .attr("d", pathData)
-  .attr("stroke", pitch.paintColor)
-  .attr("fill", "none") 
+    return str.replace(/[^a-z0-9]/gi,''); 
 }
 
-// top left
-var pathData = "M0," + scale(1) + "A " + scale(1) +" " + scale(1) + " 45 0 0" + scale(1) + ",0";
-addPath(pathData, pitchElement);
+function myFunction() {
+	// Declare variables
+	var input, filter, table, tr, td, i, txtValue;
+	input = document.getElementById("search_player");
+	filter = input.value.toUpperCase();
+	table = document.getElementById("select-player-table");
+	tr = table.getElementsByTagName("tr");
+	search = $("#search-select").val()
+	search == "name" ? val = 0 : search == "position" ? val = 1 : val = 2;
 
-// top right
-var pathData = "M"+scale(pitch.width - 1)+",0 A " + scale(1) +" " + scale(1) + " 45 0 0" + scale(pitch.width) + ","+ scale(1);
-addPath(pathData, pitchElement);
-
-// bottom left
-var pathData = "M0," + scale(pitch.length-1) + "A " + scale(1) +" " + scale(1) + " 45 0 1" + scale(1) + "," + scale(pitch.length);
-addPath(pathData, pitchElement);
-
-// top right
-var pathData = "M"+scale(pitch.width - 1)+","+scale(pitch.length)+" A " + scale(1) +" " + scale(1) + " 45 0 1" + scale(pitch.width) + ","+ scale(pitch.length-1);
-addPath(pathData, pitchElement);
-
-// Top Penalty Area
-var penaltyAreaTop = pitchElement.append("g");
-var pathData = "M" + scale(pitch.width/2 - 4 - 18) +",0L" + scale(pitch.width/2 - 4 - 18) + "," + scale(18) + "h" + scale(44) + "V0";
-addPath(pathData, penaltyAreaTop);
-
-// Top Penalty Area
-var pathData = "M" + scale(pitch.width/2 - 4 - 6) +",0L" + scale(pitch.width/2 - 4 - 6) + "," + scale(6) + "h" + scale(20) + "V0";
-addPath(pathData, penaltyAreaTop);
-
-// Top D
-var pathData = "M" + scale(pitch.width/2 - 8) +","+scale(18)+"A "+scale(10)+" "+ scale(10) +" 5 0 0 " + scale(pitch.width/2 + 8) +","+scale(18);
-addPath(pathData, penaltyAreaTop);
-
-// Top Penalty Spot
-var penaltySpotTop = penaltyAreaTop.append("circle")
-  .attr("cx", scale(pitch.width/2))
-  .attr("cy", scale(12))
-  .attr("r", 1)
-  .attr("fill", pitch.paintColor)
-  .attr("stroke", pitch.paintColor)
-
-penaltyAreaBottom = pitchElement.append("g");
-penaltyAreaBottom.html(penaltyAreaTop.html());
-penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.width)+",-"+scale(pitch.length)+")")
-
+	// Loop through all table rows, and hide those who don't match the search query
+	for (i = 0; i < tr.length; i++) {
+		td = tr[i].getElementsByTagName("td")[val];
+		if (td) {
+  			txtValue = td.textContent || td.innerText;
+		  	if (replaceSpecialChars(txtValue).toUpperCase().indexOf(filter) > -1) {
+		    	tr[i].style.display = "";
+		  	} else {
+		    	tr[i].style.display = "none";
+		  	}
+		}
+	}
+}
 	
 
-  d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
-    if (error) throw error;
+full_table_2()
 
-    // console.log(player_data.events.filter(d=>{return d.is_current == true})[0].id)
-    var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
-	var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
-	
-	d3.json(url, function(error, data) {
-	  if (error) throw error;
-	  // console.log(data)
+function full_table_2 () {
+	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, data) {
+    	if (error) throw error; 
 
-	    d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
-	      d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
-
-	      	// console.log(transfer_data)
-	        my_picks = []
-	        data.picks.forEach(d=>{
-	        	my_picks.push(d.element)
-	        })
-	        
-	        // freet = d3.select("#free_transfers").append("text")
-	        // point_cost = d3.select("#transfer_cost").append("text").text(0)
-	        $("#transfer_cost")[0].innerHTML = String(0)
-	        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-
-	        
-	        if (transfer_data.filter(d=>{return d.event == 27}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
-	          // freet.text(2)
-	          $("#free_transfers")[0].innerHTML = String(2)
-	          free_trans = 2
-	        } if (transfer_data.filter(d=>{return d.event == 27}).length >= 1) {
-	          // freet.text(1)
-	          $("#free_transfers")[0].innerHTML = String(1)
-	          free_trans = 1
-	        } if (data.active_chip == "freehit") {
-	          // freet.text(1)
-	          $("#free_transfers")[0].innerHTML = String(1)
-	          free_trans = 1
-	        } if (data.active_chip == "wildcard") {
-	          // freet.text(1)
-	          $("#free_transfers")[0].innerHTML = String(1)
-	          free_trans = 1
-	        }
-
-	        var user_data = []
-	        for (i=0; i<player_data.elements.length; i++) {
-	          player_data.elements[i].element_type == 1 ? pos = "GKP" : player_data.elements[i].element_type == 2 ? pos="DEF" :player_data.elements[i].element_type == 3 ? pos ="MID" : pos="FWD"
-
-	          user_data.push({"id":player_data.elements[i].id, "code":player_data.elements[i].code, "chance_of_playing_next_round":player_data.elements[i].chance_of_playing_next_round,"value":player_data.elements[i].now_cost/10,"name":player_data.elements[i].web_name,"position":pos,"team":player_data.elements[i].team})
-	        }
-	        // console.log(player_data.elements)
-	        // console.log(user_data)
-
-	        var images_load = []
-	        elements = []
-	        my_picks_team = []
-	        // console.log(my_picks)
-	        // console.log(data.picks)
-
-	        for (let i=0; i < data.picks.length; i++){
-	          elements.push(data.picks[i].element)
-	          var img_code = user_data.filter(d=> {return d.id == data.picks[i].element})[0].code
-	          var position_name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].position
-	          var name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].name
-	          var ch_play = user_data.filter(d=> {return d.id == data.picks[i].element})[0].chance_of_playing_next_round
-	          var price_now = user_data.filter(d=> {return d.id == data.picks[i].element})[0].value
-	          if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
-	            price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
-	          } else{
-	            price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
-	          }
-	          var team = user_data.filter(d=> {return d.id == data.picks[i].element})[0].team
-	          team_name = player_data.teams.filter(d => {return d.id == team})[0].short_name
-
-	          var url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${img_code}.png`
-
-	          images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name})
-	        }
-
-	        gkp = images_load.filter(d => {return d.position_name =="GKP"})
-	        def = images_load.filter(d => {return d.position_name =="DEF"})
-	        mid = images_load.filter(d => {return d.position_name =="MID"})
-	        fwd = images_load.filter(d => {return d.position_name =="FWD"})
-	        
-	        player_order = [gkp,def,mid,fwd]
-	        formation_images_load = []
-	        
-
-	        m = 1
-	        for (let j=0; j<player_order.length;j++){
-	          for (let i=0; i < player_order[j].length; i++) {
-	            formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team})
-
-	          	my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
-	            m++
-	          }
-	        }
-	        // console.log(m)
-	        // console.log(my_picks_team)
-
-	        // bank = d3.select("#bank").append("text")
-	        var bank_number = data.entry_history.bank/10
-
-	        // team_value = d3.select("#team_value").append("text")
-	        
-	        // console.log(images_load)
-	        // console.log(formation_images_load)
+    	to_load_table = []
 	    
-	        var playerPositions =[
-	            {x:30, y:10, pos:1,posn:"GKP"},
-	            {x:50, y:10, pos:2,posn:"GKP"},
-	            {x:75, y:30, pos:3,posn:"DEF"},
-	            {x:57.5, y:30, pos:4,posn:"DEF"},
-	            {x:40, y:30, pos:5,posn:"DEF"},
-	            {x:22.5, y:30, pos:6,posn:"DEF"},
-	            {x:5, y:30, pos:7,posn:"DEF"},
-	            {x:75, y:60, pos:8,posn:"MID"},
-	            {x:57.5, y:60, pos:9,posn:"MID"},
-	            {x:40, y:60, pos:10,posn:"MID"},
-	            {x:22.5, y:60, pos:11,posn:"MID"},
-	            {x:5, y:60, pos:12,posn:"MID"},
-	            {x:20, y:85, pos:13,posn:"FWD"},
-	            {x:40, y:85, pos:14,posn:"FWD"},
-	            {x:60, y:85, pos:15,posn:"FWD"}]
-
-	        var playersContainer = pitchElement.append("g")
-	          .attr("class", "players")
-
-	        var player_picks = pitchElement.append("g")
-	          .attr("class","picks")
-
-	        var remove_player = pitchElement.append("g")
-	          .attr("class","x_icon")
-
-	        var player_info = pitchElement.append("g")
-	          .attr("class","player_info")
-
-	        var player_name = pitchElement.append("g")
-	          .attr("class","player_name")
-
-	        
-	        var missing_players = []
-	        // console.log(missing_players)
-	        var unique_positions_missing = []
-	        var all_uniq_trans = []
-
-	        remove_player.selectAll("image")
-	          .data(playerPositions)
-	          .enter()
-	          .append("image")
-	            .attr("id",function(d){return `position_${d.pos}_remove`})
-	            .attr("xlink:href", "/data/img/times-solid.svg")
-	            .attr("x", function(d){
-	              return scale(d.x + 4);
-	            })
-	            .attr("y", function(d){
-	              return scale(d.y - 10);
-	            })
-	            .style("margin-right","20px")
-	            .attr("width", 15)
-	            .attr("height", 15)
-	            .attr("text-anchor","middle")
-	            .on("mouseover", function(d) {
-				  d3.select(this).style("cursor", "pointer")
-				})                  
-				.on("mouseout", function(d) {
-				  d3.select(this).style("cursor", "default")
-				})
-	            .on("click",function(d){
-	              bank_number += Number(d3.select(`#value_${d.pos}`).text())
-	              $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-	              element_color("bank",bank_number,"bank")
-
-
-	              d3.select(`#position_${d.pos}_pick`).remove()
-	              d3.select(`#rect_${d.pos}`).remove()
-	              d3.select(`#value_${d.pos}`).remove()
-	              d3.select(`#name_${d.pos}`).remove()
-
-	              my_picks_team = my_picks_team.filter(i =>{return i.position != d.pos})
-
-	              // console.log(my_picks_team)
-
-	              missing_players.push(d)
-	              // console.log(d)
-
-	              missing_players.forEach(m => { unique_positions_missing.push(m.pos)})
-	              unique_positions_missing = unique_positions_missing.filter(onlyUnique)
-	              // console.log(unique_positions_missing)
-
-	              for (let i=0; i < unique_positions_missing.length; i++){
-	              	if (all_uniq_trans.includes(unique_positions_missing[i])) {
-	              		// all_uniq_trans = all_uniq_trans.filter(d=>{return d != unique_positions_missing[i]})
-	              		console.log(unique_positions_missing[i])
-	              	} else {
-	              		all_uniq_trans.push(unique_positions_missing[i])
-	              		console.log(all_uniq_trans)
-	              	}
-	              }
-
-	              // console.log(all_uniq_trans)
-	              
-	              tot_trans = free_trans - all_uniq_trans.length
-	              tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-	              tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-
-	              element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-	              
-	            });
-
-	        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
-	        
-	        player_picks.selectAll("image")
-	          .data(playerPositions)
-	          .enter()
-	          .append("image")
-	            .attr("id",function(d){return `position_${d.pos}_pick`})
-	            .attr("xlink:href", function(d){return formation_images_load.filter(i =>{return i.position == d.pos})[0].url})
-	            .attr("x", function(d){
-	              return scale(d.x - 6);
-	            })
-	            .attr("y", function(d){
-	              return scale(d.y - 10);
-	            })
-	            .attr("width", 60)
-	            .attr("height", 60)
-	            .attr("text-anchor","middle")
-	            // .on("click",function(d){
-	            //   d3.select(this).remove();
-	            // });
-
-	        var info_rect = playersContainer.selectAll("rect")
-	          .data(playerPositions)
-	          .enter()
-	          .append("rect")
-	            .attr("id",function(d){return `rect_${d.pos}`})
-	            .attr("x", function(d){
-	              return scale(d.x-6);
-	            })
-	            .attr("y", function(d){
-	              return scale(d.y+3);
-	            })
-	            .attr("width", 60)
-	            .attr("height", 30)
-	            .attr("fill", function(d){
-	              color_rect = formation_images_load.filter(i =>{return i.position == d.pos})[0].ch_play
-	              color_rect >= 75 ? fill = "#0FA121" : color_rect >= 50 ? fill = "#E29019" : fill="#E33939"
-	              return fill
-	            })
-
-	          player_info.selectAll("text")
-	            .data(playerPositions)
-	            .enter().append("text")
-	              .attr("id",function(d){return `value_${d.pos}`})
-	              .attr("x", function(d){
-	                return scale(d.x);
-	              })
-	              .attr("y", function(d){
-	                return scale(d.y+5);
-	              })
-	              .style("text-anchor", "middle")
-	              .style("font-size", 10)
-	              .text(function(d){ 
-	                purch_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value_purchase
-	                curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
-	                diff = (curr_val - purch_val)*0.5
-	                return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-	              })
-
-	            player_name.selectAll("text")
-	            .data(playerPositions)
-	            .enter().append("text")
-	              .attr("id",function(d){return `name_${d.pos}`})
-	              .attr("x", function(d){
-	                return scale(d.x);
-	              })
-	              .attr("y", function(d){
-	                return scale(d.y+8);
-	              })
-	              .style("text-anchor", "middle")
-	              .style("font-size", 10)
-	              .text(function(d){ 
-	                return formation_images_load.filter(i =>{return i.position == d.pos})[0].name
-	              })
-	            
-	            var clickable_table = d3.select("#select-player-table").select("tbody").selectAll("tr")
-	            
-	            clickable_table
-	            	.on('click.tooltip_actions', function(d) {
-					    tooltip_actions.transition()
-					      .duration(300)
-					      .style("opacity", 1)
-					      .style("pointer-events", "auto");
-					    tooltip_actions.html(
-					    	`<button type="button" id="closeplayer" style="float:right;">X</button>
-					    	<br>
-					    	<button type="button" id="add_to_team">Add to my team.</button><br>
-						    <button type="button" id="add_p1">Add for comparison (p1).</button><br>
-						    <button type="button" id="add_p2">Add for comparison (p2).</button><br>`)
-					      .style("left", (d3.event.pageX) + "px")
-					      .style("top", (d3.event.pageY - 120) + "px");
-
-					    d3.select("#add_to_team").on("click",function() {
-						    tooltip_actions.transition()
-						    	.duration(100)
-						      	.style("opacity", 0)
-						      	.style("pointer-events", "none")
-						    
-						    var attrs = missing_players[0]
-
-						    if (attrs.posn == d.position){
-								// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
-								max_team = my_picks_team.filter(t=>{return t.team == d.team})
-								
-								if (max_team.length >= 3){
-									alert("You already have 3 players from the same team")
-								} else {
-									player_picks.append("image")
-						                .attr("id",`position_${attrs.pos}_pick`)
-						                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
-						                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
-						                .attr("x",scale(attrs.x - 6))
-						                .attr("y",scale(attrs.y - 10))
-						                .attr("width", 60)
-						                .attr("height", 60)
-						                .attr("text-anchor","middle");
-
-									player_info.append("text")
-										.attr("id",`value_${attrs.pos}`)
-										.attr("x", scale(attrs.x))
-										.attr("y", scale(attrs.y + 5))
-										.style("text-anchor", "middle")
-										.style("font-size", 10)
-										.text(function(){ 
-											in_team = formation_images_load.filter(i =>{return i.player_id == d.id})
-											if(in_team.length > 0){
-												purch_val = in_team[0].value_purchase
-												curr_val = in_team[0].value
-												diff = (curr_val - purch_val)*0.5
-												bank_number -= floor10((curr_val - diff),-1)
-												$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-												element_color("bank",bank_number,"bank")
-
-												// tot_trans += 1
-												if (all_uniq_trans.includes(attrs.pos)) {
-								              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
-
-								              	} else {
-								              		// all_uniq_trans.push(unique_positions_missing[i])
-								              		// console.log(all_uniq_trans)
-								              	}
-												// free_trans += unique_positions_missing.length
-												tot_trans = free_trans - all_uniq_trans.length
-												tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-												tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-												element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-												
-
-												return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-											} else {
-												bank_number -= d.value
-												$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
-												element_color("bank",bank_number,"bank")
-
-												// if (all_uniq_trans.includes(attrs.pos)) {
-								              		
-								    //           	} else {
-								    //           		// all_uniq_trans.push(unique_positions_missing[i])
-								    //           		// console.log(all_uniq_trans)
-								    //           	}
-								              	tot_trans = free_trans - all_uniq_trans.length
-												tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-												tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-												element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-												
-												return d.value
-											}
-										})
-
-						            player_name.append("text")
-										.attr("id",`name_${attrs.pos}`)
-										.attr("x", scale(attrs.x))
-										.attr("y", scale(attrs.y + 8))
-										.style("text-anchor", "middle")
-										.style("font-size", 10)
-										.text(d.name)
-
-						            playersContainer.append("rect")
-										.attr("id",`rect_${attrs.pos}`)
-										.attr("x", scale(attrs.x - 6))
-										.attr("y", scale(attrs.y + 3))
-										.attr("width", 60)
-										.attr("height", 30)
-										.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
-
-					              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
-
-					              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
-
-					              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
-								}
-								
-				              	
-							} else {
-								alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
-							}
-							// console.log(my_picks_team)
-					   	})
-						d3.select("#add_p1").on("click",function() {
-							// window.location="#player1"
-						    // d3.select("#comparison_div").selectAll("table").remove()
-						    // $("#comparison_div").empty()
-						    tooltip_actions.transition()
-						    	.duration(100)
-						      	.style("opacity", 0)
-						      	.style("pointer-events", "none")
-						    $("#player1").val(d.id);
-        					$('#player1').trigger('change');
-        					
-						})
-
-						d3.select("#add_p2").on("click",function() {
-						    // window.location="#player2"
-						    tooltip_actions.transition()
-						    	.duration(100)
-						      	.style("opacity", 0)
-						      	.style("pointer-events", "none")
-						    $("#player2").val(d.id);
-        					$('#player2').trigger('change');
-
-						})
-
-						d3.select("button#closeplayer").on("click",function() {
-							// d3.select("#comparison_div").selectAll("table").remove()
-
-						    tooltip_actions.transition()
-						      .duration(100)
-						      .style("opacity", 0)
-						      .style("pointer-events", "none");
-						  })	
-					})
-
-	            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-	            element_color("bank",bank_number,"bank")
-
-	      })
-	    })
-	  })
-	})
-}
-function replaceSpecialChars(str)
-	{
-	    str = str.replace(/[ÀÁÂÃÄÅÆĀ]/,"A");
-	    str = str.replace(/[àáâãäåæā]/,"a");
-	    str = str.replace(/[ÈÉÊËèéêëēėę]/,"E");
-	    str = str.replace(/[ÇĆČ]/,"C");
-	    str = str.replace(/[çčč]/,"c");
-	    str = str.replace(/[ûüùúūÛÜÙÚŪ]/,"u");
-	    str = str.replace(/[ôöòóœøōõÔÖÒÓŒØŌÕ]/,"o");
-	    str = str.replace(/[ÿŸ]/,"y");
-	    str = str.replace(/[îïíīįìÎÏÍĪĮÌ]/,"i");
-	    str = str.replace(/[ßśšŚŠ]/,"s");
-	    str = str.replace(/[žźżŽŹŻ]/,"z");
-	    str = str.replace(/[ñńÑŃ]/,"n");
-
-	    // o resto
-
-	    return str.replace(/[^a-z0-9]/gi,''); 
-	}
-	function myFunction() {
-	  // Declare variables
-	  var input, filter, table, tr, td, i, txtValue;
-	  input = document.getElementById("search_player");
-	  filter = input.value.toUpperCase();
-	  table = document.getElementById("select-player-table");
-	  tr = table.getElementsByTagName("tr");
-	  search = $("#search-select").val()
-	  search == "name" ? val = 0 : search == "position" ? val = 1 : val = 2;
-	  // Loop through all table rows, and hide those who don't match the search query
-	  for (i = 0; i < tr.length; i++) {
-	    td = tr[i].getElementsByTagName("td")[val];
-	    if (td) {
-	      txtValue = td.textContent || td.innerText;
-	      if (replaceSpecialChars(txtValue).toUpperCase().indexOf(filter) > -1) {
-	        tr[i].style.display = "";
-	      } else {
-	        tr[i].style.display = "none";
-	      }
-	    }
-	  }
-	}
-	
-
-	full_table_2()
-
-	function full_table_2 () {
-		d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, data) {
-	    if (error) throw error; 
-	    	to_load_table = []
-	    //"name": data[i].first_name + " " + data[i].second_name
 	    for (let i=0; i<data.elements.length; i++){
-	      data.elements[i].element_type == 1 ? position = "GKP" : data.elements[i].element_type == 2 ? position = "DEF" : data.elements[i].element_type == 3 ? position = "MID":position = "FWD"
+			data.elements[i].element_type == 1 ? position = "GKP" : data.elements[i].element_type == 2 ? position = "DEF" : data.elements[i].element_type == 3 ? position = "MID":position = "FWD"
 
-	      to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":data.elements[i].now_cost/10, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news})
+			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":data.elements[i].now_cost/10, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news})
 	    }
 
-	    var sortAscending = true;
+    	var sortAscending = true;
 	    // var table = d3.select("#select-player-table").append('table');
 	    // var titles_pl = d3.keys(data[0]);
 	    var table = d3.select("#select-player-table").append('table');
 	    titles = ["name","position", "team","value","news"]
 
-	    var headers = table.append('thead').append('tr')
-	     .selectAll('th')
-	     .data(titles).enter()
-	     .append('th')
-	     .text(function (d) {
-	          return d;})
-	     .on('click', function (d) {
-			headers.attr('class', 'header');
+    	var headers = table.append('thead').append('tr')
+     		.selectAll('th')
+			.data(titles).enter()
+			.append('th')
+			.text(function (d) {
+				return d;})
+			.on('click', function (d) {
+				headers.attr('class', 'header');
 
-		 	if (sortAscending) {
-			   rows.sort(function(a, b) { 
-			   	return d3.ascending(b[d],a[d])});
-			   sortAscending = false;
-			   this.className = 'aes';
-
-			} else {
-				 rows.sort(function(a, b) { return d3.descending(b[d],a[d]) });
-				 sortAscending = true;
-				 this.className = 'des';
-			}
-		});
+				if (sortAscending) {
+		   			rows.sort(function(a, b) { 
+			   		return d3.ascending(b[d],a[d])});
+			   		
+			   		sortAscending = false;
+			   		this.className = 'aes';
+				} else {
+					rows.sort(function(a, b) { return d3.descending(b[d],a[d]) });
+					sortAscending = true;
+					this.className = 'des';
+				}
+			});
+    
 	    headers.attr("id","select_table_header")
 
-	    var rows = table.append('tbody').selectAll('tr')
-	      .data(to_load_table).enter()
-	      .append('tr')
-	      .attr("class","select_table_rows");
-	    rows.selectAll('td')
-	      .data(function (d) {
-	        return titles.map(function (k) {
-	          return { 'value': d[k], 'name': k};
-	        });
-	      }).enter()
-	      .append('td')
-	      .attr('data-th', function (d) {
-	        return d.name;
-	      })
-	      .text(function (d) {
-	        return d.value;
-	      })
-		})
-	}
+		var rows = table.append('tbody').selectAll('tr')
+			.data(to_load_table).enter()
+			.append('tr')
+			.attr("class","select_table_rows");
+
+		rows.selectAll('td')
+			.data(function (d) {
+				return titles.map(function (k) {
+					return { 'value': d[k], 'name': k};
+				});
+			}).enter()
+				.append('td')
+				.attr('data-th', function (d) {
+					return d.name;
+				})
+				.text(function (d) {
+					return d.value;
+				})
+	})
+}
 
 
 function element_color(id,number,type){
@@ -1925,22 +1933,25 @@ function element_color(id,number,type){
 }
 
 function decimalAdjust(type, value, exp) {
-	  // If the exp is undefined or zero...
-	  if (typeof exp === 'undefined' || +exp === 0) {
-	    return Math[type](value);
-	  }
-	  value = +value;
-	  exp = +exp;
-	  // If the value is not a number or the exp is not an integer...
-	  if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
-	    return NaN;
-	  }
-	  // Shift
-	  value = value.toString().split('e');
-	  value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
-	  // Shift back
-	  value = value.toString().split('e');
-	  return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
+	// If the exp is undefined or zero...
+	if (typeof exp === 'undefined' || +exp === 0) {
+		return Math[type](value);
+	}
+	value = +value;
+	exp = +exp;
+	
+	// If the value is not a number or the exp is not an integer...
+	if (isNaN(value) || !(typeof exp === 'number' && exp % 1 === 0)) {
+		return NaN;
+	}
+	
+	// Shift
+	value = value.toString().split('e');
+	value = Math[type](+(value[0] + 'e' + (value[1] ? (+value[1] - exp) : -exp)));
+	
+	// Shift back
+	value = value.toString().split('e');
+		return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
 	}
 
 d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, full_data) {
@@ -2002,17 +2013,18 @@ function update_fixtures(gw,full_data,data) {
 
 	var margin_gw = { top_gw: 10, right_gw: 10, bottom_gw: 10, left_gw: 10 };
 
-    current_fixtures.length <= 10 ? h = 400 : current_fixtures.length <= 15 ? h = 500 : h = 600
+    current_fixtures.length <= 10 ? h = 400 : current_fixtures.length <= 15 ? h = 500 : h = 600;
+
     var width_gw = 300 - margin_gw.left_gw - margin_gw.right_gw,
         height_gw = h - margin_gw.top_gw - margin_gw.bottom_gw;
 
 	var svg_gw = d3.select("#next_gw_fixtures")
-      .append("svg")
-	      .attr("width", width_gw + margin_gw.left_gw + margin_gw.right_gw)
-	      .attr("height", height_gw + margin_gw.top_gw + margin_gw.bottom_gw)
-      .append("g")
-      	// .attr("id","results_fixtures")
-      	.attr("transform", "translate(" + margin_gw.left_gw + "," + margin_gw.top_gw + ")")
+		.append("svg")
+			.attr("width", width_gw + margin_gw.left_gw + margin_gw.right_gw)
+			.attr("height", height_gw + margin_gw.top_gw + margin_gw.bottom_gw)
+		.append("g")
+			// .attr("id","results_fixtures")
+			.attr("transform", "translate(" + margin_gw.left_gw + "," + margin_gw.top_gw + ")");
 
 
     var title = svg_gw.append("text").attr("class", "fixtures_title")
@@ -2059,99 +2071,99 @@ function update_fixtures(gw,full_data,data) {
 	let score_y_f = 46
 
     h_team_img.selectAll("image")
-      .data(current_fixtures)
-      .enter()
-	      .append("image")
-	      .attr("class", "home_team_img")
-	      .attr("xlink:href", function(d){return d.team_h_img})
-	      .attr("x", (width_gw-10)/2 - 50)
-	      .attr("y", function(d){ 
-	      	y_h_img+=step 
-	      	return y_h_img})
-	      .attr("width", 15)
-          .attr("height", 15)
-	      // .attr("text-anchor", "start")
-	      .style("font-size","10px");
+		.data(current_fixtures)
+		.enter()
+			.append("image")
+			.attr("class", "home_team_img")
+			.attr("xlink:href", function(d){return d.team_h_img})
+			.attr("x", (width_gw-10)/2 - 50)
+			.attr("y", function(d){ 
+				y_h_img+=step 
+				return y_h_img})
+			.attr("width", 15)
+			.attr("height", 15)
+			// .attr("text-anchor", "start")
+			.style("font-size","10px");
 
 	var a_team_img = svg_gw.append("g").attr("class", "team_a_img");
 	
 	a_team_img.selectAll("image")
-      .data(current_fixtures)
-      .enter()
-	      .append("image")
-	      .attr("class", "away_team_img")
-	      .attr("xlink:href", function(d){return d.team_a_img})
-	      .attr("x", (width_gw-10)/2 + 40)
-	      .attr("y", function(d){ 
-	      	y_a_img+=step 
-	      	return y_a_img})
-	      .attr("width", 15)
-          .attr("height", 15)
-	      // .attr("text-anchor", "end")
-	      .style("font-size","10px");
+		.data(current_fixtures)
+		.enter()
+			.append("image")
+			.attr("class", "away_team_img")
+			.attr("xlink:href", function(d){return d.team_a_img})
+			.attr("x", (width_gw-10)/2 + 40)
+			.attr("y", function(d){ 
+				y_a_img+=step 
+				return y_a_img})
+			.attr("width", 15)
+			.attr("height", 15)
+			// .attr("text-anchor", "end")
+			.style("font-size","10px");
 
 	var h_team = svg_gw.append("g").attr("class", "team_h_name");
 
 	
     h_team.selectAll("text")
-      .data(current_fixtures)
-      .enter()
-	      .append("text")
-	      .attr("class", "home_team")
-	      .attr("x", (width_gw-10)/2 - 60)
-	      .attr("y", function(d){ 
-	      	y_h_name+=step 
-	      	return y_h_name})
-	      .attr("text-anchor", "end")
-	      .style("font-size","10px")
-	      .text(function(d) {return d.team_h_name});
+		.data(current_fixtures)
+		.enter()
+			.append("text")
+			.attr("class", "home_team")
+			.attr("x", (width_gw-10)/2 - 60)
+			.attr("y", function(d){ 
+				y_h_name+=step 
+				return y_h_name})
+			.attr("text-anchor", "end")
+			.style("font-size","10px")
+			.text(function(d) {return d.team_h_name});
 
 	// var h_team = svg_gw.append("g").attr("class", "team_h_name");
 	var a_team = svg_gw.append("g").attr("class", "team_a_name");
 	
     a_team.selectAll("text")
-      .data(current_fixtures)
-      .enter()
-	      .append("text")
-	      .attr("class", "home_team")
-	      .attr("x", (width_gw-10)/2 + 60)
-	      .attr("y", function(d){ 
-	      	y_a_name+=step 
-	      	return y_a_name})
-	      .attr("text-anchor", "start")
-	      .style("font-size","10px")
-	      .text(function(d) {return d.team_a_name});
+		.data(current_fixtures)
+		.enter()
+			.append("text")
+			.attr("class", "home_team")
+			.attr("x", (width_gw-10)/2 + 60)
+			.attr("y", function(d){ 
+				y_a_name+=step 
+				return y_a_name})
+			.attr("text-anchor", "start")
+			.style("font-size","10px")
+			.text(function(d) {return d.team_a_name});
 
 	
 	var game_score = svg_gw.append("g").attr("class", "score");
 	
     game_score.selectAll("text")
-      .data(current_fixtures)
-      .enter()
-	      .append("text")
-	      .attr("class", "score_teams")
-	      .attr("x", (width_gw-10)/2)
-	      .attr("y", function(d){
-	      	if (d.score[0].status=="finished"){
+		.data(current_fixtures)
+		.enter()
+			.append("text")
+			.attr("class", "score_teams")
+			.attr("x", (width_gw-10)/2)
+			.attr("y", function(d){
+				if (d.score[0].status=="finished"){
 				score_y_r+=step
 				return score_y_r
-		  	} else {
-		  		score_y_f+=step 
+				} else {
+					score_y_f+=step 
 				return score_y_f
-		  	}
-		  })
-	      .attr("text-anchor", "middle")
-	      .style("font-size","10px")
-	      .text(function(d) {
-	      	if (d.score[0].status=="finished"){
-	      		return d.score[0].score
-	      	} else {
-	      		var date = new Date(d.score[0].score);
-	      		date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
+				}
+			})
+			.attr("text-anchor", "middle")
+			.style("font-size","10px")
+			.text(function(d) {
+				if (d.score[0].status=="finished"){
+					return d.score[0].score
+				} else {
+					var date = new Date(d.score[0].score);
+					date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
 				return date
-	      	}
-	      })
-	      .call(wrap, 30);
+				}
+			})
+			.call(wrap, 30);
 }
 
 function wrap(text, width) {
@@ -2166,10 +2178,10 @@ function wrap(text, width) {
             y = text.attr("y"),
             dy = 0, //parseFloat(text.attr("dy")),
             tspan = text.text(null)
-                        .append("tspan")
-                        .attr("x", x)
-                        .attr("y", y)
-                        .attr("dy", dy + "em");
+                .append("tspan")
+                .attr("x", x)
+                .attr("y", y)
+                .attr("dy", dy + "em");
         while (word = words.pop()) {
             line.push(word);
             tspan.text(line.join(" "));
@@ -2178,10 +2190,10 @@ function wrap(text, width) {
                 tspan.text(line.join(" "));
                 line = [word];
                 tspan = text.append("tspan")
-                            .attr("x", x)
-                            .attr("y", y)
-                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
-                            .text(word);
+                    .attr("x", x)
+                    .attr("y", y)
+                    .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                    .text(word);
             }
         }
     });
