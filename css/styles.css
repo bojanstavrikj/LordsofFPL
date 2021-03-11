@@ -473,6 +473,11 @@ th.aes:after {
 #select_table_header:hover {
   cursor:s-resize;
 }
+
+#previous:hover, #next:hover{
+  cursor:pointer;
+}
+
 .user_transfers{
   border-bottom:1px solid #cecece;
   border-top:1px solid #cecece;
