@@ -1361,12 +1361,12 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 	
 	d3.json(url, function(error, data) {
 	  if (error) throw error;
-	  console.log(data)
+	  // console.log(data)
 
 	    d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
 	      d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
 
-	      	console.log(transfer_data)
+	      	// console.log(transfer_data)
 	        my_picks = []
 	        data.picks.forEach(d=>{
 	        	my_picks.push(d.element)
@@ -1402,14 +1402,14 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 
 	          user_data.push({"id":player_data.elements[i].id, "code":player_data.elements[i].code, "chance_of_playing_next_round":player_data.elements[i].chance_of_playing_next_round,"value":player_data.elements[i].now_cost/10,"name":player_data.elements[i].web_name,"position":pos,"team":player_data.elements[i].team})
 	        }
-	        console.log(player_data.elements)
-	        console.log(user_data)
+	        // console.log(player_data.elements)
+	        // console.log(user_data)
 
 	        var images_load = []
 	        elements = []
 	        my_picks_team = []
-	        console.log(my_picks)
-	        console.log(data.picks)
+	        // console.log(my_picks)
+	        // console.log(data.picks)
 
 	        for (let i=0; i < data.picks.length; i++){
 	          elements.push(data.picks[i].element)
@@ -1449,16 +1449,16 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 	            m++
 	          }
 	        }
-	        console.log(m)
-	        console.log(my_picks_team)
+	        // console.log(m)
+	        // console.log(my_picks_team)
 
 	        // bank = d3.select("#bank").append("text")
 	        var bank_number = data.entry_history.bank/10
 
 	        // team_value = d3.select("#team_value").append("text")
 	        
-	        console.log(images_load)
-	        console.log(formation_images_load)
+	        // console.log(images_load)
+	        // console.log(formation_images_load)
 	    
 	        var playerPositions =[
 	            {x:30, y:10, pos:1,posn:"GKP"},
@@ -1494,7 +1494,7 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 
 	        
 	        var missing_players = []
-	        console.log(missing_players)
+	        // console.log(missing_players)
 	        var unique_positions_missing = []
 	        var all_uniq_trans = []
 
@@ -1533,14 +1533,14 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 
 	              my_picks_team = my_picks_team.filter(i =>{return i.position != d.pos})
 
-	              console.log(my_picks_team)
+	              // console.log(my_picks_team)
 
 	              missing_players.push(d)
-	              console.log(d)
+	              // console.log(d)
 
 	              missing_players.forEach(m => { unique_positions_missing.push(m.pos)})
 	              unique_positions_missing = unique_positions_missing.filter(onlyUnique)
-	              console.log(unique_positions_missing)
+	              // console.log(unique_positions_missing)
 
 	              for (let i=0; i < unique_positions_missing.length; i++){
 	              	if (all_uniq_trans.includes(unique_positions_missing[i])) {
@@ -1552,7 +1552,7 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 	              	}
 	              }
 
-	              console.log(all_uniq_trans)
+	              // console.log(all_uniq_trans)
 	              
 	              tot_trans = free_trans - all_uniq_trans.length
 	              tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
@@ -1641,7 +1641,6 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 	            
 	            clickable_table
 	            	.on('click.tooltip_actions', function(d) {
-	            		console.log(d)
 					    tooltip_actions.transition()
 					      .duration(300)
 					      .style("opacity", 1)
@@ -1664,7 +1663,7 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 						    var attrs = missing_players[0]
 
 						    if (attrs.posn == d.position){
-								console.log(my_picks_team.filter(t=>{return t.team == d.team}))
+								// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
 								max_team = my_picks_team.filter(t=>{return t.team == d.team})
 								
 								if (max_team.length >= 3){
@@ -1759,7 +1758,7 @@ penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.widt
 							} else {
 								alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
 							}
-							console.log(my_picks_team)
+							// console.log(my_picks_team)
 					   	})
 						d3.select("#add_p1").on("click",function() {
 							// window.location="#player1"
@@ -1876,8 +1875,6 @@ function replaceSpecialChars(str)
 
 		 	if (sortAscending) {
 			   rows.sort(function(a, b) { 
-			   	console.log(a)
-			   	console.log(d)
 			   	return d3.ascending(b[d],a[d])});
 			   sortAscending = false;
 			   this.className = 'aes';
@@ -1945,4 +1942,248 @@ function decimalAdjust(type, value, exp) {
 	  value = value.toString().split('e');
 	  return +(value[0] + 'e' + (value[1] ? (+value[1] + exp) : exp));
 	}
+
+d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, full_data) {
+	if (error) throw error;
+	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, data) {
+	    if (error) throw error;
+
+	    console.log(data.filter(d=>{return d.event == 27}))
+	    var gw = full_data.events.filter(d=>{return d.is_next == true})[0].id
+	    
+	    update_fixtures(gw,full_data,data)
+
+	    $("#previous")
+	    	.on("click",() => {
+	          gw-=1
+	          console.log(gw)
+	          update_fixtures(gw,full_data,data)
+	        })
+	    $("#next")
+	    	.on("click",() => {
+	          	gw+=1
+	          	console.log(gw)
+	          	update_fixtures(gw,full_data,data)
+	        })
+
+
+	})
+})
+
+function update_fixtures(gw,full_data,data) {
+	d3.select("#next_gw_fixtures").select("svg").remove();
+
+	var team_data = full_data.teams
+	var current_gw_deadline = full_data.events.filter(d=> {return d.id == gw})[0].deadline_time
+    var current_gw_data = data.filter(d=>{return d.event == gw})
+
+    console.log(gw)
+    console.log(team_data)
+    current_fixtures = []
+
+    for (i=0;i<current_gw_data.length;i++){
+    	team_h_name = team_data.filter(d=>{return d.id == current_gw_data[i].team_h})[0].name
+    	// console.log(team_h_name)
+    	team_h_code = team_data.filter(d=>{return d.id == current_gw_data[i].team_h})[0].code
+    	team_h_url = `https://fantasy.premierleague.com/dist/img/badges/badge_${team_h_code}_80.png`
+    	team_a_name = team_data.filter(d=>{return d.id == current_gw_data[i].team_a})[0].name
+    	team_a_code = team_data.filter(d=>{return d.id == current_gw_data[i].team_a})[0].code
+    	team_a_url = `https://fantasy.premierleague.com/dist/img/badges/badge_${team_a_code}_80.png`
+
+    	score = []
+    	if (current_gw_data[i].team_h_score == null || current_gw_data[i].team_a_score == null){
+    		score.push({"status":"to_play","score":current_gw_data[i].kickoff_time})
+    	} else {
+    		score.push({"status":"finished", "score":`${current_gw_data[i].team_h_score} - ${current_gw_data[i].team_a_score}`})
+    	}
+
+    	current_fixtures.push({"team_h_name":team_h_name,"team_h_img":team_h_url,"team_a_name":team_a_name,"team_a_img":team_a_url,"score":score})	
+    }
+
+	var margin_gw = { top_gw: 10, right_gw: 10, bottom_gw: 10, left_gw: 10 };
+
+    current_fixtures.length <= 10 ? h = 400 : current_fixtures.length <= 15 ? h = 500 : h = 600
+    var width_gw = 300 - margin_gw.left_gw - margin_gw.right_gw,
+        height_gw = h - margin_gw.top_gw - margin_gw.bottom_gw;
+
+	var svg_gw = d3.select("#next_gw_fixtures")
+      .append("svg")
+	      .attr("width", width_gw + margin_gw.left_gw + margin_gw.right_gw)
+	      .attr("height", height_gw + margin_gw.top_gw + margin_gw.bottom_gw)
+      .append("g")
+      	// .attr("id","results_fixtures")
+      	.attr("transform", "translate(" + margin_gw.left_gw + "," + margin_gw.top_gw + ")")
+
+
+    var title = svg_gw.append("text").attr("class", "fixtures_title")
+    	.attr("x", (width_gw-10)/2)
+		.attr("y", 10)
+		.attr("text-anchor", "middle")
+		.style("font-size","15px")
+		.style("font-weight","bold")
+		.text(function(d) {
+	      	if (current_fixtures[0].score[0].status=="finished"){
+	      		return "Results"
+	      	} else {
+				return "Fixtures"
+	      	}
+		});
+
+	var gameweek = svg_gw.append("text").attr("class", "gameweek")
+    	.attr("x", (width_gw-10)/2)
+		.attr("y", 35)
+		.attr("text-anchor", "middle")
+		.style("font-size","10px")
+		.text(`Gameweek ${gw}`);
+
+	var gameweek_deadline = svg_gw.append("text").attr("class", "gameweek_deadline")
+    	.attr("x", (width_gw-10)/2)
+		.attr("y", 50)
+		.attr("text-anchor", "middle")
+		.style("font-size","10px")
+		.text(function(){
+			var date = new Date(current_gw_deadline);
+      		date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
+			return `Deadline: ${date}`
+		});
+
+    var h_team_img = svg_gw.append("g").attr("class", "team_h_img");
+
+    let step = 30
+
+	let y_h_img = 50
+	let y_a_img = 50
+	let y_h_name = 61
+	let y_a_name = 61
+	let score_y_r = 60
+	let score_y_f = 46
+
+    h_team_img.selectAll("image")
+      .data(current_fixtures)
+      .enter()
+	      .append("image")
+	      .attr("class", "home_team_img")
+	      .attr("xlink:href", function(d){return d.team_h_img})
+	      .attr("x", (width_gw-10)/2 - 50)
+	      .attr("y", function(d){ 
+	      	y_h_img+=step 
+	      	return y_h_img})
+	      .attr("width", 15)
+          .attr("height", 15)
+	      // .attr("text-anchor", "start")
+	      .style("font-size","10px");
+
+	var a_team_img = svg_gw.append("g").attr("class", "team_a_img");
+	
+	a_team_img.selectAll("image")
+      .data(current_fixtures)
+      .enter()
+	      .append("image")
+	      .attr("class", "away_team_img")
+	      .attr("xlink:href", function(d){return d.team_a_img})
+	      .attr("x", (width_gw-10)/2 + 40)
+	      .attr("y", function(d){ 
+	      	y_a_img+=step 
+	      	return y_a_img})
+	      .attr("width", 15)
+          .attr("height", 15)
+	      // .attr("text-anchor", "end")
+	      .style("font-size","10px");
+
+	var h_team = svg_gw.append("g").attr("class", "team_h_name");
+
+	
+    h_team.selectAll("text")
+      .data(current_fixtures)
+      .enter()
+	      .append("text")
+	      .attr("class", "home_team")
+	      .attr("x", (width_gw-10)/2 - 60)
+	      .attr("y", function(d){ 
+	      	y_h_name+=step 
+	      	return y_h_name})
+	      .attr("text-anchor", "end")
+	      .style("font-size","10px")
+	      .text(function(d) {return d.team_h_name});
+
+	// var h_team = svg_gw.append("g").attr("class", "team_h_name");
+	var a_team = svg_gw.append("g").attr("class", "team_a_name");
+	
+    a_team.selectAll("text")
+      .data(current_fixtures)
+      .enter()
+	      .append("text")
+	      .attr("class", "home_team")
+	      .attr("x", (width_gw-10)/2 + 60)
+	      .attr("y", function(d){ 
+	      	y_a_name+=step 
+	      	return y_a_name})
+	      .attr("text-anchor", "start")
+	      .style("font-size","10px")
+	      .text(function(d) {return d.team_a_name});
+
+	
+	var game_score = svg_gw.append("g").attr("class", "score");
+	
+    game_score.selectAll("text")
+      .data(current_fixtures)
+      .enter()
+	      .append("text")
+	      .attr("class", "score_teams")
+	      .attr("x", (width_gw-10)/2)
+	      .attr("y", function(d){
+	      	if (d.score[0].status=="finished"){
+				score_y_r+=step
+				return score_y_r
+		  	} else {
+		  		score_y_f+=step 
+				return score_y_f
+		  	}
+		  })
+	      .attr("text-anchor", "middle")
+	      .style("font-size","10px")
+	      .text(function(d) {
+	      	if (d.score[0].status=="finished"){
+	      		return d.score[0].score
+	      	} else {
+	      		var date = new Date(d.score[0].score);
+	      		date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
+				return date
+	      	}
+	      })
+	      .call(wrap, 30);
+}
+
+function wrap(text, width) {
+    text.each(function () {
+        var text = d3.select(this),
+            words = text.text().split(/\s+/).reverse(),
+            word,
+            line = [],
+            lineNumber = 0,
+            lineHeight = 1.1, // ems
+            x = text.attr("x"),
+            y = text.attr("y"),
+            dy = 0, //parseFloat(text.attr("dy")),
+            tspan = text.text(null)
+                        .append("tspan")
+                        .attr("x", x)
+                        .attr("y", y)
+                        .attr("dy", dy + "em");
+        while (word = words.pop()) {
+            line.push(word);
+            tspan.text(line.join(" "));
+            if (tspan.node().getComputedTextLength() > width) {
+                line.pop();
+                tspan.text(line.join(" "));
+                line = [word];
+                tspan = text.append("tspan")
+                            .attr("x", x)
+                            .attr("y", y)
+                            .attr("dy", ++lineNumber * lineHeight + dy + "em")
+                            .text(word);
+            }
+        }
+    });
+}
 
