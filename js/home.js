@@ -1425,6 +1425,7 @@ function update_players (team_id) {
 					
 					if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
 						price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
+						// price_purchase = 1.0
 					} else {
 						price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
 					}
