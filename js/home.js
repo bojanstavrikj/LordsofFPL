@@ -1979,16 +1979,16 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	    filterable_keys[i] == "Value" ? elements_search += "<option selected value='"+ filterable_keys_raw[i] + "'>" + filterable_keys[i] + "</option>" : elements_search += "<option value='"+ filterable_keys_raw[i] + "'>" + filterable_keys[i] + "</option>";
 	}
 
-	document.getElementById("select-stat-player-table").innerHTML = elements_search;
+	// document.getElementById("select-stat-player-table").innerHTML = elements_search;
 	var gw = data.events.filter(d=>{return d.is_current == true})[0].id
 	var gw_next = data.events.filter(d=>{return d.is_next == true})[0].id
 
     full_table_2(data,gw_next)
 
-	$("#select-stat-player-table").on("change",function(){
-		full_table_2(data,gw_next)
-		update_players($("#team_id").val())
-	})
+	// $("#select-stat-player-table").on("change",function(){
+	// 	full_table_2(data,gw_next)
+	// 	// update_players($("#team_id").val())
+	// })
 	
 })
 
@@ -1996,14 +1996,14 @@ function full_table_2 (data,gw_next) {
 
 	d3.select("#select-player-table").select("table").remove();
 
-	insert_stat = $("#select-stat-player-table").val()
+	// insert_stat = $("#select-stat-player-table").val()
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, fixtures) {
 		if (error) throw error;
 	    
 	    to_load_table = []
 	    for (let i=0; i<data.elements.length; i++){
 			data.elements[i].element_type == 1 ? position = "GKP" : data.elements[i].element_type == 2 ? position = "DEF" : data.elements[i].element_type == 3 ? position = "MID":position = "FWD"
-			insert_stat.includes("cost") ? ins = data.elements[i][insert_stat]/10 : ins = data.elements[i][insert_stat];
+			// insert_stat.includes("cost") ? ins = data.elements[i][insert_stat]/10 : ins = data.elements[i][insert_stat];
 
 			var next_gw_fixtures = fixtures.filter(d=>{return d.event == gw_next})
 			var team = data.elements.filter(d=> {return d.id == data.elements[i].id})[0].team
@@ -2025,7 +2025,7 @@ function full_table_2 (data,gw_next) {
 				}
 			}
 
-			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":Number(ins), "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news,"opponent":opp_full})
+			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":data.elements[i].now_cost/10, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news,"opponent":opp_full})
 	    }
 
 		var sortAscending = false;
