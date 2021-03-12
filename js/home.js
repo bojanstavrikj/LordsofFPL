@@ -1361,7 +1361,10 @@ function update_players (team_id) {
 		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
 	
 		d3.json(url, function(error, data) {
-		  	if (error) throw error;
+		  	if (error) {
+		  		alert("Looks like you have entered an incorrect team ID. For information on how to find your team ID, please click on the info button.")
+		  		throw error
+		  	};
 		  	// console.log(data)
 
 	    	d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
