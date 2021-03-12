@@ -492,3 +492,8 @@ th.aes:after {
   color:white;
   font-weight: bold;
 }
+th {
+  position: sticky;
+  top: 0px;  /* 0px if you don't have a navbar, but something is required */
+  /*background: white;*/
+}

@@ -768,6 +768,7 @@ function popup_full_table (data,id) {
 	  "direct_freekicks_order", "penalties_order"]
 
 	  var headers_pl = table_pl.append('thead').append('tr')
+	  		.attr("class","sticky-header")
            .selectAll('th')
            .data(titles_pl).enter()
            .append('th')
@@ -1871,6 +1872,7 @@ function full_table_2 () {
 	    titles = ["name","position", "team","value","news"]
 
     	var headers = table.append('thead').append('tr')
+    		.attr("class","sticky-header")
      		.selectAll('th')
 			.data(titles).enter()
 			.append('th')
