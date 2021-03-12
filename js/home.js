@@ -420,23 +420,23 @@ function update (data,chart_type) {
 
 	//	BACKGROUND COLOR PLAYER IMAGE AVAILABILITY
 	if (filtered_p1[0].chance_playing_nx == 100) {
-		document.getElementById("info1").style.color = "green";
+		document.getElementById("info1").style.color = "#0FA121";
 	} if (filtered_p1[0].chance_playing_nx == 75) {
-		document.getElementById("info1").style.color = "yellow";
+		document.getElementById("info1").style.color = "#E5D125";
 	} if (filtered_p1[0].chance_playing_nx == 50) {
-		document.getElementById("info1").style.color = "orange";
+		document.getElementById("info1").style.color = "#E29019";
 	} if (filtered_p1[0].chance_playing_nx < 50) {
-		document.getElementById("info1").style.color = "red";
+		document.getElementById("info1").style.color = "#E33939";
 	}
 	
 	if (filtered_p2[0].chance_playing_nx == 100) {
-		document.getElementById("info2").style.color = "green";
+		document.getElementById("info2").style.color = "#0FA121";
 	} if (filtered_p2[0].chance_playing_nx == 75) {
-		document.getElementById("info2").style.color = "yellow";
+		document.getElementById("info2").style.color = "#E5D125";
 	} if (filtered_p2[0].chance_playing_nx == 50) {
-		document.getElementById("info2").style.color = "orange";
+		document.getElementById("info2").style.color = "#E29019";
 	} if (filtered_p2[0].chance_playing_nx < 50) {
-		document.getElementById("info2").style.color = "red";
+		document.getElementById("info2").style.color = "#E33939";
 	}
 
 	document.getElementById("pl1").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${filtered_p1[0].code}.png`;
@@ -1604,8 +1604,8 @@ function update_players (team_id) {
 						.attr("height", 30)
 						.attr("fill", function(d){
 						  	color_rect = formation_images_load.filter(i =>{return i.position == d.pos})[0].ch_play
-						  	color_rect >= 75 ? fill = "#0FA121" : color_rect >= 50 ? fill = "#E29019" : fill="#E33939"
-						  	
+						  	color_rect > 75 ? fill = "#0FA121" : color_rect > 50 ? fill = "#E5D125" :color_rect == 50 ? fill = "#E29019" : fill="#E33939"
+
 						  	return fill
 					});
 
