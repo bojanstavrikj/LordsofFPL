@@ -61,7 +61,12 @@
 	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;">
 		<div class="row">
 			<div class="col">
-				<h2 >Transfer Planner</h2>	
+				<h4 style="width:30% !important; margin:auto">
+					<!-- <i class="fas fa-arrow-left" style="float:left;" id="previous_gw"></i> -->
+					Transfer Planner
+					<!-- <i class="fas fa-arrow-right" style="float:right;" id="next_gw"></i> -->
+				</h4>
+				<a id="gw-pitch"></a>
 			</div>
 		</div>
 		<div class="row">
@@ -110,7 +115,10 @@
 			</div>
 			<div class="col-md-4" id="add_player">
 				<div class="col">
-
+					<div class="col">
+						<a style="font-weight: bold;">Stat to sort by </a>
+						<select id='select-stat-player-table' style='width: 200px;'></select>
+					</div>
 					<select id="search-select" >
 						<option selected value=name>Name</option>
 						<option value=position>Position</option>

@@ -103,6 +103,7 @@
 	  $("#player1").select2();
 	  $("#player2").select2();
 	  $("#stat").select2();
+	  $("#select-stat-player-table").select2();
 	});
 	
 
@@ -117,7 +118,7 @@
 	features = ['total_points', 'minutes','goals_scored', 'assists', 'clean_sheets', 'goals_conceded',
 	   'own_goals', 'penalties_saved', 'penalties_missed', 'yellow_cards','red_cards', 'saves',
 	   'bonus', 'bps', 'influence', 'creativity','threat', 'ict_index','shots', 'xG', 'time', 
-	   'xA', 'key_passes', 'npg', 'npxG','xGChain', 'xGBuildup']
+	   'xA', 'key_passes', 'npg', 'npxG','xGChain', 'xGBuildup',"form","round_points"]
 
 	// load_stats(features,features1)
 	
@@ -164,6 +165,7 @@
 	"xGBuildup":"total expected goals of every possession a player is involved in without key passes and shots", "player_id":"player id",
 	"code":"player image code", "GW":"gameweek","against":"team playing against","G":"goals","A":"assists","xGA":"expected goals against",
 	"GA":"goals against","pts":"total points","CS":"clean sheets","YC":"yellow cards","S":"saves","B":"bonus","difficulty":"difficulty of opponent",
+	"form":"Form","round_points":"Round points",
 	'ARS': 'Arsenal', 'AVL': 'Aston Villa', 'BHA': 'Brighton', 'BUR': 'Burnley', 'CHE': 'Chelsea', 'CRY': 'Crystal Palace', 'EVE': 'Everton',
 	'FUL': 'Fulham', 'LEI': 'Leicester', 'LEE': 'Leeds', 'LIV': 'Liverpool', 'MCI': 'Man City', 'MUN': 'Man Utd', 'NEW': 'Newcastle',
 	'SHU': 'Sheffield Utd', 'SOU': 'Southampton', 'TOT': 'Spurs', 'WBA': 'West Brom', 'WHU': 'West Ham', 'WOL': 'Wolves'}
@@ -250,6 +252,8 @@
 	    	d.yellow_cards = Number(d.yellow_cards)
 	    	d.chance_playing_tr = Number(d.chance_playing_tr)
 	    	d.chance_playing_nx = Number(d.chance_playing_nx)
+	    	d.form = Number(d.form)
+	    	d.round_points = Number(d.round_points)
 		});
 
 
@@ -445,7 +449,7 @@ function update (data,chart_type) {
     features = ['total_points', 'minutes','goals_scored', 'assists', 'clean_sheets', 'goals_conceded',
        'own_goals', 'penalties_saved', 'penalties_missed', 'yellow_cards','red_cards', 'saves',
        'bonus', 'bps', 'influence', 'creativity','threat', 'ict_index','shots', 'xG', 'time', 
-       'xA', 'key_passes', 'npg', 'npxG','xGChain', 'xGBuildup']
+       'xA', 'key_passes', 'npg', 'npxG','xGChain', 'xGBuildup',"form","round_points"]
 
     var total_p1 = []
     var total_p2 = []
@@ -454,8 +458,14 @@ function update (data,chart_type) {
     for (var i=0; i<features.length; i++) {
     	tot_varsp1.push(`p1Tot${features[i]}`)
     	tot_varsp2.push(`p2Tot${features[i]}`)
-    	window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
-    	window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
+    	if (features[i]=="form" || features[i]=="round_points"){
+    		window["p1Tot" + features[i]] = filtered_p1[0][features[i]];
+    		window["p2Tot" + features[i]] = filtered_p2[0][features[i]];	
+    	} else {
+    		window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
+    		window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
+    	}
+    	
     	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": `<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`,"player":0,"real":eval(tot_varsp1[i])}) 
     	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`,"player":1,"real":eval(tot_varsp2[i])})
     };
@@ -524,7 +534,9 @@ function update (data,chart_type) {
     	'npg':23,
     	'npxG':24,
     	'xGChain':25,
-    	'xGBuildup':26
+    	'xGBuildup':26,
+    	'form':27,
+    	"round_points":28
 	}
 
     var stats_to_show = $("#stat-select").select2("val")
@@ -1224,6 +1236,21 @@ function insert_table (data, id, season) {
 }
 
 // FOOTBALL PITCH TEAM SELECTION
+// $("#previous_gw")
+// 	.on("click",() => {
+//       gw_next-=1
+//       console.log(gw)
+//       full_table_2(data,gw_next
+//       update_players($("#team_id").val())
+//     })
+// $("#next_gw")
+// 	.on("click",() => {
+//       	gw_next+=1
+//       	console.log(gw)
+//       	full_table_2(data,gw_next
+//       	update_players($("#team_id").val())
+//     })
+
 
 update_players(3370907)
 
@@ -1248,7 +1275,7 @@ function update_players (team_id) {
 
 	var pitch = {
 		width: 80,
-		length: 100,
+		length: 110,
 		centerCircleRadius: 10,
 	penaltyArea: {
 		width: 36,
@@ -1358,6 +1385,8 @@ function update_players (team_id) {
 
     	// console.log(player_data.events.filter(d=>{return d.is_current == true})[0].id)
     	var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
+    	var gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
+    	
 		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
 	
 		d3.json(url, function(error, data) {
@@ -1369,442 +1398,500 @@ function update_players (team_id) {
 
 	    	d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
 	      		d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
+	      			d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, fixtures) {
+	    				if (error) throw error;
 
-		      	// console.log(transfer_data)
-		        my_picks = []
-		        data.picks.forEach(d=>{
-	        		my_picks.push(d.element)
-		        })
-		        
-		        // freet = d3.select("#free_transfers").append("text")
-		        // point_cost = d3.select("#transfer_cost").append("text").text(0)
-		        $("#transfer_cost")[0].innerHTML = String(0)
-		        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+				      	// console.log(transfer_data)
+				        my_picks = []
+				        data.picks.forEach(d=>{
+			        		my_picks.push(d.element)
+				        })
+				        
+				        // freet = d3.select("#free_transfers").append("text")
+				        // point_cost = d3.select("#transfer_cost").append("text").text(0)
+				        $("#transfer_cost")[0].innerHTML = String(0)
+				        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
-		        
-				if (transfer_data.filter(d=>{return d.event == 27}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
-					// freet.text(2)
-					$("#free_transfers")[0].innerHTML = String(2)
-					free_trans = 2
-				} if (transfer_data.filter(d=>{return d.event == 27}).length >= 1) {
-					// freet.text(1)
-					$("#free_transfers")[0].innerHTML = String(1)
-					free_trans = 1
-				} if (data.active_chip == "freehit") {
-					// freet.text(1)
-					$("#free_transfers")[0].innerHTML = String(1)
-					free_trans = 1
-				} if (data.active_chip == "wildcard") {
-					// freet.text(1)
-				$("#free_transfers")[0].innerHTML = String(1)
-					free_trans = 1
-				}
+				        
+						if (transfer_data.filter(d=>{return d.event == 27}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
+							// freet.text(2)
+							$("#free_transfers")[0].innerHTML = String(2)
+							free_trans = 2
+						} if (transfer_data.filter(d=>{return d.event == 27}).length >= 1) {
+							// freet.text(1)
+							$("#free_transfers")[0].innerHTML = String(1)
+							free_trans = 1
+						} if (data.active_chip == "freehit") {
+							// freet.text(1)
+							$("#free_transfers")[0].innerHTML = String(1)
+							free_trans = 1
+						} if (data.active_chip == "wildcard") {
+							// freet.text(1)
+						$("#free_transfers")[0].innerHTML = String(1)
+							free_trans = 1
+						}
 
-				var user_data = []
-				for (i=0; i<player_data.elements.length; i++) {
-					player_data.elements[i].element_type == 1 ? pos = "GKP" : player_data.elements[i].element_type == 2 ? pos="DEF" :player_data.elements[i].element_type == 3 ? pos ="MID" : pos="FWD"
+						var user_data = []
+						for (i=0; i<player_data.elements.length; i++) {
+							player_data.elements[i].element_type == 1 ? pos = "GKP" : player_data.elements[i].element_type == 2 ? pos="DEF" :player_data.elements[i].element_type == 3 ? pos ="MID" : pos="FWD"
 
-					user_data.push({"id":player_data.elements[i].id, "code":player_data.elements[i].code, "chance_of_playing_next_round":player_data.elements[i].chance_of_playing_next_round,"value":player_data.elements[i].now_cost/10,"name":player_data.elements[i].web_name,"position":pos,"team":player_data.elements[i].team})
-				}
-		        // console.log(player_data.elements)
-		        // console.log(user_data)
+							user_data.push({"id":player_data.elements[i].id, "code":player_data.elements[i].code, "chance_of_playing_next_round":player_data.elements[i].chance_of_playing_next_round,"value":player_data.elements[i].now_cost/10,"name":player_data.elements[i].web_name,"position":pos,"team":player_data.elements[i].team})
+						}
+				        // console.log(player_data.elements)
+				        // console.log(user_data)
 
-		        var images_load = []
-		        elements = []
-		        my_picks_team = []
-		        // console.log(my_picks)
-		        // console.log(data.picks)
+				        var images_load = []
+				        elements = []
+				        my_picks_team = []
+				        // console.log(my_picks)
+				        // console.log(data.picks)
 
-				for (let i=0; i < data.picks.length; i++){
-					elements.push(data.picks[i].element)
-					var img_code = user_data.filter(d=> {return d.id == data.picks[i].element})[0].code
-					var position_name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].position
-					var name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].name
-					var ch_play = user_data.filter(d=> {return d.id == data.picks[i].element})[0].chance_of_playing_next_round
-					var price_now = user_data.filter(d=> {return d.id == data.picks[i].element})[0].value
-					
-					if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
-						price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
-						// price_purchase = 1.0
-					} else {
-						price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
-					}
-					
-					var team = user_data.filter(d=> {return d.id == data.picks[i].element})[0].team
-					team_name = player_data.teams.filter(d => {return d.id == team})[0].short_name
+						for (let i=0; i < data.picks.length; i++){
+							elements.push(data.picks[i].element)
+							var img_code = user_data.filter(d=> {return d.id == data.picks[i].element})[0].code
+							var position_name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].position
+							var name = user_data.filter(d=> {return d.id == data.picks[i].element})[0].name
+							var ch_play = user_data.filter(d=> {return d.id == data.picks[i].element})[0].chance_of_playing_next_round
+							var price_now = user_data.filter(d=> {return d.id == data.picks[i].element})[0].value
+							
+							if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
+								price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
+								// price_purchase = 1.0
+							} else {
+								price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
+							}
+							
+							var team = user_data.filter(d=> {return d.id == data.picks[i].element})[0].team
+							team_name = player_data.teams.filter(d => {return d.id == team})[0].short_name
 
-					var url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${img_code}.png`
-
-					images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name})
-				}
-
-		        gkp = images_load.filter(d => {return d.position_name =="GKP"})
-		        def = images_load.filter(d => {return d.position_name =="DEF"})
-		        mid = images_load.filter(d => {return d.position_name =="MID"})
-		        fwd = images_load.filter(d => {return d.position_name =="FWD"})
-		        
-		        player_order = [gkp,def,mid,fwd]
-		        formation_images_load = []
-		        
-				m = 1
-				for (let j=0; j<player_order.length;j++){
-				  	for (let i=0; i < player_order[j].length; i++) {
-				    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team})
-
-				  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
-				    	m++
-				  	}
-				}
-		        // console.log(m)
-		        // console.log(my_picks_team)
-
-		        // bank = d3.select("#bank").append("text")
-		        var bank_number = data.entry_history.bank/10
-
-		        // team_value = d3.select("#team_value").append("text")
-		        
-		        // console.log(images_load)
-		        // console.log(formation_images_load)
-		    
-		        var playerPositions =[
-					{x:30, y:10, pos:1,posn:"GKP"},
-					{x:50, y:10, pos:2,posn:"GKP"},
-					{x:75, y:30, pos:3,posn:"DEF"},
-					{x:57.5, y:30, pos:4,posn:"DEF"},
-					{x:40, y:30, pos:5,posn:"DEF"},
-					{x:22.5, y:30, pos:6,posn:"DEF"},
-					{x:5, y:30, pos:7,posn:"DEF"},
-					{x:75, y:60, pos:8,posn:"MID"},
-					{x:57.5, y:60, pos:9,posn:"MID"},
-					{x:40, y:60, pos:10,posn:"MID"},
-					{x:22.5, y:60, pos:11,posn:"MID"},
-					{x:5, y:60, pos:12,posn:"MID"},
-					{x:20, y:85, pos:13,posn:"FWD"},
-					{x:40, y:85, pos:14,posn:"FWD"},
-					{x:60, y:85, pos:15,posn:"FWD"}]
-
-		        var playersContainer = pitchElement.append("g")
-		          	.attr("class", "players")
-
-		        var player_picks = pitchElement.append("g")
-		          	.attr("class","picks")
-
-		        var remove_player = pitchElement.append("g")
-		          	.attr("class","x_icon")
-
-		        var player_info = pitchElement.append("g")
-		          	.attr("class","player_info")
-
-		        var player_name = pitchElement.append("g")
-		          	.attr("class","player_name")
-
-		        
-		        var missing_players = []
-		        // console.log(missing_players)
-		        var unique_positions_missing = []
-		        var all_uniq_trans = []
-
-				remove_player.selectAll("image")
-					.data(playerPositions)
-					.enter()
-					.append("image")
-						.attr("id",function(d){return `position_${d.pos}_remove`})
-						.attr("xlink:href", "/data/img/times-solid.svg")
-						.attr("x", function(d){
-							return scale(d.x + 4);
-						})
-						.attr("y", function(d){
-							return scale(d.y - 10);
-						})
-						.style("margin-right","20px")
-						.attr("width", 15)
-						.attr("height", 15)
-						.attr("text-anchor","middle")
-						.on("mouseover", function(d) {
-							d3.select(this).style("cursor", "pointer")
-						})                  
-						.on("mouseout", function(d) {
-							d3.select(this).style("cursor", "default")
-						})
-						.on("click",function(d){
-							bank_number += Number(d3.select(`#value_${d.pos}`).text())
-							$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-							element_color("bank",bank_number,"bank")
-
-
-							d3.select(`#position_${d.pos}_pick`).remove()
-							d3.select(`#rect_${d.pos}`).remove()
-							d3.select(`#value_${d.pos}`).remove()
-							d3.select(`#name_${d.pos}`).remove()
-
-							my_picks_team = my_picks_team.filter(i =>{return i.position != d.pos})
-
-							// console.log(my_picks_team)
-
-							missing_players.push(d)
-							// console.log(d)
-
-							missing_players.forEach(m => { unique_positions_missing.push(m.pos)})
-							unique_positions_missing = unique_positions_missing.filter(onlyUnique)
-							// console.log(unique_positions_missing)
-
-							for (let i=0; i < unique_positions_missing.length; i++){
-								if (all_uniq_trans.includes(unique_positions_missing[i])) {
-									// all_uniq_trans = all_uniq_trans.filter(d=>{return d != unique_positions_missing[i]})
-									console.log(unique_positions_missing[i])
-								} else {
-									all_uniq_trans.push(unique_positions_missing[i])
-									console.log(all_uniq_trans)
+							var url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${img_code}.png`
+							
+							var next_gw_fixtures = fixtures.filter(d=>{return d.event == gw_next})
+							
+							var pfixts = next_gw_fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
+							// console.log(pfixts)
+							opp_full = []
+							if(pfixts.length == 0){
+								opp_full.push("(blank)")
+							} else {
+								for (j=0;j<pfixts.length;j++){
+									if (pfixts[j].team_h == team){
+										opp_name = player_data.teams.filter(d => {return d.id == pfixts[j].team_a})[0].short_name
+										opp_full.push(`${opp_name} (H)`)
+									} else {
+										opp_name = player_data.teams.filter(d => {return d.id == pfixts[j].team_h})[0].short_name
+										opp_full.push(`${opp_name} (A)`)
+									}
 								}
 							}
 
-							// console.log(all_uniq_trans)
+							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_name":opp_full})
+						}
 
-							tot_trans = free_trans - all_uniq_trans.length
-							tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-							tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
+				        def = images_load.filter(d => {return d.position_name =="DEF"})
+				        mid = images_load.filter(d => {return d.position_name =="MID"})
+				        fwd = images_load.filter(d => {return d.position_name =="FWD"})
+				        
+				        player_order = [gkp,def,mid,fwd]
+				        formation_images_load = []
+				        
+						m = 1
+						for (let j=0; j<player_order.length;j++){
+						  	for (let i=0; i < player_order[j].length; i++) {
+						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_name":player_order[j][i].opponent_name})
 
-							element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+						  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
+						    	m++
+						  	}
+						}
+				        // console.log(m)
+				        // console.log(my_picks_team)
 
-						});
+				        // bank = d3.select("#bank").append("text")
+				        var bank_number = data.entry_history.bank/10
 
-		        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
-		        
-					player_picks.selectAll("image")
-						.data(playerPositions)
-						.enter()
-						.append("image")
-							.attr("id",function(d){return `position_${d.pos}_pick`})
-							.attr("xlink:href", function(d){return formation_images_load.filter(i =>{return i.position == d.pos})[0].url})
+				        // team_value = d3.select("#team_value").append("text")
+				        
+				        // console.log(images_load)
+				        // console.log(formation_images_load)
+
+				        var playerPositions =[
+							{x:30, y:10, pos:1,posn:"GKP"},
+							{x:50, y:10, pos:2,posn:"GKP"},
+							{x:75, y:37.5, pos:3,posn:"DEF"},
+							{x:57.5, y:37.5, pos:4,posn:"DEF"},
+							{x:40, y:37.5, pos:5,posn:"DEF"},
+							{x:22.5, y:37.5, pos:6,posn:"DEF"},
+							{x:5, y:37.5, pos:7,posn:"DEF"},
+							{x:75, y:65, pos:8,posn:"MID"},
+							{x:57.5, y:65, pos:9,posn:"MID"},
+							{x:40, y:65, pos:10,posn:"MID"},
+							{x:22.5, y:65, pos:11,posn:"MID"},
+							{x:5, y:65, pos:12,posn:"MID"},
+							{x:20, y:95, pos:13,posn:"FWD"},
+							{x:40, y:95, pos:14,posn:"FWD"},
+							{x:60, y:95, pos:15,posn:"FWD"}]
+
+				        var playersContainer = pitchElement.append("g")
+				          	.attr("class", "players")
+
+				        var player_picks = pitchElement.append("g")
+				          	.attr("class","picks")
+
+				        var remove_player = pitchElement.append("g")
+				          	.attr("class","x_icon")
+
+				        var player_info = pitchElement.append("g")
+				          	.attr("class","player_info")
+
+				        var player_name = pitchElement.append("g")
+				          	.attr("class","player_name")
+
+				        var fixtures = pitchElement.append("g")
+				          	.attr("class","fixtures_pitch")
+
+				        
+				        var missing_players = []
+				        // console.log(missing_players)
+				        var unique_positions_missing = []
+				        var all_uniq_trans = []
+
+						remove_player.selectAll("image")
+							.data(playerPositions)
+							.enter()
+							.append("image")
+								.attr("id",function(d){return `position_${d.pos}_remove`})
+								.attr("xlink:href", "/data/img/times-solid.svg")
+								.attr("x", function(d){
+									return scale(d.x + 4);
+								})
+								.attr("y", function(d){
+									return scale(d.y - 10);
+								})
+								.style("margin-right","20px")
+								.attr("width", 15)
+								.attr("height", 15)
+								.attr("text-anchor","middle")
+								.on("mouseover", function(d) {
+									d3.select(this).style("cursor", "pointer")
+								})                  
+								.on("mouseout", function(d) {
+									d3.select(this).style("cursor", "default")
+								})
+								.on("click",function(d){
+									bank_number += Number(d3.select(`#value_${d.pos}`).text())
+									$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+									element_color("bank",bank_number,"bank")
+
+
+									d3.select(`#position_${d.pos}_pick`).remove()
+									d3.select(`#rect_${d.pos}`).remove()
+									d3.select(`#value_${d.pos}`).remove()
+									d3.select(`#name_${d.pos}`).remove()
+									d3.select(`#fix_${d.pos}`).remove()
+
+									my_picks_team = my_picks_team.filter(i =>{return i.position != d.pos})
+
+									// console.log(my_picks_team)
+
+									missing_players.push(d)
+									// console.log(d)
+
+									missing_players.forEach(m => { unique_positions_missing.push(m.pos)})
+									unique_positions_missing = unique_positions_missing.filter(onlyUnique)
+									// console.log(unique_positions_missing)
+
+									for (let i=0; i < unique_positions_missing.length; i++){
+										if (all_uniq_trans.includes(unique_positions_missing[i])) {
+											// all_uniq_trans = all_uniq_trans.filter(d=>{return d != unique_positions_missing[i]})
+											// console.log(unique_positions_missing[i])
+										} else {
+											all_uniq_trans.push(unique_positions_missing[i])
+											// console.log(all_uniq_trans)
+										}
+									}
+
+									// console.log(all_uniq_trans)
+
+									tot_trans = free_trans - all_uniq_trans.length
+									tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+									tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+
+									element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+
+								});
+
+				        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
+				        
+						player_picks.selectAll("image")
+							.data(playerPositions)
+							.enter()
+							.append("image")
+								.attr("id",function(d){return `position_${d.pos}_pick`})
+								.attr("xlink:href", function(d){return formation_images_load.filter(i =>{return i.position == d.pos})[0].url})
+								.attr("x", function(d){
+								  	return scale(d.x - 6);
+								})
+								.attr("y", function(d){
+								  	return scale(d.y - 10);
+								})
+								.attr("width", 60)
+								.attr("height", 60)
+								.attr("text-anchor","middle");
+								// .on("click",function(d){
+									   // d3.select(this).remove();
+								// });
+
+						var info_rect = playersContainer.selectAll("rect")
+							.data(playerPositions)
+							.enter()
+							.append("rect")
+							.attr("id",function(d){return `rect_${d.pos}`})
 							.attr("x", function(d){
-							  	return scale(d.x - 6);
+								return scale(d.x-6);
 							})
 							.attr("y", function(d){
-							  	return scale(d.y - 10);
+				  				return scale(d.y+3);
 							})
 							.attr("width", 60)
 							.attr("height", 60)
-							.attr("text-anchor","middle");
-							// .on("click",function(d){
-								   // d3.select(this).remove();
-							// });
+							.attr("rx", 6)
+    						.attr("ry", 6)
+							.attr("fill", function(d){
+							  	color_rect = formation_images_load.filter(i =>{return i.position == d.pos})[0].ch_play
+							  	color_rect > 75 ? fill = "#0FA121" : color_rect > 50 ? fill = "#E5D125" :color_rect == 50 ? fill = "#E29019" : fill="#E33939"
 
-					var info_rect = playersContainer.selectAll("rect")
-						.data(playerPositions)
-						.enter()
-						.append("rect")
-						.attr("id",function(d){return `rect_${d.pos}`})
-						.attr("x", function(d){
-							return scale(d.x-6);
-						})
-						.attr("y", function(d){
-			  				return scale(d.y+3);
-						})
-						.attr("width", 60)
-						.attr("height", 30)
-						.attr("fill", function(d){
-						  	color_rect = formation_images_load.filter(i =>{return i.position == d.pos})[0].ch_play
-						  	color_rect > 75 ? fill = "#0FA121" : color_rect > 50 ? fill = "#E5D125" :color_rect == 50 ? fill = "#E29019" : fill="#E33939"
+							  	return fill
+						});
 
-						  	return fill
-					});
+						player_info.selectAll("text")
+							.data(playerPositions)
+							.enter().append("text")
+								.attr("id",function(d){return `value_${d.pos}`})
+								.attr("x", function(d){
+									return scale(d.x);
+								})
+								.attr("y", function(d){
+									return scale(d.y+5);
+								})
+								.style("text-anchor", "middle")
+								.style("font-size", 10)
+								.text(function(d){ 
+									purch_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value_purchase
+									curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
+									diff = (curr_val - purch_val)*0.5
+									return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+								});
 
-					player_info.selectAll("text")
-						.data(playerPositions)
-						.enter().append("text")
-							.attr("id",function(d){return `value_${d.pos}`})
-							.attr("x", function(d){
-								return scale(d.x);
-							})
-							.attr("y", function(d){
-								return scale(d.y+5);
-							})
-							.style("text-anchor", "middle")
-							.style("font-size", 10)
-							.text(function(d){ 
-								purch_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value_purchase
-								curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
-								diff = (curr_val - purch_val)*0.5
-								return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-							});
-
-					player_name.selectAll("text")
-						.data(playerPositions)
-						.enter().append("text")
-							.attr("id",function(d){return `name_${d.pos}`})
-							.attr("x", function(d){
-								return scale(d.x);
-							})
-							.attr("y", function(d){
-								return scale(d.y+8);
-							})
-							.style("text-anchor", "middle")
-							.style("font-size", 10)
-							.text(function(d){ 
-							
-								return formation_images_load.filter(i =>{return i.position == d.pos})[0].name
-							});
-		            
-		            var clickable_table = d3.select("#select-player-table").select("tbody").selectAll("tr");
-		            
-		            clickable_table
-		            	.on('click.tooltip_actions', function(d) {
-						    tooltip_actions.transition()
-								.duration(300)
-								.style("opacity", 1)
-								.style("pointer-events", "auto");
-						    tooltip_actions.html(
-						    	`<button type="button" id="closeplayer" style="float:right;">X</button>
-						    	<br>
-						    	<button type="button" id="add_to_team">Add to my team.</button><br>
-							    <button type="button" id="add_p1">Add for comparison (p1).</button><br>
-							    <button type="button" id="add_p2">Add for comparison (p2).</button><br>`)
-							.style("left", (d3.event.pageX) + "px")
-							.style("top", (d3.event.pageY - 120) + "px");
-
-						    d3.select("#add_to_team").on("click",function() {
+						player_name.selectAll("text")
+							.data(playerPositions)
+							.enter().append("text")
+								.attr("id",function(d){return `name_${d.pos}`})
+								.attr("x", function(d){
+									return scale(d.x);
+								})
+								.attr("y", function(d){
+									return scale(d.y+8);
+								})
+								.style("text-anchor", "middle")
+								.style("font-size", 10)
+								.text(function(d){ 
+								
+									return formation_images_load.filter(i =>{return i.position == d.pos})[0].name
+								});
+						
+						fixtures.selectAll("text")
+							.data(playerPositions)
+							.enter().append("text")
+								.attr("id",function(d){return `fix_${d.pos}`})
+								.attr("x", function(d){
+									return scale(d.x);
+								})
+								.attr("y", function(d){
+									return scale(d.y+11);
+								})
+								.style("text-anchor", "middle")
+								.style("font-size", 10)
+								.text(function(d){ 
+									fix_load = formation_images_load.filter(i =>{return i.position == d.pos})[0].opponent_name
+									fix_load.length == 2 ? output = `${fix_load[0]} ${fix_load[1]}` : output = `${fix_load[0]}`
+									return output
+								})
+								.call(wrap, 50);
+			            
+			            var clickable_table = d3.select("#select-player-table").select("tbody").selectAll("tr");
+			            
+			            clickable_table
+			            	.on('click.tooltip_actions', function(d) {
 							    tooltip_actions.transition()
-							    	.duration(100)
-							      	.style("opacity", 0)
-							      	.style("pointer-events", "none")
-							    
-							    var attrs = missing_players[0]
+									.duration(300)
+									.style("opacity", 1)
+									.style("position","absolute")
+									.style("pointer-events", "auto");
+							    tooltip_actions.html(
+							    	`<button type="button" id="closeplayer" style="float:right;">X</button>
+							    	<br>
+							    	<button type="button" id="add_to_team">Add to my team.</button><br>
+								    <button type="button" id="add_p1">Add for comparison (p1).</button><br>
+								    <button type="button" id="add_p2">Add for comparison (p2).</button><br>`)
+								.style("left", (d3.event.pageX) + "px")
+								.style("top", (d3.event.pageY - 120) + "px");
 
-							    if (attrs.posn == d.position){
-									// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
-									max_team = my_picks_team.filter(t=>{return t.team == d.team})
-									
-									if (max_team.length >= 3){
-										alert("You already have 3 players from the same team")
+							    d3.select("#add_to_team").on("click",function() {
+								    tooltip_actions.transition()
+								    	.duration(100)
+								      	.style("opacity", 0)
+								      	.style("pointer-events", "none")
+								    
+								    var attrs = missing_players[0]
+
+								    if (attrs.posn == d.position){
+										// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
+										max_team = my_picks_team.filter(t=>{return t.team == d.team})
+										
+										if (max_team.length >= 3){
+											alert("You already have 3 players from the same team")
+										} else {
+											player_picks.append("image")
+								                .attr("id",`position_${attrs.pos}_pick`)
+								                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
+								                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
+								                .attr("x",scale(attrs.x - 6))
+								                .attr("y",scale(attrs.y - 10))
+								                .attr("width", 60)
+								                .attr("height", 60)
+								                .attr("text-anchor","middle");
+
+											player_info.append("text")
+												.attr("id",`value_${attrs.pos}`)
+												.attr("x", scale(attrs.x))
+												.attr("y", scale(attrs.y + 5))
+												.style("text-anchor", "middle")
+												.style("font-size", 10)
+												.text(function(){ 
+													in_team = formation_images_load.filter(i =>{return i.player_id == d.id})
+													if(in_team.length > 0){
+														purch_val = in_team[0].value_purchase
+														curr_val = in_team[0].value
+														diff = (curr_val - purch_val)*0.5
+														bank_number -= floor10((curr_val - diff),-1)
+														$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+														element_color("bank",bank_number,"bank")
+
+														// tot_trans += 1
+														if (all_uniq_trans.includes(attrs.pos)) {
+										              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
+
+										              	} else {
+										              		// all_uniq_trans.push(unique_positions_missing[i])
+										              		// console.log(all_uniq_trans)
+										              	}
+														// free_trans += unique_positions_missing.length
+														tot_trans = free_trans - all_uniq_trans.length
+														tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+														tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+														element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+														
+
+														return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+													} else {
+														bank_number -= d.value
+														$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
+														element_color("bank",bank_number,"bank")
+
+														// if (all_uniq_trans.includes(attrs.pos)) {
+										              		
+										    //           	} else {
+										    //           		// all_uniq_trans.push(unique_positions_missing[i])
+										    //           		// console.log(all_uniq_trans)
+										    //           	}
+										              	tot_trans = free_trans - all_uniq_trans.length
+														tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+														tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+														element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+														
+														return d.value
+													}
+												})
+
+								            player_name.append("text")
+												.attr("id",`name_${attrs.pos}`)
+												.attr("x", scale(attrs.x))
+												.attr("y", scale(attrs.y + 8))
+												.style("text-anchor", "middle")
+												.style("font-size", 10)
+												.text(d.name)
+
+								            playersContainer.append("rect")
+												.attr("id",`rect_${attrs.pos}`)
+												.attr("x", scale(attrs.x - 6))
+												.attr("y", scale(attrs.y + 3))
+												.attr("width", 60)
+												.attr("height", 60)
+												.attr("rx", 6)
+    											.attr("ry", 6)
+												.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
+
+											fixtures.append("text")
+												.attr("id",function(d){return `fix_${attrs.pos}`})
+												.attr("x", scale(attrs.x))
+												.attr("y", scale(attrs.y+11))
+												.style("text-anchor", "middle")
+												.style("font-size", 10)
+												.text(d.opponent.length == 2 ? `${d.opponent[0]} ${d.opponent[1]}` : d.opponent[0])
+												.call(wrap, 50);
+
+							              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
+
+							              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
+
+							              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
+										}
+										
+						              	
 									} else {
-										player_picks.append("image")
-							                .attr("id",`position_${attrs.pos}_pick`)
-							                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
-							                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
-							                .attr("x",scale(attrs.x - 6))
-							                .attr("y",scale(attrs.y - 10))
-							                .attr("width", 60)
-							                .attr("height", 60)
-							                .attr("text-anchor","middle");
-
-										player_info.append("text")
-											.attr("id",`value_${attrs.pos}`)
-											.attr("x", scale(attrs.x))
-											.attr("y", scale(attrs.y + 5))
-											.style("text-anchor", "middle")
-											.style("font-size", 10)
-											.text(function(){ 
-												in_team = formation_images_load.filter(i =>{return i.player_id == d.id})
-												if(in_team.length > 0){
-													purch_val = in_team[0].value_purchase
-													curr_val = in_team[0].value
-													diff = (curr_val - purch_val)*0.5
-													bank_number -= floor10((curr_val - diff),-1)
-													$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-													element_color("bank",bank_number,"bank")
-
-													// tot_trans += 1
-													if (all_uniq_trans.includes(attrs.pos)) {
-									              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
-
-									              	} else {
-									              		// all_uniq_trans.push(unique_positions_missing[i])
-									              		// console.log(all_uniq_trans)
-									              	}
-													// free_trans += unique_positions_missing.length
-													tot_trans = free_trans - all_uniq_trans.length
-													tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-													tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-													element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-													
-
-													return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-												} else {
-													bank_number -= d.value
-													$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
-													element_color("bank",bank_number,"bank")
-
-													// if (all_uniq_trans.includes(attrs.pos)) {
-									              		
-									    //           	} else {
-									    //           		// all_uniq_trans.push(unique_positions_missing[i])
-									    //           		// console.log(all_uniq_trans)
-									    //           	}
-									              	tot_trans = free_trans - all_uniq_trans.length
-													tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-													tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-													element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-													
-													return d.value
-												}
-											})
-
-							            player_name.append("text")
-											.attr("id",`name_${attrs.pos}`)
-											.attr("x", scale(attrs.x))
-											.attr("y", scale(attrs.y + 8))
-											.style("text-anchor", "middle")
-											.style("font-size", 10)
-											.text(d.name)
-
-							            playersContainer.append("rect")
-											.attr("id",`rect_${attrs.pos}`)
-											.attr("x", scale(attrs.x - 6))
-											.attr("y", scale(attrs.y + 3))
-											.attr("width", 60)
-											.attr("height", 30)
-											.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
-
-						              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
-
-						              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
-
-						              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
+										alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
 									}
-									
-					              	
-								} else {
-									alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
-								}
-								// console.log(my_picks_team)
-						   	})
-							d3.select("#add_p1").on("click",function() {
-								// window.location="#player1"
-							    // d3.select("#comparison_div").selectAll("table").remove()
-							    // $("#comparison_div").empty()
-							    tooltip_actions.transition()
-							    	.duration(100)
-							      	.style("opacity", 0)
-							      	.style("pointer-events", "none")
-							    $("#player1").val(d.id);
-	        					$('#player1').trigger('change');
-	        					
+									// console.log(my_picks_team)
+							   	})
+								d3.select("#add_p1").on("click",function() {
+									// window.location="#player1"
+								    // d3.select("#comparison_div").selectAll("table").remove()
+								    // $("#comparison_div").empty()
+								    tooltip_actions.transition()
+								    	.duration(100)
+								      	.style("opacity", 0)
+								      	.style("pointer-events", "none")
+								    $("#player1").val(d.id);
+		        					$('#player1').trigger('change');
+		        					
+								})
+
+								d3.select("#add_p2").on("click",function() {
+								    // window.location="#player2"
+								    tooltip_actions.transition()
+								    	.duration(100)
+								      	.style("opacity", 0)
+								      	.style("pointer-events", "none")
+								    $("#player2").val(d.id);
+		        					$('#player2').trigger('change');
+
+								})
+
+								d3.select("button#closeplayer").on("click",function() {
+									// d3.select("#comparison_div").selectAll("table").remove()
+
+								    tooltip_actions.transition()
+								      .duration(100)
+								      .style("opacity", 0)
+								      .style("pointer-events", "none");
+								  })	
 							})
 
-							d3.select("#add_p2").on("click",function() {
-							    // window.location="#player2"
-							    tooltip_actions.transition()
-							    	.duration(100)
-							      	.style("opacity", 0)
-							      	.style("pointer-events", "none")
-							    $("#player2").val(d.id);
-	        					$('#player2').trigger('change');
-
-							})
-
-							d3.select("button#closeplayer").on("click",function() {
-								// d3.select("#comparison_div").selectAll("table").remove()
-
-							    tooltip_actions.transition()
-							      .duration(100)
-							      .style("opacity", 0)
-							      .style("pointer-events", "none");
-							  })	
-						})
-
-		            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-		            element_color("bank",bank_number,"bank")
-
+			            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+			            element_color("bank",bank_number,"bank")
+		            })
 		      	})
 		    })
 	  	})
@@ -1855,29 +1942,101 @@ function myFunction() {
 }
 	
 
-full_table_2()
 
-function full_table_2 () {
-	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, data) {
-    	if (error) throw error; 
 
-    	to_load_table = []
+
+d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, data) {
+	if (error) throw error; 
+
+	var filterable_keys_raw = ["cost_change_start", "dreamteam_count", "event_points", "form", "now_cost", "points_per_game",
+	"selected_by_percent", "total_points", "transfers_in", "transfers_in_event", "transfers_out", "transfers_out_event", 
+	"value_form", "value_season","minutes", "goals_scored", "assists", "clean_sheets", "goals_conceded", "own_goals", 
+	"penalties_saved", "penalties_missed", "yellow_cards", "red_cards", "saves", "bonus", "bps", "influence", "creativity",
+	"threat", "ict_index", "influence_rank", "creativity_rank", "threat_rank",  "ict_index_rank"]
+
+	var var_explanation = {"cost_change_start":"Cost change from season start", "dreamteam_count":"Number of times in dreamteam",
+	"event_points":"Round points", "form":"Form", "now_cost":"Value", "points_per_game":"Points per game",
+	"selected_by_percent":"Selected by %", "total_points":"Total points", "transfers_in":"Transfers in", "transfers_in_event":"Transfers in round",
+	"transfers_out":"Transfers out", "transfers_out_event":"Transfers out round", "value_form":"Value form", "value_season":"Value season",
+	"minutes":"Minutes", "goals_scored":"Goals", "assists":"Assists", "clean_sheets":"Clean sheets", "goals_conceded":"Goals conceded",
+	"own_goals":"Own goals", "penalties_saved":"Penalties saved", "penalties_missed":"Penalties missed", "yellow_cards":"Yellow cards",
+	"red_cards":"Red cards", "saves":"Saves", "bonus":"Bonus", "bps":"BPS", "influence":"Influence", "creativity":"Creativity",
+	"threat":"Threat", "ict_index":"ICT Index", "influence_rank":"Influence rank", "creativity_rank":"Creativity rank", "threat_rank":"Threat rank",
+	"ict_index_rank":"ICT Index rank"}
+
+	filterable_keys_raw.sort(function(a, b) {
+	    var textA = a.toUpperCase();
+	    var textB = b.toUpperCase();
+	    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+	});
+
+	filterable_keys = filterable_keys_raw.map(d=>{return var_explanation[d]})
+	
+	// console.log(var_explanation["dreamte"])
+
+	var elements_search = ""
+	for(i= 0; i < filterable_keys.length; i++){
+	    filterable_keys[i] == "Value" ? elements_search += "<option selected value='"+ filterable_keys_raw[i] + "'>" + filterable_keys[i] + "</option>" : elements_search += "<option value='"+ filterable_keys_raw[i] + "'>" + filterable_keys[i] + "</option>";
+	}
+
+	document.getElementById("select-stat-player-table").innerHTML = elements_search;
+	var gw = data.events.filter(d=>{return d.is_current == true})[0].id
+	var gw_next = data.events.filter(d=>{return d.is_next == true})[0].id
+
+    full_table_2(data,gw_next)
+
+	$("#select-stat-player-table").on("change",function(){
+		full_table_2(data,gw_next)
+		update_players($("#team_id").val())
+	})
+	
+})
+
+function full_table_2 (data,gw_next) {
+
+	d3.select("#select-player-table").select("table").remove();
+
+	insert_stat = $("#select-stat-player-table").val()
+	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, fixtures) {
+		if (error) throw error;
 	    
+	    to_load_table = []
 	    for (let i=0; i<data.elements.length; i++){
 			data.elements[i].element_type == 1 ? position = "GKP" : data.elements[i].element_type == 2 ? position = "DEF" : data.elements[i].element_type == 3 ? position = "MID":position = "FWD"
+			insert_stat.includes("cost") ? ins = data.elements[i][insert_stat]/10 : ins = data.elements[i][insert_stat];
 
-			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":data.elements[i].now_cost/10, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news})
+			var next_gw_fixtures = fixtures.filter(d=>{return d.event == gw_next})
+			var team = data.elements.filter(d=> {return d.id == data.elements[i].id})[0].team
+			team_name = data.teams.filter(d => {return d.id == team})[0].short_name
+			var pfixts = next_gw_fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
+			// console.log(pfixts)
+			opp_full = []
+			if(pfixts.length == 0){
+				opp_full.push("(blank)")
+			} else {
+				for (j=0;j<pfixts.length;j++){
+					if (pfixts[j].team_h == team){
+						opp_name = data.teams.filter(d => {return d.id == pfixts[j].team_a})[0].short_name
+						opp_full.push(`${opp_name} (H)`)
+					} else {
+						opp_name = data.teams.filter(d => {return d.id == pfixts[j].team_h})[0].short_name
+						opp_full.push(`${opp_name} (A)`)
+					}
+				}
+			}
+
+			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":Number(ins), "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news,"opponent":opp_full})
 	    }
 
-    	var sortAscending = true;
-	    // var table = d3.select("#select-player-table").append('table');
-	    // var titles_pl = d3.keys(data[0]);
-	    var table = d3.select("#select-player-table").append('table');
-	    titles = ["name","position", "team","value","news"]
+		var sortAscending = false;
+		// var table = d3.select("#select-player-table").append('table');
+		// var titles_pl = d3.keys(data[0]);
+		var table = d3.select("#select-player-table").append('table');
+		titles = ["name","position", "team","value","news"]
 
-    	var headers = table.append('thead').append('tr')
-    		.attr("class","sticky-header")
-     		.selectAll('th')
+		var headers = table.append('thead').append('tr')
+			.attr("class","sticky-header")
+				.selectAll('th')
 			.data(titles).enter()
 			.append('th')
 			.text(function (d) {
@@ -1897,8 +2056,8 @@ function full_table_2 () {
 					this.className = 'des';
 				}
 			});
-    
-	    headers.attr("id","select_table_header")
+
+		headers.attr("id","select_table_header")
 
 		var rows = table.append('tbody').selectAll('tr')
 			.data(to_load_table).enter()
@@ -1918,9 +2077,9 @@ function full_table_2 () {
 				.text(function (d) {
 					return d.value;
 				})
+		rows.sort(function(a, b) { return d3.ascending(b["value"],a["value"]) });
 	})
 }
-
 
 function element_color(id,number,type){
 	if (type == "bank"){
@@ -1965,7 +2124,6 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, data) {
 	    if (error) throw error;
 
-	    console.log(data.filter(d=>{return d.event == 27}))
 	    var gw = full_data.events.filter(d=>{return d.is_next == true})[0].id
 	    
 	    update_fixtures(gw,full_data,data)
@@ -1973,13 +2131,11 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	    $("#previous")
 	    	.on("click",() => {
 	          gw-=1
-	          console.log(gw)
 	          update_fixtures(gw,full_data,data)
 	        })
 	    $("#next")
 	    	.on("click",() => {
 	          	gw+=1
-	          	console.log(gw)
 	          	update_fixtures(gw,full_data,data)
 	        })
 
@@ -1994,8 +2150,6 @@ function update_fixtures(gw,full_data,data) {
 	var current_gw_deadline = full_data.events.filter(d=> {return d.id == gw})[0].deadline_time
     var current_gw_data = data.filter(d=>{return d.event == gw})
 
-    console.log(gw)
-    console.log(team_data)
     current_fixtures = []
 
     for (i=0;i<current_gw_data.length;i++){
