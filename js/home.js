@@ -1236,21 +1236,6 @@ function insert_table (data, id, season) {
 }
 
 // FOOTBALL PITCH TEAM SELECTION
-// $("#previous_gw")
-// 	.on("click",() => {
-//       gw_next-=1
-//       console.log(gw)
-//       full_table_2(data,gw_next
-//       update_players($("#team_id").val())
-//     })
-// $("#next_gw")
-// 	.on("click",() => {
-//       	gw_next+=1
-//       	console.log(gw)
-//       	full_table_2(data,gw_next
-//       	update_players($("#team_id").val())
-//     })
-
 
 update_players(3370907)
 
@@ -1270,6 +1255,8 @@ var missing_players = []
 var unique_positions_missing = []
 var all_uniq_trans = []
 var bank_number = 0
+var gw_next = 0
+var gw = 0
 function update_players (team_id) {
 		$("#pitch").empty()
 
@@ -1388,8 +1375,8 @@ function update_players (team_id) {
     	if (error) throw error;
 
     	// console.log(player_data.events.filter(d=>{return d.is_current == true})[0].id)
-    	var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
-    	var gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
+    	gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
+    	gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
     	
 		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
 	
@@ -1472,26 +1459,27 @@ function update_players (team_id) {
 							
 							var next_gw_fixtures = fixtures.filter(d=>{return d.event == gw_next})
 							
-							var pfixts = next_gw_fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
-							// console.log(pfixts)
-							opp_full = []
-							if(pfixts.length == 0){
-								opp_full.push("(blank)")
+							var next_fix_full = fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
+							
+							var opp_all = []
+							if(next_fix_full.length == 0){
+								opp_all.push("(blank)")
 							} else {
-								for (j=0;j<pfixts.length;j++){
-									if (pfixts[j].team_h == team){
-										opp_name = player_data.teams.filter(d => {return d.id == pfixts[j].team_a})[0].short_name
-										opp_full.push(`${opp_name} (H)`)
+								for (j=0;j<next_fix_full.length;j++){
+									if (next_fix_full[j].team_h == team){
+										opp_name = player_data.teams.filter(d => {return d.id == next_fix_full[j].team_a})[0].short_name
+										opp_all.push({"opponent":`${opp_name} (H)`,"gw":next_fix_full[j].event})
 									} else {
-										opp_name = player_data.teams.filter(d => {return d.id == pfixts[j].team_h})[0].short_name
-										opp_full.push(`${opp_name} (A)`)
+										opp_name = player_data.teams.filter(d => {return d.id == next_fix_full[j].team_h})[0].short_name
+										opp_all.push({"opponent":`${opp_name} (A)`,"gw":next_fix_full[j].event})
 									}
 								}
 							}
 
-							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_name":opp_full})
+							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all})
 						}
 
+						console.log(fixtures)
 				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
 				        def = images_load.filter(d => {return d.position_name =="DEF"})
 				        mid = images_load.filter(d => {return d.position_name =="MID"})
@@ -1503,7 +1491,7 @@ function update_players (team_id) {
 						m = 1
 						for (let j=0; j<player_order.length;j++){
 						  	for (let i=0; i < player_order[j].length; i++) {
-						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_name":player_order[j][i].opponent_name})
+						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_all":player_order[j][i].opponent_all})
 
 						  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
 						    	m++
@@ -1518,7 +1506,7 @@ function update_players (team_id) {
 				        // team_value = d3.select("#team_value").append("text")
 				        
 				        console.log(images_load)
-				        // console.log(formation_images_load)
+				        console.log(formation_images_load)
 
 				        var playerPositions =[
 							{x:30, y:10, pos:1,posn:"GKP"},
@@ -1622,6 +1610,9 @@ function update_players (team_id) {
 
 									element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
+									formation_images_load = formation_images_load.filter(i=>{return i.position != d.pos})
+									console.log(formation_images_load)
+
 								});
 
 				        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
@@ -1716,11 +1707,69 @@ function update_players (team_id) {
 								.style("text-anchor", "middle")
 								.style("font-size", 10)
 								.text(function(d){ 
-									fix_load = formation_images_load.filter(i =>{return i.position == d.pos})[0].opponent_name
-									fix_load.length == 2 ? output = `${fix_load[0]} ${fix_load[1]}` : output = `${fix_load[0]}`
+									fix_load = formation_images_load.filter(i =>{return i.position == d.pos})[0].opponent_all
+									fix_load = fix_load.filter(j=>{return j.gw==gw_next})
+									fix_load.length == 2 ? output = `${fix_load[0].opponent} ${fix_load[1].opponent}` : fix_load.length == 0 ? output = "(blank)": output = `${fix_load[0].opponent}`
 									return output
 								})
 								.call(wrap, 50);
+						$("#gw_planner")[0].innerHTML = String(gw_next)
+
+						$("#previous_gw")
+							.on("click",() => {
+								(gw_next - 1) < gw ? gw_next : gw_next-=1
+						      	
+						      	fixtures.selectAll("text").remove()
+
+								fixtures.selectAll("text")
+									.data(playerPositions)
+									.enter().append("text")
+										.attr("id",function(d){return `fix_${d.pos}`})
+										.attr("x", function(d){
+											return scale(d.x);
+										})
+										.attr("y", function(d){
+											return scale(d.y+11);
+										})
+										.style("text-anchor", "middle")
+										.style("font-size", 10)
+										.text(function(d){ 
+											fix_load = formation_images_load.filter(i =>{return i.position == d.pos})[0].opponent_all
+											fix_load = fix_load.filter(j=>{return j.gw==gw_next})
+											fix_load.length == 2 ? output = `${fix_load[0].opponent} ${fix_load[1].opponent}` : fix_load.length == 0 ? output = "(blank)": output = `${fix_load[0].opponent}`
+											return output
+										})
+										.call(wrap, 50);
+
+									$("#gw_planner")[0].innerHTML = String(gw_next)
+						    })
+						$("#next_gw")
+							.on("click",() => {
+								(gw_next + 1) > 38 ? gw_next : gw_next+=1
+						      	// gw_next+=1
+						      	fixtures.selectAll("text").remove()
+
+						      	fixtures.selectAll("text")
+								.data(playerPositions)
+								.enter().append("text")
+									.attr("id",function(d){return `fix_${d.pos}`})
+									.attr("x", function(d){
+										return scale(d.x);
+									})
+									.attr("y", function(d){
+										return scale(d.y+11);
+									})
+									.style("text-anchor", "middle")
+									.style("font-size", 10)
+									.text(function(d){ 
+										fix_load = formation_images_load.filter(i =>{return i.position == d.pos})[0].opponent_all
+										fix_load = fix_load.filter(j=>{return j.gw==gw_next})
+										fix_load.length == 2 ? output = `${fix_load[0].opponent} ${fix_load[1].opponent}` : fix_load.length == 0 ? output = "(blank)": output = `${fix_load[0].opponent}`
+										return output
+									})
+									.call(wrap, 50);
+									$("#gw_planner")[0].innerHTML = String(gw_next)
+						    })
 			            
 			            var filterable_keys_raw = ["cost_change_start", "dreamteam_count", "event_points", "form", "now_cost", "points_per_game",
 						"selected_by_percent", "total_points", "transfers_in", "transfers_in_event", "transfers_out", "transfers_out_event", 
@@ -1757,10 +1806,10 @@ function update_players (team_id) {
 						// var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
 						// var gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
 
-					    full_table_2(player_data,gw_next,player_picks,player_info,player_name,playersContainer, fixtures,scale)
+					    full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale)
 			            
 			            $("#select-stat-player-table").on("change",function(){
-							full_table_2(player_data,gw_next,player_picks,player_info,player_name,playersContainer, fixtures,scale)
+							full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale)
 							// update_players($("#team_id").val())
 						})
 
@@ -1832,7 +1881,7 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	
 })
 
-function full_table_2 (data,gw_next,player_picks,player_info,player_name,playersContainer, fixtures,scale) {
+function full_table_2 (data,player_picks,player_info,player_name,playersContainer, fixtures,scale) {
 
 	d3.select("#select-player-table").select("table").remove();
 
@@ -1850,22 +1899,24 @@ function full_table_2 (data,gw_next,player_picks,player_info,player_name,players
 			team_name = data.teams.filter(d => {return d.id == team})[0].short_name
 			var pfixts = next_gw_fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
 			// console.log(pfixts)
-			opp_full = []
-			if(pfixts.length == 0){
-				opp_full.push("(blank)")
+			var next_fix_full = fixtures_data.filter(d=>{return d.team_h == team || d.team_a == team})
+							
+			var opp_all = []
+			if(next_fix_full.length == 0){
+				opp_all.push("(blank)")
 			} else {
-				for (j=0;j<pfixts.length;j++){
-					if (pfixts[j].team_h == team){
-						opp_name = data.teams.filter(d => {return d.id == pfixts[j].team_a})[0].short_name
-						opp_full.push(`${opp_name} (H)`)
+				for (j=0;j<next_fix_full.length;j++){
+					if (next_fix_full[j].team_h == team){
+						opp_name = data.teams.filter(d => {return d.id == next_fix_full[j].team_a})[0].short_name
+						opp_all.push({"opponent":`${opp_name} (H)`,"gw":next_fix_full[j].event})
 					} else {
-						opp_name = data.teams.filter(d => {return d.id == pfixts[j].team_h})[0].short_name
-						opp_full.push(`${opp_name} (A)`)
+						opp_name = data.teams.filter(d => {return d.id == next_fix_full[j].team_h})[0].short_name
+						opp_all.push({"opponent":`${opp_name} (A)`,"gw":next_fix_full[j].event})
 					}
 				}
 			}
 
-			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":ins, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news,"opponent":opp_full})
+			to_load_table.push({"id":data.elements[i].id, "name": data.elements[i].web_name, "value":ins, "add":data.elements[i].code,"ch_play": data.elements[i].chance_of_playing_next_round == null ? 100 : data.elements[i].chance_of_playing_next_round, "price":data.elements[i].now_cost,"position":position,"team":data.teams.filter(d=>{ return d.id == data.elements[i].team})[0].short_name,"news":data.elements[i].news,"opponent":opp_all})
 	    }
 
 		var sortAscending = false;
@@ -2052,20 +2103,29 @@ function full_table_2 (data,gw_next,player_picks,player_info,player_name,players
 								.attr("ry", 6)
 								.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
 
+							
 							fixtures.append("text")
 								.attr("id",function(d){return `fix_${attrs.pos}`})
 								.attr("x", scale(attrs.x))
 								.attr("y", scale(attrs.y+11))
 								.style("text-anchor", "middle")
 								.style("font-size", 10)
-								.text(d.opponent.length == 2 ? `${d.opponent[0]} ${d.opponent[1]}` : d.opponent[0])
+								.text(function (){
+									output = d.opponent.filter(i=>{return i.gw == gw_next})
+									return output.length == 2 ? `${output[0].opponent} ${output[1].opponent}` : output.length == 0 ? "(blank)"  :  output[0].opponent})
 								.call(wrap, 50);
-
+								
 			              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
 
 			              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
 
 			              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
+			              	console.log(d)
+			              	image_url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`
+			              	formation_images_load.push({"player_id":d.id,"position":attrs.pos,"position_name":d.position,"url":image_url,"name":d.name,"ch_play":d.ch_play,"value":d.value,"value_purchase":d.value,"team":d.team,"opponent_all":d.opponent})
+
+			              	formation_images_load.sort((a, b) => (a.position > b.position) ? 1 : -1)
+			              	console.log(formation_images_load)
 						}
 						
 		              	

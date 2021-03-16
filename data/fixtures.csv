@@ -1,6 +1,5 @@
 finished,event,team_h_difficulty,team_a_difficulty,team_a_name,team_a_short_name,team_h_name,team_h_short_name,date
-False,28.0,4.0,3,Liverpool,LIV,Wolves,WOL,2021-03-15
-False,29.0,(blank),(blank),(blank),(blank),Burnley,BUR,(blank)
+False,29.0,3.0,2,Leeds,LEE,Fulham,FUL,2021-03-19
 False,29.0,(blank),(blank),(blank),(blank),Southampton,SOU,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Sheffield Utd,SHU,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Man Utd,MUN,(blank)
@@ -10,44 +9,44 @@ False,29.0,(blank),(blank),(blank),(blank),Leicester,LEI,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Everton,EVE,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Crystal Palace,CRY,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Chelsea,CHE,(blank)
+False,29.0,(blank),(blank),(blank),(blank),Burnley,BUR,(blank)
 False,29.0,(blank),(blank),(blank),(blank),West Brom,WBA,(blank)
 False,29.0,(blank),(blank),(blank),(blank),Wolves,WOL,(blank)
-False,29.0,3.0,3,Spurs,TOT,Aston Villa,AVL,2021-03-21
-False,29.0,3.0,4,Arsenal,ARS,West Ham,WHU,2021-03-21
 False,29.0,2.0,2,Newcastle,NEW,Brighton,BHA,2021-03-20
-False,29.0,3.0,2,Leeds,LEE,Fulham,FUL,2021-03-19
-False,30.0,3.0,4,Brighton,BHA,Man Utd,MUN,2021-04-03
-False,30.0,4.0,3,West Ham,WHU,Wolves,WOL,2021-04-03
-False,30.0,5.0,4,Man City,MCI,Leicester,LEI,2021-04-03
-False,30.0,2.0,3,Sheffield Utd,SHU,Leeds,LEE,2021-04-03
-False,30.0,3.0,3,Crystal Palace,CRY,Everton,EVE,2021-04-03
+False,29.0,3.0,4,Arsenal,ARS,West Ham,WHU,2021-03-21
+False,29.0,3.0,3,Spurs,TOT,Aston Villa,AVL,2021-03-21
+False,30.0,4.0,3,West Ham,WHU,Wolves,WOL,2021-04-05
 False,30.0,2.0,4,West Brom,WBA,Chelsea,CHE,2021-04-03
+False,30.0,2.0,3,Sheffield Utd,SHU,Leeds,LEE,2021-04-03
+False,30.0,5.0,4,Man City,MCI,Leicester,LEI,2021-04-03
 False,30.0,2.0,3,Fulham,FUL,Aston Villa,AVL,2021-04-03
-False,30.0,4.0,3,Liverpool,LIV,Arsenal,ARS,2021-04-03
-False,30.0,3.0,3,Spurs,TOT,Newcastle,NEW,2021-04-03
-False,30.0,2.0,3,Burnley,BUR,Southampton,SOU,2021-04-03
-False,31.0,4.0,4,Leicester,LEI,West Ham,WHU,2021-04-10
-False,31.0,4.0,2,Everton,EVE,Brighton,BHA,2021-04-10
-False,31.0,2.0,2,Newcastle,NEW,Burnley,BUR,2021-04-10
-False,31.0,4.0,3,Chelsea,CHE,Crystal Palace,CRY,2021-04-10
-False,31.0,3.0,2,Wolves,WOL,Fulham,FUL,2021-04-10
+False,30.0,2.0,3,Burnley,BUR,Southampton,SOU,2021-04-04
+False,30.0,3.0,3,Spurs,TOT,Newcastle,NEW,2021-04-04
+False,30.0,3.0,3,Crystal Palace,CRY,Everton,EVE,2021-04-05
+False,30.0,4.0,3,Liverpool,LIV,Arsenal,ARS,2021-04-04
+False,30.0,3.0,4,Brighton,BHA,Man Utd,MUN,2021-04-04
+False,31.0,2.0,2,Southampton,SOU,West Brom,WBA,2021-04-12
+False,31.0,3.0,2,Arsenal,ARS,Sheffield Utd,SHU,2021-04-11
+False,31.0,4.0,4,Man Utd,MUN,Spurs,TOT,2021-04-11
+False,31.0,4.0,4,Leicester,LEI,West Ham,WHU,2021-04-11
+False,31.0,2.0,2,Newcastle,NEW,Burnley,BUR,2021-04-11
 False,31.0,3.0,4,Aston Villa,AVL,Liverpool,LIV,2021-04-10
 False,31.0,3.0,5,Leeds,LEE,Man City,MCI,2021-04-10
-False,31.0,3.0,2,Arsenal,ARS,Sheffield Utd,SHU,2021-04-10
-False,31.0,4.0,4,Man Utd,MUN,Spurs,TOT,2021-04-10
-False,31.0,2.0,2,Southampton,SOU,West Brom,WBA,2021-04-10
-False,32.0,3.0,3,Spurs,TOT,Everton,EVE,2021-04-17
+False,31.0,3.0,2,Wolves,WOL,Fulham,FUL,2021-04-09
+False,31.0,4.0,2,Everton,EVE,Brighton,BHA,2021-04-12
+False,31.0,4.0,3,Chelsea,CHE,Crystal Palace,CRY,2021-04-10
 False,32.0,2.0,3,Fulham,FUL,Arsenal,ARS,2021-04-17
-False,32.0,5.0,3,Man City,MCI,Aston Villa,AVL,2021-04-17
 False,32.0,2.0,3,Sheffield Utd,SHU,Wolves,WOL,2021-04-17
 False,32.0,3.0,3,Crystal Palace,CRY,Southampton,SOU,2021-04-17
 False,32.0,4.0,3,West Ham,WHU,Newcastle,NEW,2021-04-17
 False,32.0,2.0,4,Burnley,BUR,Man Utd,MUN,2021-04-17
 False,32.0,2.0,4,West Brom,WBA,Leicester,LEI,2021-04-17
 False,32.0,4.0,3,Liverpool,LIV,Leeds,LEE,2021-04-17
+False,32.0,3.0,3,Spurs,TOT,Everton,EVE,2021-04-17
 False,32.0,3.0,4,Brighton,BHA,Chelsea,CHE,2021-04-17
-False,33.0,(blank),(blank),(blank),(blank),Fulham,FUL,(blank)
+False,32.0,5.0,3,Man City,MCI,Aston Villa,AVL,2021-04-17
 False,33.0,(blank),(blank),(blank),(blank),Man City,MCI,(blank)
+False,33.0,(blank),(blank),(blank),(blank),Fulham,FUL,(blank)
 False,33.0,(blank),(blank),(blank),(blank),Southampton,SOU,(blank)
 False,33.0,(blank),(blank),(blank),(blank),Spurs,TOT,(blank)
 False,33.0,3.0,2,Brighton,BHA,Sheffield Utd,SHU,2021-04-24

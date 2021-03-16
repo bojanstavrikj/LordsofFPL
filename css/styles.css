@@ -474,7 +474,7 @@ th.aes:after {
   cursor:s-resize;
 }
 
-#previous:hover, #next:hover{
+.fa-arrow-left:hover, .fa-arrow-right:hover{
   cursor:pointer;
 }
 
