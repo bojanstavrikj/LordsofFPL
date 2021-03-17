@@ -83,8 +83,7 @@
 		    tooltip.html(
 		    	`<button type="button" id="close" style="float:right;">X</button><br>You can use the dropdown menu to select which column you want to search for.<br>
 		    	<strong>The available options are</strong>: name, position, team. <br>
-		    	For example, if you select position in the dropdown, and search fwd, all forwards will show up in the table (as shown in the image below).<br>
-		    	<img src="/data/img/fwd-search.png" style="float:center; width:30%;"><br><br>
+		    	For example, if you select position in the dropdown, and search fwd, all forwards will show up in the table.<br>
 		    	Once you have found the player you need, simply click on them in the table and you will see a pop-up window with 3 options.<br>
 		    	One is adding the player to your team. The other two allow you to select which comparison field to add them to in the comparison tool below.`)
 		      .style("left", (d3.event.pageX)-300 + "px")
