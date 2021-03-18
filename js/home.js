@@ -691,6 +691,8 @@ function update (data,chart_type) {
     // d3.select("#comparison_div").selectAll("table").remove()
     d3.select("#p2-full-table").selectAll("table").remove()
     d3.select("#p1-full-table").selectAll("table").remove()
+    d3.select("#p1-full-fixtures").selectAll("table").remove()
+    d3.select("#p2-full-fixtures").selectAll("table").remove()
     
     d3.selectAll("#blank_text").remove()
    
