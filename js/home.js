@@ -1241,6 +1241,8 @@ function insert_table (data, id, season) {
 update_players(3370907)
 
 $("#team_id_button").on("click",function(){
+	all_uniq_trans = []
+	bank_number = 0
 	update_players($("#team_id").val())
 })
 
@@ -1252,14 +1254,14 @@ var tooltip_actions = d3.select("body")
     .attr("class", "tooltip_actions")
     .style("opacity", 0);
 
+var gw_next = 0
+var gw = 0
 var missing_players = []
 var unique_positions_missing = []
 var all_uniq_trans = []
 var bank_number = 0
-var gw_next = 0
-var gw = 0
 function update_players (team_id) {
-		$("#pitch").empty()
+	$("#pitch").empty()
 
 	var scale = d3.scale.linear()
 		.domain([0, 100])
@@ -1807,10 +1809,10 @@ function update_players (team_id) {
 						// var gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
 						// var gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
 
-					    full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale)
+					    full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale,images_load)
 			            
 			            $("#select-stat-player-table").on("change",function(){
-							full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale)
+							full_table_2(player_data,player_picks,player_info,player_name,playersContainer, fixtures,scale,images_load)
 							// update_players($("#team_id").val())
 						})
 
@@ -1882,7 +1884,7 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	
 })
 
-function full_table_2 (data,player_picks,player_info,player_name,playersContainer, fixtures,scale) {
+function full_table_2 (data,player_picks,player_info,player_name,playersContainer, fixtures,scale,images_load) {
 
 	d3.select("#select-player-table").select("table").remove();
 
@@ -2041,7 +2043,7 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 								.style("text-anchor", "middle")
 								.style("font-size", 10)
 								.text(function(){ 
-									in_team = formation_images_load.filter(i =>{return i.player_id == d.id})
+									in_team = images_load.filter(i =>{return i.player_id == d.id})
 									if(in_team.length > 0){
 										purch_val = in_team[0].value_purchase
 										curr_val = d.price/10
