@@ -64,17 +64,21 @@
 		<div id="error-message" title="Message" style="display:none; padding:5px;margin:auto;text-align: center;"></div>
 	</div>
 	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;">
-		<div class="row">
+		<div class="row" style="width:60%; margin:auto;">
+			<div class="col" style="margin:auto;">
+				<i class="fas fa-arrow-left fa-2x" style="float:right;" id="previous_gw"></i>
+			</div>
 			<div class="col">
-				<h4 style="width:30% !important; margin:auto">
-					<i class="fas fa-arrow-left" style="float:left;" id="previous_gw"></i>
+				<h4 style=" margin:auto">
 					Transfer Planner
-					<i class="fas fa-arrow-right" style="float:right;" id="next_gw"></i>
 					<div style="font-size:12px" class="col">
 						<p>Fixtures shown for GW: <a id="gw_planner"></a></p>
 					</div>
 				</h4>
 				<a id="gw-pitch"></a>
+			</div>
+			<div class="col" style="margin:auto;">
+				<i class="fas fa-arrow-right fa-2x" style="float:left;" id="next_gw"></i>
 			</div>
 		</div>
 		<div class="row">
@@ -103,7 +107,7 @@
 					<div class="w-100"></div>
 					<div class="col user_transfers">
 						<strong>Latest Points</strong>
-						<div><a id="gw_transfers"></a> pts</div>
+						<div><a id="gw_points"></a> pts</div>
 					</div>
 					<div class="w-100"></div>
 					<div class="col">

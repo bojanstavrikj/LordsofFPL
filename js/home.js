@@ -169,9 +169,11 @@
 	'FUL': 'Fulham', 'LEI': 'Leicester', 'LEE': 'Leeds', 'LIV': 'Liverpool', 'MCI': 'Man City', 'MUN': 'Man Utd', 'NEW': 'Newcastle',
 	'SHU': 'Sheffield Utd', 'SOU': 'Southampton', 'TOT': 'Spurs', 'WBA': 'West Brom', 'WHU': 'West Ham', 'WOL': 'Wolves'}
 
-	d3.csv("/data/players_full.csv", function(error, data) {
-		if (error) throw error; 
-
+	var data = {}
+	d3.csv("/data/players_small.csv", function(error, data1) {
+		if (error) throw error;
+		data = data1
+		
 		var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
 
 	    $("#gw-slider").slider({
@@ -261,108 +263,366 @@
 		
 		update(data)
 
-	    $("#player1")
-	        .on("change", function(){
-	        	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	        	load_stats(features,to_fill)
-	          	update(data)
-	        })
+		d3.csv("/data/players_full.csv", function(error, data2) {
+			if (error) throw error;
+			data = data2
 
-		$("#player2")
-	        .on("change", () => {
-	          to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-        	  load_stats(features,to_fill)
-	          update(data)
-	        })
+			var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
 
-		$("#stat")
-	        .on("change", () => {
-	          update(data)
-	        })
+		    $("#gw-slider").slider({
+		      min: 1,
+		      max: max_gw,
+		      step: 1,
+		      values: [ 1, max_gw ],
+		      range: true,
+		      stop: (event, ui) => {
+		      }
+		    });
+		    $("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
 
-	    $("#gw-slider").slider({
-			stop: (event,ui) => {
-				update(data)
-				$("#top-gws")[0].innerHTML = String(ui.values[0] + "-" + ui.values[1])
-    	}
+		    var elem_load_id = []
+		    data.filter(d => {
+		    	elem_load_id.push({"key": Number(d.element), "value": `${d.web_name} (${d.team_short})`})
+		    });
+		    var elem_load_id = elem_load_id.reduce((unique, o) => {
+			    if(!unique.some(obj => obj.key === o.key)) {
+			      unique.push(o);
+			    }
+			    return unique;
+			},[]);
+
+		    var elementsp1 = ""
+			for(i= 0; i < elem_load_id.length; i++){
+			    elem_load_id[i].key == 254 ? elementsp1 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp1 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+			}
+			var elementsp2 = ""
+			for(i= 0; i < elem_load_id.length; i++){
+			    elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+			}
+
+			document.getElementById("player1").innerHTML = elementsp1;
+			document.getElementById("player2").innerHTML = elementsp2;
+
+			data.forEach(d => {
+			    d.assists = Number(d.assists)
+			    d.bonus = Number(d.bonus)
+			    d.bps = Number(d.bps)
+			    d.clean_sheets = Number(d.clean_sheets)
+			    d.creativity = Number(d.creativity)
+			    // d.date = d.date
+			    d.element = Number(d.element)
+			    d.fixture = Number(d.fixture)
+			    d.goals_conceded = Number(d.goals_conceded)
+			    d.goals_scored = Number(d.goals_scored)
+			    d.ict_index = Number(d.ict_index)
+			    d.influence = Number(d.influence)
+			    d.key_passes = Number(d.key_passes)
+			    d.minutes = Number(d.minutes)
+			    d.npg = Number(d.npg)
+			    d.npxG = Number(d.npxG)
+			    d.opponent_team = Number(d.opponent_team)
+			    d.own_goals = Number(d.own_goals)
+			    d.penalties_missed = Number(d.penalties_missed)
+			    d.penalties_saved = Number(d.penalties_saved)
+			    d.player_id = Number(d.player_id)
+			    d.red_cards = Number(d.red_cards)
+			    d.round = Number(d.round)
+			    d.saves = Number(d.saves)
+			    d.selected = Number(d.selected)
+			    d.shots = Number(d.shots)
+			    d.team_a_score = Number(d.team_a_score)
+			    d.team_h_score = Number(d.team_h_score)
+			    d.threat = Number(d.threat)
+			    d.time = Number(d.time)
+			    d.total_points = Number(d.total_points)
+			    d.transfers_balance = Number(d.transfers_balance)
+			    d.transfers_in = Number(d.transfers_in)
+			    d.transfers_out = Number(d.transfers_out)
+			    d.value = Number(d.value)
+			    d.xA = Number(d.xA)
+		    	d.xG = Number(d.xG)
+		    	d.xGBuildup = Number(d.xGBuildup)
+		    	d.xGChain = Number(d.xGChain)
+		    	d.yellow_cards = Number(d.yellow_cards)
+		    	d.chance_playing_tr = Number(d.chance_playing_tr)
+		    	d.chance_playing_nx = Number(d.chance_playing_nx)
+		    	d.form = Number(d.form)
+		    	d.round_points = Number(d.round_points)
+			});
+
+
+			to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+			load_stats(features,to_fill)
+			
+			update(data)
+
+		    $("#player1")
+		        .on("change", function(){
+		        	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+		        	load_stats(features,to_fill)
+		          	update(data)
+		        })
+
+			$("#player2")
+		        .on("change", () => {
+		          to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+	        	  load_stats(features,to_fill)
+		          update(data)
+		        })
+
+			$("#stat")
+		        .on("change", () => {
+		          update(data)
+		        })
+
+		    $("#gw-slider").slider({
+				stop: (event,ui) => {
+					update(data)
+					$("#top-gws")[0].innerHTML = String(ui.values[0] + "-" + ui.values[1])
+	    	}
+			});
+			
+			$("#check")
+		        .on("click", () => {
+		          update(data)
+		        })
+		    $("#stat-select")
+		    .on("change", () => {
+		      update(data)
+		    })
+
+		    $(function() {
+			   $("#info1").on("click", function(){ 
+			   		update(data)
+			       $( "#p1-full-table" ).dialog({
+			          height: window.innerHeight-100,
+			          width: window.innerWidth/1.5,
+			          modal: true
+			        });
+			       $("#p1-full-table").show();
+
+			    });
+			 });
+
+			$(function() {
+			   $("#info2").on("click", function(){ 
+			   		update(data)
+			       $( "#p2-full-table" ).dialog({
+			          height: window.innerHeight-100,
+			          width: window.innerWidth/2,
+			          modal: true
+			        });
+
+			       $("#p2-full-table").show();
+			    });
+			 });
+
+			$(function() {
+			   $("#full_fix1").on("click", function(){
+			   	update(data)
+			       $( "#p1-full-fixtures" ).dialog({
+			          height: window.innerHeight-100,
+			          width: window.innerWidth/1.5,
+			          modal: true
+			        });
+			       $("#p1-full-fixtures").show();
+			    });
+			 });
+
+			$(function() {
+			   $("#full_fix2").on("click", function(){ 
+			   	update(data)
+			       $( "#p2-full-fixtures" ).dialog({
+			          height: window.innerHeight-100,
+			          width: window.innerWidth/1.5,
+			          modal: true
+			        });
+			       $("#p2-full-fixtures").show();
+			    });
+			 });
+			console.log(data)
 		});
+		console.log(data)
+	})
+
+	// d3.csv("/data/players_full.csv", function(error, data) {
+	// 	if (error) throw error;
+	// 	console.log(data)
+
+	// 	var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
+
+	//     $("#gw-slider").slider({
+	//       min: 1,
+	//       max: max_gw,
+	//       step: 1,
+	//       values: [ 1, max_gw ],
+	//       range: true,
+	//       stop: (event, ui) => {
+	//       }
+	//     });
+	//     $("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
+
+	//     var elem_load_id = []
+	//     data.filter(d => {
+	//     	elem_load_id.push({"key": Number(d.element), "value": `${d.web_name} (${d.team_short})`})
+	//     });
+	//     var elem_load_id = elem_load_id.reduce((unique, o) => {
+	// 	    if(!unique.some(obj => obj.key === o.key)) {
+	// 	      unique.push(o);
+	// 	    }
+	// 	    return unique;
+	// 	},[]);
+
+	//     var elementsp1 = ""
+	// 	for(i= 0; i < elem_load_id.length; i++){
+	// 	    elem_load_id[i].key == 254 ? elementsp1 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp1 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+	// 	}
+	// 	var elementsp2 = ""
+	// 	for(i= 0; i < elem_load_id.length; i++){
+	// 	    elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+	// 	}
+
+	// 	document.getElementById("player1").innerHTML = elementsp1;
+	// 	document.getElementById("player2").innerHTML = elementsp2;
+
+	// 	data.forEach(d => {
+	// 	    d.assists = Number(d.assists)
+	// 	    d.bonus = Number(d.bonus)
+	// 	    d.bps = Number(d.bps)
+	// 	    d.clean_sheets = Number(d.clean_sheets)
+	// 	    d.creativity = Number(d.creativity)
+	// 	    // d.date = d.date
+	// 	    d.element = Number(d.element)
+	// 	    d.fixture = Number(d.fixture)
+	// 	    d.goals_conceded = Number(d.goals_conceded)
+	// 	    d.goals_scored = Number(d.goals_scored)
+	// 	    d.ict_index = Number(d.ict_index)
+	// 	    d.influence = Number(d.influence)
+	// 	    d.key_passes = Number(d.key_passes)
+	// 	    d.minutes = Number(d.minutes)
+	// 	    d.npg = Number(d.npg)
+	// 	    d.npxG = Number(d.npxG)
+	// 	    d.opponent_team = Number(d.opponent_team)
+	// 	    d.own_goals = Number(d.own_goals)
+	// 	    d.penalties_missed = Number(d.penalties_missed)
+	// 	    d.penalties_saved = Number(d.penalties_saved)
+	// 	    d.player_id = Number(d.player_id)
+	// 	    d.red_cards = Number(d.red_cards)
+	// 	    d.round = Number(d.round)
+	// 	    d.saves = Number(d.saves)
+	// 	    d.selected = Number(d.selected)
+	// 	    d.shots = Number(d.shots)
+	// 	    d.team_a_score = Number(d.team_a_score)
+	// 	    d.team_h_score = Number(d.team_h_score)
+	// 	    d.threat = Number(d.threat)
+	// 	    d.time = Number(d.time)
+	// 	    d.total_points = Number(d.total_points)
+	// 	    d.transfers_balance = Number(d.transfers_balance)
+	// 	    d.transfers_in = Number(d.transfers_in)
+	// 	    d.transfers_out = Number(d.transfers_out)
+	// 	    d.value = Number(d.value)
+	// 	    d.xA = Number(d.xA)
+	//     	d.xG = Number(d.xG)
+	//     	d.xGBuildup = Number(d.xGBuildup)
+	//     	d.xGChain = Number(d.xGChain)
+	//     	d.yellow_cards = Number(d.yellow_cards)
+	//     	d.chance_playing_tr = Number(d.chance_playing_tr)
+	//     	d.chance_playing_nx = Number(d.chance_playing_nx)
+	//     	d.form = Number(d.form)
+	//     	d.round_points = Number(d.round_points)
+	// 	});
+
+
+	// 	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+	// 	load_stats(features,to_fill)
 		
-		$("#check")
-	        .on("click", () => {
-	          update(data)
-	        })
-	    $("#stat-select")
-	    .on("change", () => {
-	      update(data)
-	    })
+	// 	update(data)
 
-	    $(function() {
-		   $("#info1").on("click", function(){ 
-		   		update(data)
-		       $( "#p1-full-table" ).dialog({
-		          height: window.innerHeight-100,
-		          width: window.innerWidth/1.5,
-		          modal: true
-		        });
-		       $("#p1-full-table").show();
+	//     $("#player1")
+	//         .on("change", function(){
+	//         	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+	//         	load_stats(features,to_fill)
+	//           	update(data)
+	//         })
 
-		    });
-		 });
+	// 	$("#player2")
+	//         .on("change", () => {
+	//           to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
+ //        	  load_stats(features,to_fill)
+	//           update(data)
+	//         })
 
-		$(function() {
-		   $("#info2").on("click", function(){ 
-		   		update(data)
-		       $( "#p2-full-table" ).dialog({
-		          height: window.innerHeight-100,
-		          width: window.innerWidth/2,
-		          modal: true
-		        });
+	// 	$("#stat")
+	//         .on("change", () => {
+	//           update(data)
+	//         })
 
-		       $("#p2-full-table").show();
-		    });
-		 });
+	//     $("#gw-slider").slider({
+	// 		stop: (event,ui) => {
+	// 			update(data)
+	// 			$("#top-gws")[0].innerHTML = String(ui.values[0] + "-" + ui.values[1])
+ //    	}
+	// 	});
+		
+	// 	$("#check")
+	//         .on("click", () => {
+	//           update(data)
+	//         })
+	//     $("#stat-select")
+	//     .on("change", () => {
+	//       update(data)
+	//     })
 
-		$(function() {
-		   $("#full_fix1").on("click", function(){
-		   	update(data)
-		       $( "#p1-full-fixtures" ).dialog({
-		          height: window.innerHeight-100,
-		          width: window.innerWidth/1.5,
-		          modal: true
-		        });
-		       $("#p1-full-fixtures").show();
-		    });
-		 });
+	//     $(function() {
+	// 	   $("#info1").on("click", function(){ 
+	// 	   		update(data)
+	// 	       $( "#p1-full-table" ).dialog({
+	// 	          height: window.innerHeight-100,
+	// 	          width: window.innerWidth/1.5,
+	// 	          modal: true
+	// 	        });
+	// 	       $("#p1-full-table").show();
 
-		$(function() {
-		   $("#full_fix2").on("click", function(){ 
-		   	update(data)
-		       $( "#p2-full-fixtures" ).dialog({
-		          height: window.innerHeight-100,
-		          width: window.innerWidth/1.5,
-		          modal: true
-		        });
-		       $("#p2-full-fixtures").show();
-		    });
-		 });
-	
+	// 	    });
+	// 	 });
 
-		// $('input[name=check]').change(function() {
-		//   if ($(this).is(':checked')) {
-		//   	update(data,"not-checked")
-		//     console.log("Checkbox is checked..")
-		//   } else {
-		//   	update(data,"checked")
-		//     console.log("Checkbox is not checked..")
-		//   }
-		// });
-	});
+	// 	$(function() {
+	// 	   $("#info2").on("click", function(){ 
+	// 	   		update(data)
+	// 	       $( "#p2-full-table" ).dialog({
+	// 	          height: window.innerHeight-100,
+	// 	          width: window.innerWidth/2,
+	// 	          modal: true
+	// 	        });
 
-// var p1_pastgames = d3.select("#p1-past-games")	
-// 	.append("svg")
-// 	.attr("width", 200)
-// 	.attr("height", 20)
-// 	.append("g")
+	// 	       $("#p2-full-table").show();
+	// 	    });
+	// 	 });
+
+	// 	$(function() {
+	// 	   $("#full_fix1").on("click", function(){
+	// 	   	update(data)
+	// 	       $( "#p1-full-fixtures" ).dialog({
+	// 	          height: window.innerHeight-100,
+	// 	          width: window.innerWidth/1.5,
+	// 	          modal: true
+	// 	        });
+	// 	       $("#p1-full-fixtures").show();
+	// 	    });
+	// 	 });
+
+	// 	$(function() {
+	// 	   $("#full_fix2").on("click", function(){ 
+	// 	   	update(data)
+	// 	       $( "#p2-full-fixtures" ).dialog({
+	// 	          height: window.innerHeight-100,
+	// 	          width: window.innerWidth/1.5,
+	// 	          modal: true
+	// 	        });
+	// 	       $("#p2-full-fixtures").show();
+	// 	    });
+	// 	 });
+	// });
 
 // Unique function
 function onlyUnique(value, index, self) {
@@ -1292,7 +1552,9 @@ function update_players (team_id) {
 		.attr("height", scale(pitch.length + pitch.padding.top + pitch.padding.bottom))
 		.attr("style", "background:"+pitch.grassColor+";margin-left:-" + 0.01 * scale(pitch.width + pitch.padding.left + pitch.padding.right) + "");;
 
-
+	console.log(scale(pitch.width + pitch.padding.left + pitch.padding.right))
+	console.log(pitch.width + pitch.padding.left + pitch.padding.right)
+	console.log(document.getElementById("pitch").offsetWidth)
 
 	var pitchElement = svg.append("g")
 		.attr("transform", "translate(" +scale(pitch.padding.left) + "," + scale(pitch.padding.top) + ")")
@@ -1474,7 +1736,8 @@ function update_players (team_id) {
 							var next_fix_full = fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
 							
 							var live_points = player_data.elements.filter(d=> {return d.id == data.picks[i].element})[0].event_points
-							tot_pts += live_points
+
+							tot_pts += live_points * data.picks[i].multiplier
 
 							var opp_all = []
 							if(next_fix_full.length == 0){
@@ -1493,9 +1756,9 @@ function update_players (team_id) {
 
 							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all,"total_points":live_points})
 						}
-						$("#gw_transfers")[0].innerHTML = String(tot_pts)
-						console.log(tot_pts)
-						// console.log(fixtures)
+						console.log(data)
+						$("#gw_points")[0].innerHTML = String(tot_pts)
+						
 				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
 				        def = images_load.filter(d => {return d.position_name =="DEF"})
 				        mid = images_load.filter(d => {return d.position_name =="MID"})
@@ -1880,22 +2143,6 @@ function myFunction() {
 		}
 	}
 }
-	
-
-
-
-
-d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, data) {
-	if (error) throw error; 
-
-	
-
-	// $("#select-stat-player-table").on("change",function(){
-	// 	full_table_2(data,gw_next)
-	// 	// update_players($("#team_id").val())
-	// })
-	
-})
 
 function full_table_2 (data,player_picks,player_info,player_name,playersContainer, fixtures,scale,images_load) {
 
