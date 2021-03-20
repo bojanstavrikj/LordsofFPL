@@ -2682,9 +2682,11 @@ function update_fixtures(gw,full_data,data) {
 			.attr("x", (width_gw-10)/2)
 			.attr("y", function(d){
 				if (d.score[0].status=="finished"){
-				score_y_r+=step
+					score_y_r+=step
+					score_y_f+=step
 				return score_y_r
 				} else {
+					score_y_r+=step
 					score_y_f+=step 
 				return score_y_f
 				}
@@ -2692,13 +2694,16 @@ function update_fixtures(gw,full_data,data) {
 			.attr("text-anchor", "middle")
 			.style("font-size","10px")
 			.text(function(d) {
+				
 				if (d.score[0].status=="finished"){
-					return d.score[0].score
+					output = d.score[0].score
+					console.log(output)
 				} else {
 					var date = new Date(d.score[0].score);
-					date = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
-				return date
+					output = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
+					console.log(output)
 				}
+				return output
 			})
 			.call(wrap, 30);
 }
