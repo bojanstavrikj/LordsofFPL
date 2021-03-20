@@ -1385,7 +1385,14 @@ function update_players (team_id) {
 	
 		d3.json(url, function(error, data) {
 		  	if (error) {
-		  		alert("Looks like you have entered an incorrect team ID. For information on how to find your team ID, please click on the info button.")
+		  		$("#error-message").empty()
+				$("#error-message")[0].innerHTML = `Looks like you have entered an incorrect team ID. For information on how to find your team ID, please click on the info icon above the submit button. If this doesn't work, please contact me through the form in the footer below!`
+				$( "#error-message" ).dialog({
+		          height: 100,
+		          width: window.innerWidth/1.5,
+		          modal: true
+		        });
+		       $("#error-message").show()
 		  		throw error
 		  	};
 		  	// console.log(data)
@@ -1407,11 +1414,11 @@ function update_players (team_id) {
 				        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
 				        
-						if (transfer_data.filter(d=>{return d.event == 27}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
+						if (transfer_data.filter(d=>{return d.event == gw}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
 							// freet.text(2)
 							$("#free_transfers")[0].innerHTML = String(2)
 							free_trans = 2
-						} if (transfer_data.filter(d=>{return d.event == 27}).length >= 1) {
+						} if (transfer_data.filter(d=>{return d.event == gw}).length >= 1) {
 							// freet.text(1)
 							$("#free_transfers")[0].innerHTML = String(1)
 							free_trans = 1
@@ -2022,120 +2029,146 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 				    if (attrs.posn == d.position){
 						// console.log(my_picks_team.filter(t=>{return t.team == d.team}))
 						max_team = my_picks_team.filter(t=>{return t.team == d.team})
+						in_team_now = formation_images_load.filter(i =>{return i.player_id == d.id})
 						
-						if (max_team.length >= 3){
-							alert("You already have 3 players from the same team")
+						if (in_team_now.length == 1) {
+							$("#error-message").empty()
+							$("#error-message")[0].innerHTML = `You already have ${in_team_now[0].name} in your team`
+							$( "#error-message" ).dialog({
+					          height: 100,
+					          width: window.innerWidth/1.5,
+					          modal: true
+					        });
+					       $("#error-message").show()
 						} else {
-							player_picks.append("image")
-				                .attr("id",`position_${attrs.pos}_pick`)
-				                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
-				                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
-				                .attr("x",scale(attrs.x - 6))
-				                .attr("y",scale(attrs.y - 10))
-				                .attr("width", 60)
-				                .attr("height", 60)
-				                .attr("text-anchor","middle");
+							if (max_team.length >= 3){
+								$("#error-message").empty()
+								$("#error-message")[0].innerHTML = `You already have 3 players from ${d.team}`
+								$( "#error-message" ).dialog({
+						          height: 100,
+						          width: window.innerWidth/1.5,
+						          modal: true
+						        });
+						       $("#error-message").show()
+							} else {
+								player_picks.append("image")
+					                .attr("id",`position_${attrs.pos}_pick`)
+					                // .attr("xlink:href", https://resources.premierleague.com/premierleague/photos/players/110x140/p192895.png")
+					                .attr("xlink:href", `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`)
+					                .attr("x",scale(attrs.x - 6))
+					                .attr("y",scale(attrs.y - 10))
+					                .attr("width", 60)
+					                .attr("height", 60)
+					                .attr("text-anchor","middle");
 
-							player_info.append("text")
-								.attr("id",`value_${attrs.pos}`)
-								.attr("x", scale(attrs.x))
-								.attr("y", scale(attrs.y + 5))
-								.style("text-anchor", "middle")
-								.style("font-size", 10)
-								.text(function(){ 
-									in_team = images_load.filter(i =>{return i.player_id == d.id})
-									if(in_team.length > 0){
-										purch_val = in_team[0].value_purchase
-										curr_val = d.price/10
-										diff = (curr_val - purch_val)*0.5
-										bank_number -= floor10((curr_val - diff),-1)
-										$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
-										element_color("bank",bank_number,"bank")
+								player_info.append("text")
+									.attr("id",`value_${attrs.pos}`)
+									.attr("x", scale(attrs.x))
+									.attr("y", scale(attrs.y + 5))
+									.style("text-anchor", "middle")
+									.style("font-size", 10)
+									.text(function(){ 
+										in_team = images_load.filter(i =>{return i.player_id == d.id})
+										if(in_team.length > 0){
+											purch_val = in_team[0].value_purchase
+											curr_val = d.price/10
+											diff = (curr_val - purch_val)*0.5
+											bank_number -= floor10((curr_val - diff),-1)
+											$("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
+											element_color("bank",bank_number,"bank")
 
-										// tot_trans += 1
-										if (all_uniq_trans.includes(attrs.pos)) {
-						              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
+											// tot_trans += 1
+											if (all_uniq_trans.includes(attrs.pos)) {
+							              		all_uniq_trans = all_uniq_trans.filter(d=>{return d != attrs.pos})
 
-						              	} else {
-						              		// all_uniq_trans.push(unique_positions_missing[i])
-						              		// console.log(all_uniq_trans)
-						              	}
-										// free_trans += unique_positions_missing.length
-										tot_trans = free_trans - all_uniq_trans.length
-										tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-										tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-										element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-										
+							              	} else {
+							              		// all_uniq_trans.push(unique_positions_missing[i])
+							              		// console.log(all_uniq_trans)
+							              	}
+											// free_trans += unique_positions_missing.length
+											tot_trans = free_trans - all_uniq_trans.length
+											tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+											tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+											element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+											
 
-										return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-									} else {
-										bank_number -= d.price/10
-										$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
-										element_color("bank",bank_number,"bank")
+											return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+										} else {
+											bank_number -= d.price/10
+											$("#bank")[0].innerHTML = String(bank_number.toFixed(1))
+											element_color("bank",bank_number,"bank")
 
-										// if (all_uniq_trans.includes(attrs.pos)) {
-						              		
-						    //           	} else {
-						    //           		// all_uniq_trans.push(unique_positions_missing[i])
-						    //           		// console.log(all_uniq_trans)
-						    //           	}
-						              	tot_trans = free_trans - all_uniq_trans.length
-										tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-										tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
-										element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
-										
-										return d.price/10
-									}
-								})
+											// if (all_uniq_trans.includes(attrs.pos)) {
+							              		
+							    //           	} else {
+							    //           		// all_uniq_trans.push(unique_positions_missing[i])
+							    //           		// console.log(all_uniq_trans)
+							    //           	}
+							              	tot_trans = free_trans - all_uniq_trans.length
+											tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+											tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+											element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
+											
+											return d.price/10
+										}
+									})
 
-				            player_name.append("text")
-								.attr("id",`name_${attrs.pos}`)
-								.attr("x", scale(attrs.x))
-								.attr("y", scale(attrs.y + 8))
-								.style("text-anchor", "middle")
-								.style("font-size", 10)
-								.text(d.name)
+					            player_name.append("text")
+									.attr("id",`name_${attrs.pos}`)
+									.attr("x", scale(attrs.x))
+									.attr("y", scale(attrs.y + 8))
+									.style("text-anchor", "middle")
+									.style("font-size", 10)
+									.text(d.name)
 
-				            playersContainer.append("rect")
-								.attr("id",`rect_${attrs.pos}`)
-								.attr("x", scale(attrs.x - 6))
-								.attr("y", scale(attrs.y + 3))
-								.attr("width", 60)
-								.attr("height", 60)
-								.attr("rx", 6)
-								.attr("ry", 6)
-								.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
+					            playersContainer.append("rect")
+									.attr("id",`rect_${attrs.pos}`)
+									.attr("x", scale(attrs.x - 6))
+									.attr("y", scale(attrs.y + 3))
+									.attr("width", 60)
+									.attr("height", 60)
+									.attr("rx", 6)
+									.attr("ry", 6)
+									.attr("fill", d.ch_play > 75 ? "#0FA121" : d.ch_play > 50 ? "#E29019" : "#E33939")
 
-							
-							fixtures.append("text")
-								.attr("id",function(d){return `fix_${attrs.pos}`})
-								.attr("x", scale(attrs.x))
-								.attr("y", scale(attrs.y+11))
-								.style("text-anchor", "middle")
-								.style("font-size", 10)
-								.text(function (){
-									output = d.opponent.filter(i=>{return i.gw == gw_next})
-									return output.length == 2 ? `${output[0].opponent} ${output[1].opponent}` : output.length == 0 ? "(blank)"  :  output[0].opponent})
-								.call(wrap, 50);
 								
-			              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
+								fixtures.append("text")
+									.attr("id",function(d){return `fix_${attrs.pos}`})
+									.attr("x", scale(attrs.x))
+									.attr("y", scale(attrs.y+11))
+									.style("text-anchor", "middle")
+									.style("font-size", 10)
+									.text(function (){
+										output = d.opponent.filter(i=>{return i.gw == gw_next})
+										return output.length == 2 ? `${output[0].opponent} ${output[1].opponent}` : output.length == 0 ? "(blank)"  :  output[0].opponent})
+									.call(wrap, 50);
+									
+				              	unique_positions_missing = unique_positions_missing.filter(r=>{return r != missing_players[0].pos}).filter(onlyUnique)	              	
 
-			              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
+				              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
 
-			              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
-			              	console.log(d)
-			              	image_url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`
-			              	formation_images_load.push({"player_id":d.id,"position":attrs.pos,"position_name":d.position,"url":image_url,"name":d.name,"ch_play":d.ch_play,"value":d.value,"value_purchase":d.value,"team":d.team,"opponent_all":d.opponent})
+				              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
+				              	console.log(d)
+				              	image_url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`
+				              	formation_images_load.push({"player_id":d.id,"position":attrs.pos,"position_name":d.position,"url":image_url,"name":d.name,"ch_play":d.ch_play,"value":d.value,"value_purchase":d.value,"team":d.team,"opponent_all":d.opponent})
 
-			              	formation_images_load.sort((a, b) => (a.position > b.position) ? 1 : -1)
-			              	console.log(formation_images_load)
+				              	formation_images_load.sort((a, b) => (a.position > b.position) ? 1 : -1)
+				              	console.log(formation_images_load)
+							}
 						}
+						
 						
 		              	
 					} else {
-						alert(`You are trying to select a ${d.position}! Please select a player at position ${missing_players[0].posn}!`)
+						$("#error-message").empty()
+						$("#error-message")[0].innerHTML = `You are trying to select a player at position ${d.position}! Please select a player at position ${missing_players[0].posn}!`
+						$( "#error-message" ).dialog({
+				          height: 100,
+				          width: window.innerWidth/1.5,
+				          modal: true
+				        });
+				       $("#error-message").show()
 					}
-					// console.log(my_picks_team)
 			   	})
 				d3.select("#add_p1").on("click",function() {
 					// window.location="#player1"
