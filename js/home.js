@@ -1243,6 +1243,7 @@ update_players(3370907)
 $("#team_id_button").on("click",function(){
 	all_uniq_trans = []
 	bank_number = 0
+	tot_pts = 0
 	update_players($("#team_id").val())
 })
 
@@ -1260,6 +1261,7 @@ var missing_players = []
 var unique_positions_missing = []
 var all_uniq_trans = []
 var bank_number = 0
+var tot_pts = 0
 function update_players (team_id) {
 	$("#pitch").empty()
 
@@ -1471,6 +1473,9 @@ function update_players (team_id) {
 							
 							var next_fix_full = fixtures.filter(d=>{return d.team_h == team || d.team_a == team})
 							
+							var live_points = player_data.elements.filter(d=> {return d.id == data.picks[i].element})[0].event_points
+							tot_pts += live_points
+
 							var opp_all = []
 							if(next_fix_full.length == 0){
 								opp_all.push("(blank)")
@@ -1486,10 +1491,11 @@ function update_players (team_id) {
 								}
 							}
 
-							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all})
+							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all,"total_points":live_points})
 						}
-
-						console.log(fixtures)
+						$("#gw_transfers")[0].innerHTML = String(tot_pts)
+						console.log(tot_pts)
+						// console.log(fixtures)
 				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
 				        def = images_load.filter(d => {return d.position_name =="DEF"})
 				        mid = images_load.filter(d => {return d.position_name =="MID"})
@@ -1501,7 +1507,7 @@ function update_players (team_id) {
 						m = 1
 						for (let j=0; j<player_order.length;j++){
 						  	for (let i=0; i < player_order[j].length; i++) {
-						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_all":player_order[j][i].opponent_all})
+						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_all":player_order[j][i].opponent_all,"total_points":player_order[j][i].total_points})
 
 						  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
 						    	m++
@@ -1515,8 +1521,8 @@ function update_players (team_id) {
 
 				        // team_value = d3.select("#team_value").append("text")
 				        
-				        console.log(images_load)
-				        console.log(formation_images_load)
+				        // console.log(images_load)
+				        // console.log(formation_images_load)
 
 				        var playerPositions =[
 							{x:30, y:10, pos:1,posn:"GKP"},
@@ -2148,12 +2154,11 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 				              	my_picks_team.push({"player_id":d.id,"team":d.team,"position":attrs.pos})
 
 				              	missing_players = missing_players.filter(f=>{return f.pos != attrs.pos})		
-				              	console.log(d)
+				              	
 				              	image_url = `https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png`
 				              	formation_images_load.push({"player_id":d.id,"position":attrs.pos,"position_name":d.position,"url":image_url,"name":d.name,"ch_play":d.ch_play,"value":d.value,"value_purchase":d.value,"team":d.team,"opponent_all":d.opponent})
 
 				              	formation_images_load.sort((a, b) => (a.position > b.position) ? 1 : -1)
-				              	console.log(formation_images_load)
 							}
 						}
 						
