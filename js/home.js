@@ -182,10 +182,11 @@
 	      step: 1,
 	      values: [ 1, max_gw ],
 	      range: true,
-	      stop: (event, ui) => {
+	      slide: (event, ui) => {
+	      	$("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
 	      }
 	    });
-	    $("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
+	    
 
 	    var elem_load_id = []
 	    data.filter(d => {
@@ -1525,12 +1526,29 @@ var tot_pts = 0
 function update_players (team_id) {
 	$("#pitch").empty()
 
+	console.log(document.getElementById("pitch").offsetWidth)
 	var scale = d3.scale.linear()
 		.domain([0, 100])
 		.range([0, 500]);
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+	 
+	 $("#error-message").empty()
+		$("#error-message")[0].innerHTML = `Looks like you are on a mobile device, for optimal experience please visit on desktop!`
+		$( "#error-message" ).dialog({
+	      height: 150,
+	      width: window.innerWidth/1.5,
+	      modal: true
+	    });
+	   $("#error-message").show()
+	 pitch_width = 65
+	} else {
+		// $("#planner").show()
+		// $("#title")[0].innerHTML = "FPL Mania | Player Comparison Tool & Transfer Planner"
+		pitch_width = 80
+	}
 
 	var pitch = {
-		width: 80,
+		width: pitch_width,
 		length: 110,
 		centerCircleRadius: 10,
 	penaltyArea: {
@@ -1787,7 +1805,8 @@ function update_players (team_id) {
 				        // console.log(images_load)
 				        // console.log(formation_images_load)
 
-				        var playerPositions =[
+				        var playerPositions ={
+				        	"desktop":[
 							{x:30, y:10, pos:1,posn:"GKP"},
 							{x:50, y:10, pos:2,posn:"GKP"},
 							{x:75, y:37.5, pos:3,posn:"DEF"},
@@ -1802,7 +1821,43 @@ function update_players (team_id) {
 							{x:5, y:65, pos:12,posn:"MID"},
 							{x:20, y:95, pos:13,posn:"FWD"},
 							{x:40, y:95, pos:14,posn:"FWD"},
-							{x:60, y:95, pos:15,posn:"FWD"}]
+							{x:60, y:95, pos:15,posn:"FWD"}],
+							"mobile":[
+							{x:22, y:10, pos:1,posn:"GKP"},
+							{x:42, y:10, pos:2,posn:"GKP"},
+							{x:60, y:37.5, pos:3,posn:"DEF"},
+							{x:46.25, y:37.5, pos:4,posn:"DEF"},
+							{x:32.5, y:37.5, pos:5,posn:"DEF"},
+							{x:18.75, y:37.5, pos:6,posn:"DEF"},
+							{x:5, y:37.5, pos:7,posn:"DEF"},
+							{x:60, y:65, pos:8,posn:"MID"},
+							{x:46.25, y:65, pos:9,posn:"MID"},
+							{x:32.5, y:65, pos:10,posn:"MID"},
+							{x:18.75, y:65, pos:11,posn:"MID"},
+							{x:5, y:65, pos:12,posn:"MID"},
+							{x:12.5, y:95, pos:13,posn:"FWD"},
+							{x:32.5, y:95, pos:14,posn:"FWD"},
+							{x:52.5, y:95, pos:15,posn:"FWD"}]
+						}
+
+						if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+							 // $("#planner").hide()
+							 // $("#title")[0].innerHTML = "FPL Mania | Player Comparison Tool"
+							 // $("#error-message").empty()
+								// $("#error-message")[0].innerHTML = `Looks like you are on a mobile device. Please visit us on desktop to get access to the transfer planner! If you receive this message and you are on desktop, please report the issue using the contact form below!`
+								// $( "#error-message" ).dialog({
+							 //      height: 300,
+							 //      width: window.innerWidth/1.5,
+							 //      modal: true
+							 //    });
+							 //   $("#error-message").show()
+							 playerPositions = playerPositions.mobile
+							} else {
+								// $("#planner").show()
+								// $("#title")[0].innerHTML = "FPL Mania | Player Comparison Tool & Transfer Planner"
+								playerPositions = playerPositions.desktop
+							}
+						
 
 				        var playersContainer = pitchElement.append("g")
 				          	.attr("class", "players")

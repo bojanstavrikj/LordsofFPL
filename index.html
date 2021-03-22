@@ -34,7 +34,7 @@
 </head>
 <body>
 	<nav class="navbar navbar-custom navbar-expand-md navbar-dark bg-dark" style="background-color: #360F39 !important;">
-	    <a class="navbar-brand" href="/index.html"><i class="fas fa-futbol fa-inverse fa-1.5x"></i> FPL Mania | Player Comparison Tool & Transfer Planner</a>
+	    <a class="navbar-brand" href="/index.html" style="white-space: pre-wrap;" id="title"><i class="fas fa-futbol fa-inverse fa-1.5x"></i> FPL Mania | Player Comparison Tool & Transfer Planner</a>
 	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
 	        <span class="navbar-toggler-icon"></span>
 	    </button>
@@ -62,91 +62,6 @@
 	</nav>
 	<div class="col">
 		<div id="error-message" title="Message" style="display:none; padding:5px;margin:auto;text-align: center;"></div>
-	</div>
-	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;">
-		<div class="row" style="width:60%; margin:auto;">
-			<div class="col" style="margin:auto;">
-				<i class="fas fa-arrow-left fa-2x" style="float:right;" id="previous_gw"></i>
-			</div>
-			<div class="col">
-				<h4 style=" margin:auto">
-					Transfer Planner
-					<div style="font-size:12px" class="col">
-						<p>Fixtures shown for GW: <a id="gw_planner"></a></p>
-					</div>
-				</h4>
-				<a id="gw-pitch"></a>
-			</div>
-			<div class="col" style="margin:auto;">
-				<i class="fas fa-arrow-right fa-2x" style="float:left;" id="next_gw"></i>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-4">
-				<div class="row" id="user-team-select">
-					<div class="col">
-						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br> 
-						<input type="text" name="team_id" id="team_id">
-						<button id="team_id_button">Submit</button>
-					</div>
-					<div class="w-100"></div>
-					<div class="col user_transfers">
-						<strong>Bank</strong>
-						<div id="bank"></div>
-					</div>
-					<div class="w-100"></div>
-					<div class="col user_transfers">
-						<strong>Transfer Cost</strong>
-						<div> <a id="transfer_cost"></a> pts</div>
-					</div>
-					<div class="w-100"></div>
-					<div class="col user_transfers">
-						<strong>Free Transfers</strong>
-						<div><a id="free_transfers"></a> free transfers</div>
-					</div>
-					<div class="w-100"></div>
-					<div class="col user_transfers">
-						<strong>Latest Points</strong>
-						<div><a id="gw_points"></a> pts</div>
-					</div>
-					<div class="w-100"></div>
-					<div class="col">
-						<div id="next_gw_fixtures">
-							<i class="fas fa-arrow-left" style="float:left;" id="previous"></i>
-							<i class="fas fa-arrow-right" style="float:right;" id="next"></i>
-						</div>
-				
-					</div>
-					<!-- <div class="col user_transfers">
-						<strong>Color codes</strong>
-						<div id="legend"></div>
-					</div> -->	
-				</div>
-			</div>
-			<div class="col-md-4" height="500px">
-				<div class="row">
-					<div class="col" id="transfer_planner">
-						<div id="pitch"></div>
-					</div>
-				</div>
-			</div>
-			<div class="col-md-4" id="add_player">
-				<div class="col">
-					<div class="col">
-						<a style="font-weight: bold;">Stat to sort by </a>
-						<select id='select-stat-player-table' style='width: 200px;'></select>
-					</div>
-					<select id="search-select" >
-						<option selected value=name>Name</option>
-						<option value=position>Position</option>
-						<option value=team>Team</option>
-					</select>
-					<input type="text" id="search_player" onkeyup="myFunction()" placeholder="Search for names..">
-					<i style ='margin-top:5px;' id="table-select-info" class="fas fa-info-circle"></i>
-					<div id="select-player-table"></div>
-				</div>
-			</div>
-		</div>
 	</div>
 	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
 		<div class="row">
@@ -275,9 +190,83 @@
 			</div>
 		</div>
 	</div>
-	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
+	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;" id="planner">
+		<div class="row" style="width:50%; margin:auto;" id="heading-pitch">
+			<div class="col">
+				<h4 style=" margin:auto">
+					Transfer Planner
+				</h4>
+			</div>
+		</div>
 		<div class="row">
-			
+			<div class="col-md-4">
+				<div class="row" id="user-team-select">
+					<div class="col">
+						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br> 
+						<input type="text" name="team_id" id="team_id">
+						<button id="team_id_button">Submit</button>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Bank</strong>
+						<div id="bank"></div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Transfer Cost</strong>
+						<div> <a id="transfer_cost"></a> pts</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Free Transfers</strong>
+						<div><a id="free_transfers"></a> free transfers</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col user_transfers">
+						<strong>Latest Points</strong>
+						<div><a id="gw_points"></a> pts</div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col">
+						<div id="next_gw_fixtures">
+							<i class="fas fa-arrow-left" style="float:left;" id="previous"></i>
+							<i class="fas fa-arrow-right" style="float:right;" id="next"></i>
+						</div>
+					</div>
+					<!-- <div class="col user_transfers">
+						<strong>Color codes</strong>
+						<div id="legend"></div>
+					</div> -->	
+				</div>
+			</div>
+			<div class="col-md-4" height="500px">
+				<div class="row">
+					<div class="col">
+						<i class="fas fa-arrow-left" style="display:inline; margin-right: 30px;" id="previous_gw"></i>
+						<p style="display:inline;">Fixtures shown for GW: <a id="gw_planner"></a></p>
+						<i class="fas fa-arrow-right" style="display:inline; margin-left: 30px;" id="next_gw"></i>
+					</div>
+					<div class="col" id="transfer_planner">
+						<div id="pitch"></div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4" id="add_player">
+				<div class="col">
+					<div class="col">
+						<a style="font-weight: bold;">Stat to sort by </a>
+						<select id='select-stat-player-table' style='width: 200px;'></select>
+					</div>
+					<select id="search-select" >
+						<option selected value=name>Name</option>
+						<option value=position>Position</option>
+						<option value=team>Team</option>
+					</select>
+					<input type="text" id="search_player" onkeyup="myFunction()" placeholder="Search for names..">
+					<i style ='margin-top:5px;' id="table-select-info" class="fas fa-info-circle"></i>
+					<div id="select-player-table"></div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<footer class="footer">
