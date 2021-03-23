@@ -2,6 +2,20 @@
 		width = Math.min(500, window.innerWidth - 10) - margin.left - margin.right,
 		height = Math.min(width, window.innerHeight - margin.top - margin.bottom - 20);
 
+	var opts = {
+	  lines: 9, // The number of lines to draw
+	  length: 9, // The length of each line
+	  width: 5, // The line thickness
+	  radius: 14, // The radius of the inner circle
+	  color: '#134ADB', // #rgb or #rrggbb or array of colors
+	  speed: 1.9, // Rounds per second
+	  trail: 40, // Afterglow percentage
+	  className: 'spinner', // The CSS class to assign to the spinner
+	};
+
+	var target = document.getElementById("radar");
+	var spinner = new Spinner(opts).spin(target);
+
 	d3.csv("/data/timestamp.txt", function(error, data) {
 		if (error) throw error;
 		$("#timestamp")[0].innerHTML = data.columns[0] + ", " + data.columns[1]
@@ -623,6 +637,7 @@
 		       $("#p2-full-fixtures").show();
 		    });
 		 });
+		spinner.stop();
 	});
 
 // Unique function
@@ -1650,15 +1665,20 @@ function update_players (team_id) {
 	penaltyAreaBottom = pitchElement.append("g");
 	penaltyAreaBottom.html(penaltyAreaTop.html());
 	penaltyAreaBottom.attr("transform", "rotate(180) translate(-" + scale(pitch.width)+",-"+scale(pitch.length)+")")
+	
+	var opts = {
+	  lines: 9, // The number of lines to draw
+	  length: 9, // The length of each line
+	  width: 5, // The line thickness
+	  radius: 14, // The radius of the inner circle
+	  color: '#134ADB', // #rgb or #rrggbb or array of colors
+	  speed: 1.9, // Rounds per second
+	  trail: 40, // Afterglow percentage
+	  className: 'spinner', // The CSS class to assign to the spinner
+	};
 
-	var loading = svg.append("text")
-		.attr("x", scale(pitch.width + pitch.padding.left + pitch.padding.right)/2)
-		.attr("y", scale(pitch.length + pitch.padding.top + pitch.padding.bottom)/2)
-		.style("font-size","20")
-		.style("position","absolute")
-		.style("text-anchor", "middle")
-		.style("font-weight","bold")
-		.text("Simulating, one moment please!")
+	var target = document.getElementById("pitch");
+	var spinner = new Spinner(opts).spin(target);
 
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
     	if (error) throw error;
@@ -2154,7 +2174,7 @@ function update_players (team_id) {
 			            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
 			            element_color("bank",bank_number,"bank")
 
-			        loading.remove();
+			        spinner.stop();
 		            })
 		      	})
 		    })
