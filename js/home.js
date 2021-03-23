@@ -7,7 +7,7 @@
 	  length: 9, // The length of each line
 	  width: 5, // The line thickness
 	  radius: 14, // The radius of the inner circle
-	  color: '#134ADB', // #rgb or #rrggbb or array of colors
+	  color: '#360F39', // #rgb or #rrggbb or array of colors
 	  speed: 1.9, // Rounds per second
 	  trail: 40, // Afterglow percentage
 	  className: 'spinner', // The CSS class to assign to the spinner
@@ -1671,7 +1671,7 @@ function update_players (team_id) {
 	  length: 9, // The length of each line
 	  width: 5, // The line thickness
 	  radius: 14, // The radius of the inner circle
-	  color: '#134ADB', // #rgb or #rrggbb or array of colors
+	  color: '#360F39', // #rgb or #rrggbb or array of colors
 	  speed: 1.9, // Rounds per second
 	  trail: 40, // Afterglow percentage
 	  className: 'spinner', // The CSS class to assign to the spinner
