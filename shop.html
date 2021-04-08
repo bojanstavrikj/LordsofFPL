@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="description" content="FPL Mania is a player comparison tool to help FPL managers simulate player transfers as you would do on Fantasy Premier League's official website. ">
+  	<meta name="keywords" content="fpl player comparison tool">
+	<title>FPL Mania | Shop</title>
+	<!-- Google fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300" rel='stylesheet' type='text/css'>
+	<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+	<!-- D3.js -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<link rel="stylesheet" href="/css/styles.css">
+	<!-- Script -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src='/js/select2.min.js' type='text/javascript'></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<!-- CSS -->
+	<link href='/css/select2.min.css' rel='stylesheet' type='text/css'>
+	<link rel="icon"  href="/data/img/futbol-solid.svg">
+	<link rel="image_src" href="/data/img/preview.png">
+	<meta property="og:image" content="/data/img/preview.png">
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-Q5R14EDGSG"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+
+	  gtag('config', 'G-Q5R14EDGSG');
+	</script>
+</head>
+<body>
+	<nav class="navbar navbar-custom navbar-expand-md navbar-dark bg-dark" style="background-color: #360F39 !important;">
+	    <a class="navbar-brand" href="/index.html" style="white-space: pre-wrap;" id="title"><i class="fas fa-futbol fa-inverse fa-1.5x"></i> FPL Mania | Shop</a>
+	    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+	        <span class="navbar-toggler-icon"></span>
+	    </button>
+	    <div class="collapse navbar-collapse" id="navbarNav">
+	        <ul class="navbar-nav mr-auto">
+	            <!-- <li class="nav-item active">
+	                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#">Features</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="#">Pricing</a>
+	            </li> -->
+	        </ul>
+	        <ul class="navbar-nav">
+	            <li class="nav-item">
+	                <a class="nav-link" href="index.html">Home</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link active" href="shop.html">Shop</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="about.html">About</a>
+	            </li>
+	        </ul>
+	    </div>
+	</nav>
+	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
+		<h7>Hello user, this page is composed of links to amazon products. This is the only way I can cover the costs of hosting this tool online and keeping it available to everyone for free. Adblockers usually hide the links to the products, so you might be seeing an empty window. Please disable your adblocker if you want to see the products. The other pages are ad-free, so you won't get spammed there with any unwanted ads. Thank you for your support! <i class="fas fa-futbol fa-1.5x"></i></h7>
+	</div>
+	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08BGMSHFQ&asins=B08BGMSHFQ&linkId=da0586ac9f190bff448f7e78bfbea9b0&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08BGPPJ1R&asins=B08BGPPJ1R&linkId=000d1e6f68b80fe244bb3f6febfeeb84&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08BGMRP8Q&asins=B08BGMRP8Q&linkId=e3465a315ecb530336fc008f04463433&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08B4C7YY2&asins=B08B4C7YY2&linkId=d1b13bd67a58a50123188cdc7be1eec9&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B089Z7LC5C&asins=B089Z7LC5C&linkId=311ae79ce50647bdbbccc73eee41ba53&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B01GVQUX3U&asins=B01GVQUX3U&linkId=5c3eb5c7043f88ddea361cf6e20c3f7d&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B01M4KLNE6&asins=B01M4KLNE6&linkId=00a8f8132147d5810d4351c33314b8f0&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08H99BPJN&asins=B08H99BPJN&linkId=29f9edf8fffabe083ac0b923ec35ff7a&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07SDFLVKD&asins=B07SDFLVKD&linkId=fdb13f093fcb3141f5a2ca7de76df87e&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B087VLP2RT&asins=B087VLP2RT&linkId=b57af7a4272eb4da67b19913a2017d0b&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B087VMGP5G&asins=B087VMGP5G&linkId=08e63de844843b8f0eb831adad4587eb&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B072BZ66JL&asins=B072BZ66JL&linkId=8d7076ca77e4a4b68ccc80c2cf74f8b4&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08NXZM52N&asins=B08NXZM52N&linkId=f35dbbd4f892931102a62013ba646183&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07VVY3JZM&asins=B07VVY3JZM&linkId=8481bfbcf5464b760e721e8dbb251f28&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=1723834254&asins=1723834254&linkId=51ced67f72ef51bf888501b83cb2fc61&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08DXGG935&asins=B08DXGG935&linkId=ee5d0692cb804846372571911df1b2a5&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>      		
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07S62C7L6&asins=B07S62C7L6&linkId=6901544c209a791ae7814b9a3238b92c&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B086P8QKMV&asins=B086P8QKMV&linkId=eee6bf4dd0a0949064d94fade084856e&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>  		
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08CBKVZBC&asins=B08CBKVZBC&linkId=47b6937dd5dd64fe453a433ec13e90ca&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>		
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07TZGM914&asins=B07TZGM914&linkId=d50aae66d41584a683d82eda3de77898&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07QHPPJPK&asins=B07QHPPJPK&linkId=f34c9d14c795c73b024d47f28c8204d6&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08QMHB8N5&asins=B08QMHB8N5&linkId=080386632d674cb79a940f0bd52b8ec9&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07VTSDLK3&asins=B07VTSDLK3&linkId=748776162b04f57e001c84c191fbc82b&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B0824LZDLR&asins=B0824LZDLR&linkId=13e6920d46625749d309aecf2daf2f0d&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07QFTYLLF&asins=B07QFTYLLF&linkId=c0b4a93756761eacb768488dcf47763d&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07PP959T4&asins=B07PP959T4&linkId=35bd8b6ecd82bb6b9845e1308039b4e0&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08CBKVZBC&asins=B08CBKVZBC&linkId=47b6937dd5dd64fe453a433ec13e90ca&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>		
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07W59TTT9&asins=B07W59TTT9&linkId=6ddfd441e8150685afc06d6df9056796&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B083BDYFS2&asins=B083BDYFS2&linkId=92eee1ac59ca0ddecee5d69eaddcd8d1&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B0869BZKYH&asins=B0869BZKYH&linkId=1d29e4774e8e9725114505dbfe485a0d&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07QDDDJZ3&asins=B07QDDDJZ3&linkId=f3967ec05ab7a7d106ef6859c88a6f63&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B084CQ41M2&asins=B084CQ41M2&linkId=b1df6be8e2a4fcce8167289551c27e61&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08B1MGGYY&asins=B08B1MGGYY&linkId=8e40c6ae379739d3637779d599e2a6d4&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07B8GKZ9G&asins=B07B8GKZ9G&linkId=a6f3a155328752cd2065393a850202d5&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07HGHRYCY&asins=B07HGHRYCY&linkId=7d78628f0b705971c7e974ed89c81c15&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>	
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07YBNB2PS&asins=B07YBNB2PS&linkId=c46f791ad3388c75a4b43faedaf31a6c&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+		<div class="row" id="select-menu">
+			<div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07MF9Q21L&asins=B07MF9Q21L&linkId=cba1c0bda697a0b950dda994966da70b&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B01GVQVQH2&asins=B01GVQVQH2&linkId=73ed5120359f5ff0d3db50d58141a54a&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08H95Y452&asins=B08H95Y452&linkId=c0351b2d906489b7a1896c56d18fe66c&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B08GD9MNZB&asins=B08GD9MNZB&linkId=33e5ee8a15abd69c6012f2d6db82133a&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B0186MHJB6&asins=B0186MHJB6&linkId=896e59b3e3717bef1bf2211cf6258790&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		    <div class="col" style='width: 300px;'>
+				<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-eu.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=GB&source=ac&ref=tf_til&ad_type=product_link&tracking_id=fplmania-21&marketplace=amazon&amp;region=GB&placement=B07W4CK8KR&asins=B07W4CK8KR&linkId=e302c378e9bbd4519ed0ba59d62e34d0&show_border=true&link_opens_in_new_window=true&price_color=333333&title_color=0066c0&bg_color=ffffff">
+    			</iframe>
+		    </div>
+		</div>
+	</div>
+	<footer class="footer">
+		<div class="container bottom_border">
+			<div class="row">
+				<div class=" col-sm-6">
+					<h5 class="headin5_amrc col_white_amrc pt2">What is FPL Mania?</h5>
+					<!--headin5_amrc-->
+					<p class="mb10">FPL Mania is a player comparison tool to help FPL managers simulate player transfers as you would do on <a id="fpl_link" style="text-decoration:none;"href="https://fantasy.premierleague.com/">Fantasy Premier League's</a> official website. </p>
+					<h5 class="headin5_amrc col_white_amrc pt2">Why should you use FPL Mania?</h5>
+					<!--headin5_amrc-->
+					<p class="mb10">The tool gathers and organizes all the important information regarding player performance like totals points, expected goals/assists, bonus points and non-penality goals. All data is aggregated from the Fantasy Premier League's official website and Understat.</p>
+					<!-- <p><i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35 </p>
+					<p><i class="fa fa-phone"></i>  +91-9999878398  </p>
+					<p><i class="fa fa fa-envelope"></i> info@example.com  </p> -->
+				</div>
+				<div class=" col-sm-6">
+					<h5 class="headin5_amrc col_white_amrc pt2">Contact</h5>
+					<!--headin5_amrc-->
+					<form id="contactform" action="https://formspree.io/f/mbjpvzvl" method="POST">
+				        <div class="input">
+				          <p>Name</p><input name="name">
+				        </div>
+				        <div class="input">
+				          <p>Email</p><input type="email" name="_replyto">
+				        </div>
+				        <div class="input">
+				          <p>Message</p>
+				          <textarea name="body"></textarea>
+				        </div>
+				        <div class="input">
+				          <input id="button" type="submit" value="Send">
+				        </div>
+				      </form>
+				</div>
+				<!-- <div class=" col-sm-4">
+					<h5 class="headin5_amrc col_white_amrc pt2">Quick links</h5>
+					<ul class="footer_ul_amrc">
+						<li><a href="#"></a></li>
+						<li><a href="https://www.premierleague.com/">Premier League</a></li>
+						<li><a href="https://understat.com/">Understat</a></li> 
+					</ul>
+				</div> -->
+			</div>
+		</div>
+		<div class="container">
+			<ul class="foote_bottom_ul_amrc">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="shop.html">Shop</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="sitemap.xml">Sitemaps</a></li>
+				<li><a href="privacy-policy.html">Privacy Policy</a></li>
+			</ul>
+			<!--foote_bottom_ul_amrc ends here-->
+			<p class="text-center">Copyright 2021</p>
+		</div>
+
+	</footer>
+
+	
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+</body>
+	<script src="/js/radarChart.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>	
+	<!-- <script src="/js/home.js"></script> -->
+</html>
