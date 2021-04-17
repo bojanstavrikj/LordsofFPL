@@ -969,6 +969,7 @@ function update (data,chart_type) {
     d3.select("#p1-full-table").selectAll("table").remove()
     d3.select("#p1-full-fixtures").selectAll("table").remove()
     d3.select("#p2-full-fixtures").selectAll("table").remove()
+    d3.select("#teams_div").selectAll("table").remove()
     
     d3.selectAll("#blank_text").remove()
    
@@ -1040,6 +1041,14 @@ function update (data,chart_type) {
 
 			insert_next_games(teams,fixtures_p1,current_p1,"#nextgwp1")
 			insert_next_games(teams,fixtures_p2,current_p2,"#nextgwp2")
+
+			insert_next_games_full(teams,"#teams_1",0,4)
+			insert_next_games_full(teams,"#teams_2",4,8)
+			insert_next_games_full(teams,"#teams_3",8,12)
+			insert_next_games_full(teams,"#teams_4",12,16)
+			insert_next_games_full(teams,"#teams_5",16,20)
+
+			// insert_next_games_full(teams,"#all_teams")
 
 		})
 	})
@@ -1201,10 +1210,121 @@ function insert_next_games (data,fixtures,current,id) {
 				return d.name != "stat" ? (d3.format(".0f"))(d.value) : d.value;
 			});
 		}
-		}
-		
+	}		
+}
 
+function insert_next_games_full (data,id,start, finish) {
+
+	team_list = []
+	console.log(data)
+	data.forEach(d=> team_list.push(d.title))
+	team_list = team_list.filter(onlyUnique)
+	team_list.sort(function(a, b) {
+	    var textA = a.toUpperCase();
+	    var textB = b.toUpperCase();
+	    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
+	});
+	
+	console.log(team_list)
+	// https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png
+	for (i=start;i<finish;i++){
 		
+		to_insert_fixtures = data.filter(d=> {return d.title == team_list[i]})
+		next_gws_team = []
+
+		for (j=0; j<to_insert_fixtures.length; j++){
+			next_gws_team.push({'team':`${to_insert_fixtures[j].team_short}`, 'xGA':to_insert_fixtures[j].xGA,'GA':to_insert_fixtures[j].missed, 'xG':to_insert_fixtures[j].xG,'G':to_insert_fixtures[j].scored}) 
+		}
+		next_gws_team_L4 = next_gws_team.slice(Math.max(next_gws_team.length - 4, 0))
+		next_gws_team_L6 = next_gws_team.slice(Math.max(next_gws_team.length - 6, 0))
+		total_L4 = {}
+		total_L4['stat'] = `Last 4`;
+		
+		next_gws_team_L4.forEach(function(d) {
+		    ["team","xGA","GA","xG","G"].forEach(function(k) {
+		        if (k !== "team") {
+		            if (k in total_L4) {
+		                total_L4[k] += d[k];
+		            } else {
+		                total_L4[k] = d[k];
+		            }
+		        }
+		    });
+		});
+		
+		total_L6 = {}
+		total_L6['stat'] = `Last 6`;
+		next_gws_team_L6.forEach(function(d) {
+		    ["team","xGA","GA","xG","G"].forEach(function(k) {
+		        if (k !== "team") {
+		            if (k in total_L6) {
+		                total_L6[k] += d[k];
+		            } else {
+		                total_L6[k] = d[k];
+		            }
+		        }
+		    });
+		});
+		
+		total_S = {}
+		total_S['stat'] = `Season`;
+		next_gws_team.forEach(function(d) {
+		    ["team","xGA","GA","xG","G"].forEach(function(k) {
+		        if (k !== "team") {
+		            if (k in total_S) {
+		                total_S[k] += d[k];
+		            } else {
+		                total_S[k] = d[k];
+		            }
+		        }
+		    });
+		});
+
+		trial = [total_S,total_L4,total_L6]
+		console.log(trial)
+		// console.log(trial)
+
+		var table_nx = d3.select(id).append('table').attr("class","table_nx");
+
+		var headers_nx = table_nx.append('thead').append('tr')
+	       .selectAll('th')
+	       .data([`${next_gws_team[0].team}`,"xGA","GA","xG","G"]).enter()
+	       .append('th')
+	       .text(function (d) {
+	            return d;
+	        })
+		    .on('mouseover.tooltip', function(d) {
+			    tooltip.transition()
+			      .duration(300)
+			      .style("opacity", 1);
+			    tooltip.html(`${var_explanation[d]}`)
+			      .style("left", (d3.event.pageX) + "px")
+			      .style("top", (d3.event.pageY - 30) + "px");
+			  })
+			.on("mouseout.tooltip", function() {
+			    tooltip.transition()
+			      .duration(100)
+			      .style("opacity", 0);
+			  })
+
+		var rows_nx = table_nx.append('tbody').selectAll('tr')
+	       .data(trial).enter()
+	       .append('tr');
+		rows_nx.selectAll('td')
+			.data(function (d) {
+			return ["stat","xGA","GA","xG","G"].map(function (k) {
+				return { 'value': d[k], 'name': k};
+			});
+		}).enter()
+		.append('td')
+		.attr('data-th', function (d) {
+			return d.name;
+		})
+		.text(function (d) {
+			return d.name != "stat" ? (d3.format(".0f"))(d.value) : d.value;
+		});
+		
+	}		
 }
 
 function diverging_chart(data,stat) {
