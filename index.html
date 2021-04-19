@@ -75,9 +75,11 @@
 			<div class="col-md-4">
 				<div class="row" id="user-team-select">
 					<div class="col">
-						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br> 
-						<input type="text" name="user_id" id="team_id">
-						<button id="team_id_button">Submit</button>
+						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br>
+						<form id="team_id_form">
+							<input type="search" name="user_id" id="team_id">
+							<button id="team_id_button" type="submit">Submit</button>
+						</form>
 					</div>
 					<div class="w-100"></div>
 					<div class="col user_transfers">
@@ -224,7 +226,7 @@
 					<div class="w-100"></div>
 					<div class="col">
 						<div id="radar" style="margin-top:100px"></div>
-						<div class="radarChart"></div>
+						<div  class="radarChart" style="margin:auto;"></div>
 					</div>
 				</div>
 			</div>
@@ -269,13 +271,79 @@
 			</div>
 		</div>
 	</div>
+	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece; text-align: center; margin:auto;" id="comparison_div2">
+		<div class="row">
+			<div class="col">
+				<h2>Compare player with/without a teammate</h2>	
+			</div>
+		</div>
+		<div class="row" >
+			<div class="col-md-4" id="comparison_2" style="margin:auto;">
+				<div class="row" style="text-align:center;">
+					<div class="col">
+						<label id="head" for="fname" style="font-size: 15px; font-weight:bold;">Select players</label> <i style ='margin-top:5px;' id="info-with-without" class="fas fa-info-circle"></i><br>
+					</div>
+					<div class="w-100"></div>
+					<div class="col">
+						<select id='player1_with' style='width: 150px;'></select>
+					</div>
+					<div class="col">
+						<select id='player2_without' style='width: 150px;'></select>
+					</div>	
+				</div>
+				<div class="row">
+					<div class="col">
+						<img id="pl1_with" width=40%>
+					</div>
+					<div class="col">
+						<img id="pl1_without" width=40%>
+					</div>	
+				</div>
+				<div class="row">
+					<div class="col">
+						<div id="p1-color-with-info"></div>
+						<div id="p1-color-with"><hr/></div>
+						<div id="p1-color-without-info"></div>
+						<div id="p1-color-without"><hr/></div>
+					</div>
+					<div class="w-100"></div>
+					<div class="col">
+						Gameweeks not played together:
+						<div id="gws-without"></div>
+						<!-- <div id="gws-with"></div> -->
+					</div>
+				</div>
+				<div calss="col">
+					<label id="head" for="fname" style="font-size: 15px; font-weight:bold;">Stat selector: </label><br>
+			        <select id='stat-select-with' style='width: 300px;' class="js-example-basic-multiple" name="countries[]" multiple="multiple"></select>
+				</div>
+			</div>
+			<div class="col-md-8" style="text-align: center;">
+				<div class="col">
+					<div id="timestamp-div" class="col">Latest update: <span id="timestamp2"></span> (GMT)</div>
+				</div>
+				<div class="col">
+					<select id='stat-with' style='width: 200px;'>
+						<option value="per_90_min">Per 90 Min</option>
+						<option value="total">Total</option>
+					</select>
+				</div>
+				<div calss="col" id="radarChart_2">
+					
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			
+		</div>
+	</div>
 	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece;" id="teams_div">
 		<div class="row">
 			<div class="col">
 				<h2>Attacking and Defensive Stats per Team</h2>	
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" id="teams_stats_div">
 			<div class="col" id="teams_1">
 			</div>
 			<div class="col" id="teams_2">

@@ -66,6 +66,21 @@
 	color:#2DA8B6;
 	background-color: #2DA8B6;
 }
+
+#p1-color-with hr, #p1-color-without hr{
+  color:#CC333F;
+  background-color: #CC333F;
+  width:25%;
+  height:4px !important;
+  margin-top: 0;
+  margin-bottom:2px;
+  border-radius: 99px;
+}
+#p1-color-without hr{
+  color:#2DA8B6;
+  background-color: #2DA8B6;
+}
+
 div.tooltip {
   position: absolute;
   background-color: white;
@@ -492,8 +507,8 @@ th.aes:after {
   color:white;
   font-weight: bold;
 }
-th {
+.sticky-header th {
   position: sticky;
-  top: 0px;  /* 0px if you don't have a navbar, but something is required */
+  top: 0px;   
   /*background: white;*/
 }

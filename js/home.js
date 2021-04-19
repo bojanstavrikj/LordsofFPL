@@ -14,11 +14,14 @@
 	};
 
 	var target = document.getElementById("radar");
+	var target_with = document.getElementById("radarChart_2");
 	var spinner = new Spinner(opts).spin(target);
+	var spinner_with = new Spinner(opts).spin(target_with);
 
 	d3.csv("/data/timestamp.txt", function(error, data) {
 		if (error) throw error;
 		$("#timestamp")[0].innerHTML = data.columns[0] + ", " + data.columns[1]
+		$("#timestamp2")[0].innerHTML = data.columns[0] + ", " + data.columns[1]
 	}) 
 
 	var color = d3.scale.ordinal()
@@ -41,6 +44,11 @@
 	  	placeholder:"Select stats",
 	  	maximumSelectionLength: 12
 	  });
+	  $("#stat-select-with").select2({
+	  	allowClear: true,
+	  	placeholder:"Select stats",
+	  	maximumSelectionLength: 12
+	  });
 	});
 	
     // Initialize the tooltip
@@ -55,6 +63,23 @@
 		      .duration(300)
 		      .style("opacity", 1);
 		    tooltip.html(`Click to switch between Radar and Diverging chart.`)
+		      .style("left", (d3.event.pageX) + "px")
+		      .style("top", (d3.event.pageY + 10) + "px");
+		  })
+		.on("mouseout.tooltip", function() {
+		    tooltip.transition()
+		      .duration(100)
+		      .style("opacity", 0);
+		  })
+
+		
+	var info_with_without = d3.select("#info-with-without")
+		.on('mouseover.tooltip', function(d) {
+		    tooltip.transition()
+		      .duration(300)
+		      .style("opacity", 1);
+		    tooltip.html(`This section allows users to compare a single player's stats, when playing with or without another player from their team.
+		    	For example, the default view shows Salah's stats when he plays with vs without Milner.`)
 		      .style("left", (d3.event.pageX) + "px")
 		      .style("top", (d3.event.pageY + 10) + "px");
 		  })
@@ -115,7 +140,10 @@
 	  // Initialize select2
 	  $("#player1").select2();
 	  $("#player2").select2();
+	  $("#player1_with").select2();
+	  $("#player2_without").select2();
 	  $("#stat").select2();
+	  $("#stat-with").select2();
 	  $("#select-stat-player-table").select2();
 	});
 	
@@ -137,7 +165,7 @@
 	
 	
 
-    function load_stats (features,pos) {
+    function load_stats (features,pos,id) {
     	if (pos_pos1.includes(pos)) {
 			var featuresx = ["xG","goals_scored","minutes", "npg", "npxG", "xA", "assists", "shots", "key_passes", "total_points", "bonus"]
 		} if (pos_pos2.includes(pos)) {
@@ -157,7 +185,7 @@
 			featuresx.includes(features[i]) ? elements_stat += "<option selected value='"+ features[i] + "'>" + features[i] + "</option>" : elements_stat += "<option value='"+ features[i] + "'>" + features[i] + "</option>";
 		}
 
-		document.getElementById("stat-select").innerHTML = elements_stat;
+		document.getElementById(id).innerHTML = elements_stat;
 	}
 
 
@@ -183,286 +211,8 @@
 	'FUL': 'Fulham', 'LEI': 'Leicester', 'LEE': 'Leeds', 'LIV': 'Liverpool', 'MCI': 'Man City', 'MUN': 'Man Utd', 'NEW': 'Newcastle',
 	'SHU': 'Sheffield Utd', 'SOU': 'Southampton', 'TOT': 'Spurs', 'WBA': 'West Brom', 'WHU': 'West Ham', 'WOL': 'Wolves'}
 
-	// var data = {}
-	// d3.csv("/data/players_small.csv", function(error, data1) {
-	// 	if (error) throw error;
-	// 	data = data1
-		
-	// 	var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
-
-	//     $("#gw-slider").slider({
-	//       min: 1,
-	//       max: max_gw,
-	//       step: 1,
-	//       values: [ 1, max_gw ],
-	//       range: true,
-	//       slide: (event, ui) => {
-	//       	$("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
-	//       }
-	//     });
-	    
-
-	//     var elem_load_id = []
-	//     data.filter(d => {
-	//     	elem_load_id.push({"key": Number(d.element), "value": `${d.web_name} (${d.team_short})`})
-	//     });
-	//     var elem_load_id = elem_load_id.reduce((unique, o) => {
-	// 	    if(!unique.some(obj => obj.key === o.key)) {
-	// 	      unique.push(o);
-	// 	    }
-	// 	    return unique;
-	// 	},[]);
-
-	//     var elementsp1 = ""
-	// 	for(i= 0; i < elem_load_id.length; i++){
-	// 	    elem_load_id[i].key == 254 ? elementsp1 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp1 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
-	// 	}
-	// 	var elementsp2 = ""
-	// 	for(i= 0; i < elem_load_id.length; i++){
-	// 	    elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
-	// 	}
-
-	// 	document.getElementById("player1").innerHTML = elementsp1;
-	// 	document.getElementById("player2").innerHTML = elementsp2;
-
-	// 	data.forEach(d => {
-	// 	    d.assists = Number(d.assists)
-	// 	    d.bonus = Number(d.bonus)
-	// 	    d.bps = Number(d.bps)
-	// 	    d.clean_sheets = Number(d.clean_sheets)
-	// 	    d.creativity = Number(d.creativity)
-	// 	    // d.date = d.date
-	// 	    d.element = Number(d.element)
-	// 	    d.fixture = Number(d.fixture)
-	// 	    d.goals_conceded = Number(d.goals_conceded)
-	// 	    d.goals_scored = Number(d.goals_scored)
-	// 	    d.ict_index = Number(d.ict_index)
-	// 	    d.influence = Number(d.influence)
-	// 	    d.key_passes = Number(d.key_passes)
-	// 	    d.minutes = Number(d.minutes)
-	// 	    d.npg = Number(d.npg)
-	// 	    d.npxG = Number(d.npxG)
-	// 	    d.opponent_team = Number(d.opponent_team)
-	// 	    d.own_goals = Number(d.own_goals)
-	// 	    d.penalties_missed = Number(d.penalties_missed)
-	// 	    d.penalties_saved = Number(d.penalties_saved)
-	// 	    d.player_id = Number(d.player_id)
-	// 	    d.red_cards = Number(d.red_cards)
-	// 	    d.round = Number(d.round)
-	// 	    d.saves = Number(d.saves)
-	// 	    d.selected = Number(d.selected)
-	// 	    d.shots = Number(d.shots)
-	// 	    d.team_a_score = Number(d.team_a_score)
-	// 	    d.team_h_score = Number(d.team_h_score)
-	// 	    d.threat = Number(d.threat)
-	// 	    d.time = Number(d.time)
-	// 	    d.total_points = Number(d.total_points)
-	// 	    d.transfers_balance = Number(d.transfers_balance)
-	// 	    d.transfers_in = Number(d.transfers_in)
-	// 	    d.transfers_out = Number(d.transfers_out)
-	// 	    d.value = Number(d.value)
-	// 	    d.xA = Number(d.xA)
-	//     	d.xG = Number(d.xG)
-	//     	d.xGBuildup = Number(d.xGBuildup)
-	//     	d.xGChain = Number(d.xGChain)
-	//     	d.yellow_cards = Number(d.yellow_cards)
-	//     	d.chance_playing_tr = Number(d.chance_playing_tr)
-	//     	d.chance_playing_nx = Number(d.chance_playing_nx)
-	//     	d.form = Number(d.form)
-	//     	d.round_points = Number(d.round_points)
-	// 	});
-
-
-	// 	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	// 	load_stats(features,to_fill)
-		
-	// 	update(data)
-
-	// 	d3.csv("/data/players_full.csv", function(error, data2) {
-	// 		if (error) throw error;
-	// 		data = data2
-
-	// 		var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
-
-	// 	    $("#gw-slider").slider({
-	// 	      min: 1,
-	// 	      max: max_gw,
-	// 	      step: 1,
-	// 	      values: [ 1, max_gw ],
-	// 	      range: true,
-	// 	      stop: (event, ui) => {
-	// 	      }
-	// 	    });
-	// 	    $("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
-
-	// 	    var elem_load_id = []
-	// 	    data.filter(d => {
-	// 	    	elem_load_id.push({"key": Number(d.element), "value": `${d.web_name} (${d.team_short})`})
-	// 	    });
-	// 	    var elem_load_id = elem_load_id.reduce((unique, o) => {
-	// 		    if(!unique.some(obj => obj.key === o.key)) {
-	// 		      unique.push(o);
-	// 		    }
-	// 		    return unique;
-	// 		},[]);
-
-	// 	    var elementsp1 = ""
-	// 		for(i= 0; i < elem_load_id.length; i++){
-	// 		    elem_load_id[i].key == 254 ? elementsp1 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp1 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
-	// 		}
-	// 		var elementsp2 = ""
-	// 		for(i= 0; i < elem_load_id.length; i++){
-	// 		    elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
-	// 		}
-
-	// 		document.getElementById("player1").innerHTML = elementsp1;
-	// 		document.getElementById("player2").innerHTML = elementsp2;
-
-	// 		data.forEach(d => {
-	// 		    d.assists = Number(d.assists)
-	// 		    d.bonus = Number(d.bonus)
-	// 		    d.bps = Number(d.bps)
-	// 		    d.clean_sheets = Number(d.clean_sheets)
-	// 		    d.creativity = Number(d.creativity)
-	// 		    // d.date = d.date
-	// 		    d.element = Number(d.element)
-	// 		    d.fixture = Number(d.fixture)
-	// 		    d.goals_conceded = Number(d.goals_conceded)
-	// 		    d.goals_scored = Number(d.goals_scored)
-	// 		    d.ict_index = Number(d.ict_index)
-	// 		    d.influence = Number(d.influence)
-	// 		    d.key_passes = Number(d.key_passes)
-	// 		    d.minutes = Number(d.minutes)
-	// 		    d.npg = Number(d.npg)
-	// 		    d.npxG = Number(d.npxG)
-	// 		    d.opponent_team = Number(d.opponent_team)
-	// 		    d.own_goals = Number(d.own_goals)
-	// 		    d.penalties_missed = Number(d.penalties_missed)
-	// 		    d.penalties_saved = Number(d.penalties_saved)
-	// 		    d.player_id = Number(d.player_id)
-	// 		    d.red_cards = Number(d.red_cards)
-	// 		    d.round = Number(d.round)
-	// 		    d.saves = Number(d.saves)
-	// 		    d.selected = Number(d.selected)
-	// 		    d.shots = Number(d.shots)
-	// 		    d.team_a_score = Number(d.team_a_score)
-	// 		    d.team_h_score = Number(d.team_h_score)
-	// 		    d.threat = Number(d.threat)
-	// 		    d.time = Number(d.time)
-	// 		    d.total_points = Number(d.total_points)
-	// 		    d.transfers_balance = Number(d.transfers_balance)
-	// 		    d.transfers_in = Number(d.transfers_in)
-	// 		    d.transfers_out = Number(d.transfers_out)
-	// 		    d.value = Number(d.value)
-	// 		    d.xA = Number(d.xA)
-	// 	    	d.xG = Number(d.xG)
-	// 	    	d.xGBuildup = Number(d.xGBuildup)
-	// 	    	d.xGChain = Number(d.xGChain)
-	// 	    	d.yellow_cards = Number(d.yellow_cards)
-	// 	    	d.chance_playing_tr = Number(d.chance_playing_tr)
-	// 	    	d.chance_playing_nx = Number(d.chance_playing_nx)
-	// 	    	d.form = Number(d.form)
-	// 	    	d.round_points = Number(d.round_points)
-	// 		});
-
-
-	// 		to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	// 		load_stats(features,to_fill)
-			
-	// 		update(data)
-
-	// 	    $("#player1")
-	// 	        .on("change", function(){
-	// 	        	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	// 	        	load_stats(features,to_fill)
-	// 	          	update(data)
-	// 	        })
-
-	// 		$("#player2")
-	// 	        .on("change", () => {
-	// 	          to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	//         	  load_stats(features,to_fill)
-	// 	          update(data)
-	// 	        })
-
-	// 		$("#stat")
-	// 	        .on("change", () => {
-	// 	          update(data)
-	// 	        })
-
-	// 	    $("#gw-slider").slider({
-	// 			stop: (event,ui) => {
-	// 				update(data)
-	// 				$("#top-gws")[0].innerHTML = String(ui.values[0] + "-" + ui.values[1])
-	//     	}
-	// 		});
-			
-	// 		$("#check")
-	// 	        .on("click", () => {
-	// 	          update(data)
-	// 	        })
-	// 	    $("#stat-select")
-	// 	    .on("change", () => {
-	// 	      update(data)
-	// 	    })
-
-	// 	    $(function() {
-	// 		   $("#info1").on("click", function(){ 
-	// 		   		update(data)
-	// 		       $( "#p1-full-table" ).dialog({
-	// 		          height: window.innerHeight-100,
-	// 		          width: window.innerWidth/1.5,
-	// 		          modal: true
-	// 		        });
-	// 		       $("#p1-full-table").show();
-
-	// 		    });
-	// 		 });
-
-	// 		$(function() {
-	// 		   $("#info2").on("click", function(){ 
-	// 		   		update(data)
-	// 		       $( "#p2-full-table" ).dialog({
-	// 		          height: window.innerHeight-100,
-	// 		          width: window.innerWidth/2,
-	// 		          modal: true
-	// 		        });
-
-	// 		       $("#p2-full-table").show();
-	// 		    });
-	// 		 });
-
-	// 		$(function() {
-	// 		   $("#full_fix1").on("click", function(){
-	// 		   	update(data)
-	// 		       $( "#p1-full-fixtures" ).dialog({
-	// 		          height: window.innerHeight-100,
-	// 		          width: window.innerWidth/1.5,
-	// 		          modal: true
-	// 		        });
-	// 		       $("#p1-full-fixtures").show();
-	// 		    });
-	// 		 });
-
-	// 		$(function() {
-	// 		   $("#full_fix2").on("click", function(){ 
-	// 		   	update(data)
-	// 		       $( "#p2-full-fixtures" ).dialog({
-	// 		          height: window.innerHeight-100,
-	// 		          width: window.innerWidth/1.5,
-	// 		          modal: true
-	// 		        });
-	// 		       $("#p2-full-fixtures").show();
-	// 		    });
-	// 		 });
-	// 		console.log(data)
-	// 	});
-	// 	console.log(data)
-	// })
-
 	d3.csv("/data/players_full.csv", function(error, data) {
 		if (error) throw error;
-		console.log(data)
 
 		var max_gw = Math.max.apply(null, data.map(function(a){return a.round;}))
 
@@ -497,8 +247,30 @@
 		    elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
 		}
 
+		// for(i= 0; i < elem_load_id.length; i++){
+		//     elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+		// }
+		console.log(elem_load_id)
+
 		document.getElementById("player1").innerHTML = elementsp1;
 		document.getElementById("player2").innerHTML = elementsp2;
+
+		document.getElementById("player1_with").innerHTML = elementsp1;
+		// document.getElementById("player2_without").innerHTML = elementsp2;
+		// console.log(elementsp2.filter(d=>{return d.str.contains}))
+
+		var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
+		console.log(p1_selected)
+    	var elementsp3 = ""
+		for(i= 0; i < elem_load_id.length; i++){
+			console.log(elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1]))
+			if (elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1])){
+		    elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
+			}
+		}
+		console.log(elementsp3)
+		
+		document.getElementById("player2_without").innerHTML = elementsp3;
 
 		data.forEach(d => {
 		    d.assists = Number(d.assists)
@@ -549,21 +321,52 @@
 
 
 		to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-		load_stats(features,to_fill)
+		load_stats(features,to_fill,"stat-select")
+		load_stats(features,to_fill,"stat-select-with")
 		
 		update(data)
+		update_2(data)
+
+		$("#player1_with")
+	        .on("change", function(){
+	        	to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
+	        	load_stats(features,to_fill,"stat-select-with")
+	          	
+	          	var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
+	        	var elementsp3 = ""
+				for(i= 0; i < elem_load_id.length; i++){
+					if (elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1])){
+				    elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
+					}
+				}
+				
+				document.getElementById("player2_without").innerHTML = elementsp3;
+
+	          	update_2(data)
+	        })
+
+		$("#player2_without")
+	        .on("change", () => {
+				to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
+				load_stats(features,to_fill,"stat-select-with")
+	          	update_2(data)
+	        })
+	    $("#stat-with")
+	        .on("change", () => {
+	          update_2(data)
+	        })
 
 	    $("#player1")
 	        .on("change", function(){
 	        	to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-	        	load_stats(features,to_fill)
+	        	load_stats(features,to_fill,"stat-select")
 	          	update(data)
 	        })
 
 		$("#player2")
 	        .on("change", () => {
 	          to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
-        	  load_stats(features,to_fill)
+        	  load_stats(features,to_fill,"stat-select")
 	          update(data)
 	        })
 
@@ -586,6 +389,10 @@
 	    $("#stat-select")
 	    .on("change", () => {
 	      update(data)
+	    })
+	    $("#stat-select-with")
+	    .on("change", () => {
+	      update_2(data)
 	    })
 
 	    $(function() {
@@ -638,7 +445,274 @@
 		    });
 		 });
 		spinner.stop();
+		spinner_with.stop();
 	});
+
+function update_2 (data,chart_type) {
+	d3.select("#radarChart_2").selectAll("*").remove();
+	// d3.selectAll(".bars").remove()
+	// d3.selectAll(".labels").remove()
+
+	var player1 = $('#player1_with option:selected').val()
+    var player2 = $('#player2_without option:selected').val()
+
+    // console.log($('#check option:checked').val())
+    var gws_compare = []
+    data.filter(d => {return d.element == player2 && d.minutes == 0}).forEach(i=>{gws_compare.push(i.round)})
+    // console.log(gws_compare)
+    // console.log(data)
+    // console.log(data.filter(d => {return d.element == player2 && d.minutes == 0}))
+
+    var filtered_p1 = data.filter(function(d) {
+	        return gws_compare.indexOf(d.round) !== -1 && d.element == player1;
+	})
+
+    var filtered_p2 = data.filter(function(d) {
+	        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+	})
+
+ //    var gw_low = $("#gw-slider").slider("values",0)
+ //    var gw_high = $("#gw-slider").slider("values",1)
+
+	// var filtered_p1_old = data.filter(d => {
+ //    	return d.element == player1 && d.round <= gw_high && d.round >= gw_low
+ //    });
+ 	let gws_together = ""
+ 	for (i=0; i < gws_compare.length; i++){
+ 		i == gws_compare.length-1 ? gws_together += `and ${gws_compare[i]}.` : gws_together += `${gws_compare[i]}, `
+ 	}
+ 	document.getElementById('gws-without').innerHTML = gws_together
+
+ 	document.getElementById("pl1_with").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${filtered_p1[0].code}.png`;
+    document.getElementById("pl1_without").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${data.filter(d => {return d.element == player2})[0].code}.png`;
+	
+	console.log(filtered_p1)
+	// console.log(filtered_p1_old)
+	console.log(filtered_p2)
+
+	let p1_info_with = `${filtered_p1[0].web_name}'s stats without ${data.filter(d => {return d.element == player2})[0].web_name}`
+	let p1_info_without = `${filtered_p1[0].web_name}'s stats with ${data.filter(d => {return d.element == player2})[0].web_name}`
+	
+
+	document.getElementById('p1-color-with-info').innerHTML = p1_info_with
+	document.getElementById('p1-color-without-info').innerHTML = p1_info_without
+    
+    features = ['total_points', 'minutes','goals_scored', 'assists', 'clean_sheets', 'goals_conceded',
+       'own_goals', 'penalties_saved', 'penalties_missed', 'yellow_cards','red_cards', 'saves',
+       'bonus', 'bps', 'influence', 'creativity','threat', 'ict_index','shots', 'xG', 'time', 
+       'xA', 'key_passes', 'npg', 'npxG','xGChain', 'xGBuildup',"form","round_points"]
+
+    var total_p1 = []
+    var total_p2 = []
+    tot_varsp1 = []
+    tot_varsp2 = []
+    for (var i=0; i<features.length; i++) {
+    	tot_varsp1.push(`p1Tot${features[i]}`)
+    	tot_varsp2.push(`p2Tot${features[i]}`)
+    	if (features[i]=="form" || features[i]=="round_points"){
+    		window["p1Tot" + features[i]] = filtered_p1[0][features[i]];
+    		window["p2Tot" + features[i]] = filtered_p2[0][features[i]];	
+    	} else {
+    		window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
+    		window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
+    	}
+    	
+    	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": `<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`,"player":0,"real":eval(tot_varsp1[i])}) 
+    	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`,"player":1,"real":eval(tot_varsp2[i])})
+    };
+    
+    p1_pgs = filtered_p1.filter(d => {
+		return d.position != "Sub" && d.position != "Not selected"
+	});
+	p2_pgs = filtered_p2.filter(d => {
+		return d.position != "Sub" && d.position != "Not selected"
+	});
+
+	var total_p1_pgs = []
+    var total_p2_pgs = []
+    // tot_varsp1_pgs = []
+    // tot_varsp2_pgs = []
+    for (var i=0; i<features.length; i++) {
+    	// tot_varsp1_pgs.push(`p1TotPgs${features[i]}`)
+    	// tot_varsp2_pgs.push(`p2TotPgs${features[i]}`)
+    	// window["p1TotPgs" + features[i]] = p1_pgs.reduce((total, obj) => obj[features[i]] + total,0);
+    	// window["p2TotPgs" + features[i]] = p2_pgs.reduce((total, obj) => obj[features[i]] + total,0);
+    	total_p1_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/p1_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`,"player":0, "real": eval(tot_varsp1[i])/p1_pgs.length})
+    	total_p2_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/p2_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`,"player":1, "real":eval(tot_varsp2[i])/p2_pgs.length})
+    };
+    // console.log(eval(tot_varsp1_pgs[2]))
+
+    var total_p1_90 = []
+    var total_p2_90 = []
+    // tot_varsp1 = []
+    // tot_varsp2 = []
+    for (var i=0; i<features.length; i++) {
+    	// tot_varsp1.push(`p1Tot${features[i]}`)
+    	// tot_varsp2.push(`p2Tot${features[i]}`)
+    	// window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
+    	// window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
+    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
+    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
+    };
+    
+    var pos = `${filtered_p1[0].position_short} ${filtered_p2[0].position_short}`
+
+    
+    f_m = {
+    	"total_points":0,
+    	'minutes':1,
+    	'goals_scored':2,
+    	'assists':3, 
+    	'clean_sheets':4,
+    	'goals_conceded':5,
+    	'own_goals':6,
+    	'penalties_saved':7,
+    	'penalties_missed':8,
+    	'yellow_cards':9,
+    	'red_cards':10,
+    	'saves':11,
+    	'bonus':12,
+    	'bps':13, 
+    	'influence':14,
+    	'creativity':15,
+    	'threat':16,
+    	'ict_index':17,
+    	'shots':18,
+    	'xG':19,
+    	'time':20,
+    	'xA':21,
+    	'key_passes':22,
+    	'npg':23,
+    	'npxG':24,
+    	'xGChain':25,
+    	'xGBuildup':26,
+    	'form':27,
+    	"round_points":28
+	}
+
+    var stats_to_show = $("#stat-select-with").select2("val")
+
+    if (pos_pos1.includes(pos)) {
+		// var features1 = ["xG","goals_scored","minutes", "npg", "npxG", "xA", "assists", "shots", "key_passes", "total_points", "bonus"]
+		arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+	} if (pos_pos2.includes(pos)) {
+ //    	var features2 = ["total_points", "bonus", "goals_conceded", "saves", "penalties_saved", "minutes", "own_goals","clean_sheets"]
+ 		// arr = [f_m.total_points,f_m.bonus,f_m.goals_conceded,f_m.saves,f_m.penalties_saved,f_m.minutes,f_m.own_goals,f_m.clean_sheets]
+ 		arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+    } if (pos_pos3.includes(pos)){
+    	// var features3 = ["goals_scored", "npg", "assists", "shots", "key_passes", "total_points", "bonus", "goals_conceded", "clean_sheets"]
+    	// arr = [f_m.bonus,f_m.npg,f_m.assists,f_m.shots,f_m.key_passes,f_m.total_points,f_m.bonus,f_m.goals_conceded,f_m.clean_sheets]
+    	arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+    } if (pos_pos4.includes(pos)) {
+    	// var features4 = ["goals_scored", "npg", "assists", "clean_sheets", "total_points", "bonus", "time"]
+    	// arr = [f_m.bonus,f_m.npg,f_m.assists,f_m.clean_sheets,f_m.total_points,f_m.bonus,f_m.time]
+    	arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+    } if (pos_pos5.includes(pos)) {
+    	arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+    	// arr = [f_m.bonus,f_m.assists,f_m.clean_sheets,f_m.total_points,f_m.bonus,f_m.time,f_m.goals_scored]
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+    } if (pos_pos6.includes(pos)) {
+    	arr = []
+		for (var i=0;i<stats_to_show.length; i++){			
+			arr.push(f_m[stats_to_show[i]])	
+		}
+    	// arr = [f_m.bonus,f_m.assists,f_m.clean_sheets,f_m.total_points,f_m.bonus,f_m.time,f_m.goals_scored]
+		total_p1_load = arr.map((item) => total_p1[item])
+		total_p2_load = arr.map((item) => total_p2[item])
+		total_p1_pgs_load = arr.map((item) => total_p1_pgs[item])
+		total_p2_pgs_load = arr.map((item) => total_p2_pgs[item])
+		total_p1_90_load = arr.map((item) => total_p1_90[item])
+		total_p2_90_load = arr.map((item) => total_p2_90[item])
+    }
+
+    sample_trial = [total_p1_load, total_p2_load]
+    sample_pgs = [total_p1_pgs_load, total_p2_pgs_load]
+    sample_90 = [total_p1_90_load, total_p2_90_load]
+
+    var diverging_total = []
+    for (let i=0; i<total_p1.length;i++){
+    	diverging_total.push({"rank":i,"name":total_p1[i].axis,"difference":(total_p2[i].real - total_p1[i].real)/(total_p2[i].real + total_p1[i].real),"actual":`${total_p1[i].actual}<br>${total_p2[i].actual}`})
+    }
+
+    diverging_total.sort(function(a, b) {
+	    return b.difference - a.difference;
+	});
+
+    var diverging_pgs = []
+    for (let i=0; i<total_p1.length;i++){
+    	diverging_pgs.push({"rank":i,"name":total_p1_pgs[i].axis,"difference":total_p2_pgs[i].value - total_p1_pgs[i].value,"actual":`${total_p1_pgs[i].actual}<br>${total_p2_pgs[i].actual}`})
+    }
+
+    diverging_pgs.sort(function(a, b) {
+	    return b.difference - a.difference;
+	});
+
+    var diverging_90 = []
+    for (let i=0; i<total_p1.length;i++){
+    	diverging_90.push({"rank":i,"name":total_p1_90[i].axis,"difference":total_p2_90[i].value - total_p1_90[i].value,"actual":`${total_p1_90[i].actual}<br>${total_p2_90[i].actual}`})
+    }
+
+    diverging_90.sort(function(a, b) {
+	    return b.difference - a.difference;
+	});
+
+	var stat_type = $('#stat-with option:selected').val()
+	var insert = [sample_trial,sample_90]
+
+	// RadarChart("#radarChart_2", insert[0], radarChartOptions)
+
+	
+	stat_type == "total" ? RadarChart("#radarChart_2", insert[0], radarChartOptions) : RadarChart("#radarChart_2", insert[1], radarChartOptions);
+	
+	
+	// console.log(sample_trial)
+	
+}
 
 // Unique function
 function onlyUnique(value, index, self) {
@@ -655,6 +729,7 @@ function update (data,chart_type) {
     var player2 = $('#player2 option:selected').val()
 
     // console.log($('#check option:checked').val())
+    // console.log(data)
 
 	var gw_low = $("#gw-slider").slider("values",0)
     var gw_high = $("#gw-slider").slider("values",1)
@@ -741,8 +816,8 @@ function update (data,chart_type) {
     		window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
     	}
     	
-    	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": `<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`,"player":0,"real":eval(tot_varsp1[i])}) 
-    	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`,"player":1,"real":eval(tot_varsp2[i])})
+    	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": `<strong>${filtered_p1[0].web_name}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`,"player":0,"real":eval(tot_varsp1[i])}) 
+    	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":`<strong>${filtered_p2[0].web_name}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`,"player":1,"real":eval(tot_varsp2[i])})
     };
     
     p1_pgs = filtered_p1.filter(d => {
@@ -761,8 +836,8 @@ function update (data,chart_type) {
     	// tot_varsp2_pgs.push(`p2TotPgs${features[i]}`)
     	// window["p1TotPgs" + features[i]] = p1_pgs.reduce((total, obj) => obj[features[i]] + total,0);
     	// window["p2TotPgs" + features[i]] = p2_pgs.reduce((total, obj) => obj[features[i]] + total,0);
-    	total_p1_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/p1_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`,"player":0, "real": eval(tot_varsp1[i])/p1_pgs.length})
-    	total_p2_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/p2_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`,"player":1, "real":eval(tot_varsp2[i])/p2_pgs.length})
+    	total_p1_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/p1_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p1[0].web_name}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`,"player":0, "real": eval(tot_varsp1[i])/p1_pgs.length})
+    	total_p2_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/p2_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p2[0].web_name}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`,"player":1, "real":eval(tot_varsp2[i])/p2_pgs.length})
     };
     // console.log(eval(tot_varsp1_pgs[2]))
 
@@ -775,8 +850,8 @@ function update (data,chart_type) {
     	// tot_varsp2.push(`p2Tot${features[i]}`)
     	// window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
     	// window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
-    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${$('#player1 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
-    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${$('#player2 option:selected').text().split(" ")[0]}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
+    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p1[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
+    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p2[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
     };
     
     var pos = `${filtered_p1[0].position_short} ${filtered_p2[0].position_short}`
@@ -934,6 +1009,7 @@ function update (data,chart_type) {
 		stat_type == "total" ? RadarChart(".radarChart", insert[0], radarChartOptions) : stat_type == "per_game_started" ? RadarChart(".radarChart", insert[1], radarChartOptions) : RadarChart(".radarChart", insert[2], radarChartOptions);
 	}
 	
+	console.log(sample_trial)
 
 	//Call function to draw the Radar chart
 	
@@ -978,8 +1054,11 @@ function update (data,chart_type) {
 
 	popup_full_table(data.filter(d => {return d.element == player1}),"#p1-full-table")
 	popup_full_table(data.filter(d => {return d.element == player2}),"#p2-full-table")
+
 	d3.csv("/data/fixtures.csv", function(error, fix) {
 		if (error) throw error;
+
+		
 
 		fix.forEach(d => {
 		    d.event = Number(d.event)
@@ -1049,9 +1128,10 @@ function update (data,chart_type) {
 			insert_next_games_full(teams,"#teams_5",16,20)
 
 			// insert_next_games_full(teams,"#all_teams")
-
 		})
 	})
+
+
 }
 
 function popup_full_table (data,id) {
@@ -1214,9 +1294,7 @@ function insert_next_games (data,fixtures,current,id) {
 }
 
 function insert_next_games_full (data,id,start, finish) {
-
 	team_list = []
-	console.log(data)
 	data.forEach(d=> team_list.push(d.title))
 	team_list = team_list.filter(onlyUnique)
 	team_list.sort(function(a, b) {
@@ -1225,7 +1303,6 @@ function insert_next_games_full (data,id,start, finish) {
 	    return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
 	});
 	
-	console.log(team_list)
 	// https://resources.premierleague.com/premierleague/photos/players/110x140/p${d.add}.png
 	for (i=start;i<finish;i++){
 		
@@ -1281,8 +1358,6 @@ function insert_next_games_full (data,id,start, finish) {
 		});
 
 		trial = [total_S,total_L4,total_L6]
-		console.log(trial)
-		// console.log(trial)
 
 		var table_nx = d3.select(id).append('table').attr("class","table_nx");
 
@@ -1633,15 +1708,44 @@ function insert_table (data, id, season) {
 }
 
 // FOOTBALL PITCH TEAM SELECTION
+// Call update functions bsaed on callbacks 
+function getUrlVars(){
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
 
-update_players(3370907)
-
-$("#team_id_button").on("click",function(){
+if (window.location.href.includes("user_id")) {
+	// If redirected with selection
 	all_uniq_trans = []
 	bank_number = 0
 	tot_pts = 0
-	update_players($("#team_id").val())
-})
+	let redirect_options = getUrlVars()["user_id"]
+	console.log(redirect_options)
+	update_players(redirect_options)
+} else {
+	//default
+	all_uniq_trans = []
+	bank_number = 0
+	tot_pts = 0
+	update_players(3370907)
+}
+
+// $("#team_id_button").on("click",function(){
+// 	all_uniq_trans = []
+// 	bank_number = 0
+// 	tot_pts = 0
+// 	// let redirect_options = getUrlVars()["user_id"].split("=")
+// 	// console.log(getUrlVars()["user_id"])
+// 	// console.log(getUrlVars()["user_id"])
+// 	update_players($("#team_id").val())
+// })
 
 var floor10 = (value, exp) => decimalAdjust('floor', value, exp);
 const ceil10 = (value, exp) => decimalAdjust('ceil', value, exp);
@@ -1661,7 +1765,6 @@ var tot_pts = 0
 function update_players (team_id) {
 	$("#pitch").empty()
 
-	console.log(document.getElementById("pitch").offsetWidth)
 	var scale = d3.scale.linear()
 		.domain([0, 100])
 		.range([0, 500]);
@@ -1803,7 +1906,6 @@ function update_players (team_id) {
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
     	if (error) throw error;
 
-    	// console.log(player_data.events.filter(d=>{return d.is_current == true})[0].id)
     	gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
     	gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
     	
@@ -1821,14 +1923,12 @@ function update_players (team_id) {
 		       $("#error-message").show()
 		  		throw error
 		  	};
-		  	// console.log(data)
 
 	    	d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
 	      		d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
 	      			d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, fixtures) {
 	    				if (error) throw error;
 
-				      	// console.log(transfer_data)
 				        my_picks = []
 				        data.picks.forEach(d=>{
 			        		my_picks.push(d.element)
@@ -1918,7 +2018,7 @@ function update_players (team_id) {
 
 							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all,"total_points":live_points})
 						}
-						console.log(data)
+						
 						$("#gw_points")[0].innerHTML = String(tot_pts)
 						
 				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
@@ -2089,8 +2189,6 @@ function update_players (team_id) {
 									element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
 									formation_images_load = formation_images_load.filter(i=>{return i.position != d.pos})
-									console.log(formation_images_load)
-
 								});
 
 				        // full_table(player_data,player_picks,playersContainer,formation_images_load,player_info,player_name)
@@ -2457,7 +2555,6 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 			            
         clickable_table
         	.on('click.tooltip_actions', function(d) {
-        		console.log(d)
 			    tooltip_actions.transition()
 					.duration(300)
 					.style("opacity", 1)
@@ -2898,11 +2995,9 @@ function update_fixtures(gw,full_data,data) {
 				
 				if (d.score[0].status=="finished"){
 					output = d.score[0].score
-					console.log(output)
 				} else {
 					var date = new Date(d.score[0].score);
 					output = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + (date.getMinutes()==0 ? "00" : date.getMinutes());
-					console.log(output)
 				}
 				return output
 			})
@@ -2941,4 +3036,3 @@ function wrap(text, width) {
         }
     });
 }
-
