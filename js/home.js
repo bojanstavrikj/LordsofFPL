@@ -254,6 +254,10 @@
 
 		document.getElementById("player1").innerHTML = elementsp1;
 		document.getElementById("player2").innerHTML = elementsp2;
+		var elementsp3 = ""
+		for(i= 0; i < elem_load_id.length; i++){
+		    elem_load_id[i].key == 254 ? elementsp3 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
+		}
 
 		document.getElementById("player1_with").innerHTML = elementsp1;
 		// document.getElementById("player2_without").innerHTML = elementsp2;
@@ -261,16 +265,16 @@
 
 		var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
 		console.log(p1_selected)
-    	var elementsp3 = ""
+    	var elementsp4 = ""
 		for(i= 0; i < elem_load_id.length; i++){
 			console.log(elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1]))
 			if (elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1])){
-		    elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
+		    elementsp4 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
 			}
 		}
-		console.log(elementsp3)
+		console.log(elementsp4)
 		
-		document.getElementById("player2_without").innerHTML = elementsp3;
+		document.getElementById("player2_without").innerHTML = elementsp4;
 
 		data.forEach(d => {
 		    d.assists = Number(d.assists)
@@ -462,14 +466,26 @@ function update_2 (data,chart_type) {
     // console.log(gws_compare)
     // console.log(data)
     // console.log(data.filter(d => {return d.element == player2 && d.minutes == 0}))
-
-    var filtered_p1 = data.filter(function(d) {
+    if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player1;}).length == 0) {
+    	var filtered_p1 = data.filter(function(d) {
+	        return d.element == player1;
+		})
+    } else {
+    	var filtered_p1 = data.filter(function(d) {
 	        return gws_compare.indexOf(d.round) !== -1 && d.element == player1;
-	})
+		})
+    }
 
-    var filtered_p2 = data.filter(function(d) {
+    if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player2;}).length == 0) {
+    	var filtered_p2 = data.filter(function(d) {
 	        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
-	})
+		})
+    } else {
+    	var filtered_p2 = data.filter(function(d) {
+	        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+		})
+    }
+
 
  //    var gw_low = $("#gw-slider").slider("values",0)
  //    var gw_high = $("#gw-slider").slider("values",1)
@@ -483,6 +499,7 @@ function update_2 (data,chart_type) {
  	}
  	document.getElementById('gws-without').innerHTML = gws_together
 
+ 	console.log(filtered_p1)
  	document.getElementById("pl1_with").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${filtered_p1[0].code}.png`;
     document.getElementById("pl1_without").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${data.filter(d => {return d.element == player2})[0].code}.png`;
 	
