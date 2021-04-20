@@ -669,9 +669,20 @@ function update_2 (data,chart_type) {
     		window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
     		window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
     	}
-    	
-    	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": `<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`,"player":0,"real":eval(tot_varsp1[i])}) 
-    	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`,"player":1,"real":eval(tot_varsp2[i])})
+
+    	if ($("#comparison_type").val()=="with/without"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`
+    	} else if($("#comparison_type").val()=="position"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} as ${pos_vs1} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} as ${pos_vs2} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`
+    	} else if($("#comparison_type").val()=="gw-range"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs1} - ${gw2_vs1} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i]))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs2} - ${gw2_vs2} </strong> <br><strong>${features[i]}:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i]))}`
+    	}
+
+    	total_p1.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp1[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual": input1,"player":0,"real":eval(tot_varsp1[i])}) 
+    	total_p2.push({'axis':`${features[i]}`, 'value':Nan_rep(eval(tot_varsp2[i])/(eval(tot_varsp1[i])+eval(tot_varsp2[i]))), "actual":input2,"player":1,"real":eval(tot_varsp2[i])})
     };
     
     p1_pgs = filtered_p1.filter(d => {
@@ -690,8 +701,19 @@ function update_2 (data,chart_type) {
     	// tot_varsp2_pgs.push(`p2TotPgs${features[i]}`)
     	// window["p1TotPgs" + features[i]] = p1_pgs.reduce((total, obj) => obj[features[i]] + total,0);
     	// window["p2TotPgs" + features[i]] = p2_pgs.reduce((total, obj) => obj[features[i]] + total,0);
-    	total_p1_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/p1_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`,"player":0, "real": eval(tot_varsp1[i])/p1_pgs.length})
-    	total_p2_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/p2_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`,"player":1, "real":eval(tot_varsp2[i])/p2_pgs.length})
+    	if ($("#comparison_type").val()=="with/without"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name} </strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`
+    	} else if($("#comparison_type").val()=="position"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} as ${pos_vs1} </strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} as ${pos_vs2} </strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`
+    	} else if($("#comparison_type").val()=="gw-range"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs1} - ${gw2_vs1} </strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/p1_pgs.length)}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs2} - ${gw2_vs2} </strong> <br><strong>${features[i]} per game started:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/p2_pgs.length)}`
+    	}
+
+    	total_p1_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/p1_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":input1,"player":0, "real": eval(tot_varsp1[i])/p1_pgs.length})
+    	total_p2_pgs.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/p2_pgs.length)/(eval(tot_varsp1[i])/p1_pgs.length+eval(tot_varsp2[i])/p2_pgs.length)), "actual":input2,"player":1, "real":eval(tot_varsp2[i])/p2_pgs.length})
     };
     // console.log(eval(tot_varsp1_pgs[2]))
 
@@ -704,8 +726,19 @@ function update_2 (data,chart_type) {
     	// tot_varsp2.push(`p2Tot${features[i]}`)
     	// window["p1Tot" + features[i]] = filtered_p1.reduce((total, obj) => obj[features[i]] + total,0);
     	// window["p2Tot" + features[i]] = filtered_p2.reduce((total, obj) => obj[features[i]] + total,0);
-    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
-    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":`<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
+    	if ($("#comparison_type").val()=="with/without"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} without ${data.filter(d => {return d.element == player2})[0].web_name} </strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} with ${data.filter(d => {return d.element == player2})[0].web_name}</strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`
+    	} else if($("#comparison_type").val()=="position"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} as ${pos_vs1} </strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} as ${pos_vs2} </strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`
+    	} else if($("#comparison_type").val()=="gw-range"){
+    		var input1 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs1} - ${gw2_vs1} </strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))}`
+    		var input2 = `<strong>${filtered_p1[0].web_name} between ${gw1_vs2} - ${gw2_vs2} </strong> <br><strong>${features[i]} per 90min:</strong> ${(d3.format(".2f"))(eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))}`
+    	}
+
+    	total_p1_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":input1,"player":0,"real":eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)})
+    	total_p2_90.push({'axis':`${features[i]}`, 'value':Nan_rep((eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))/(eval(tot_varsp1[i])/(eval(tot_varsp1[1])/90)+eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90))), "actual":input2,"player":1,"real":eval(tot_varsp2[i])/(eval(tot_varsp2[1])/90)})
     };
     
     var pos = `${filtered_p1[0].position_short} ${filtered_p2[0].position_short}`
@@ -855,12 +888,12 @@ function update_2 (data,chart_type) {
 	});
 
 	var stat_type = $('#stat-with option:selected').val()
-	var insert = [sample_trial,sample_90]
+	var insert = [sample_trial,sample_90,sample_pgs]
 
 	// RadarChart("#radarChart_2", insert[0], radarChartOptions)
 
 	
-	stat_type == "total" ? RadarChart("#radarChart_2", insert[0], radarChartOptions) : RadarChart("#radarChart_2", insert[1], radarChartOptions);
+	stat_type == "total" ? RadarChart("#radarChart_2", insert[0], radarChartOptions) : stat_type == "per_game_started" ? RadarChart("#radarChart_2", insert[2], radarChartOptions) : RadarChart("#radarChart_2", insert[1], radarChartOptions);
 	
 	
 	// console.log(sample_trial)
