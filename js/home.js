@@ -78,8 +78,9 @@
 		    tooltip.transition()
 		      .duration(300)
 		      .style("opacity", 1);
-		    tooltip.html(`This section allows users to compare a single player's stats, when playing with or without another player from their team.
-		    	For example, the default view shows Salah's stats when he plays with vs without Milner.`)
+		    tooltip.html(`This section allows users to compare a single player's stats based on three options: with/without another player, at different positions played, and between two ranges of gameweeks.
+		    	For example, the default view shows Salah's stats when he plays with vs without Milner. If you select positions in the first dropdown, then you could compare Salah's stats when he plays as a forward or on the wing.
+		    	If you select gw range in the first dropdown then you can compare Salah's stats between two ranges of gameweeks of your choice!`)
 		      .style("left", (d3.event.pageX) + "px")
 		      .style("top", (d3.event.pageY + 10) + "px");
 		  })
@@ -145,6 +146,7 @@
 	  $("#stat").select2();
 	  $("#stat-with").select2();
 	  $("#select-stat-player-table").select2();
+	  $("#comparison_type").select2();
 	});
 	
 
@@ -226,6 +228,9 @@
 	      }
 	    });
 	    $("#top-gws")[0].innerHTML = String($("#gw-slider").slider("values",0) + "-" + $("#gw-slider").slider("values",1))
+		
+		document.getElementById("gw2-vs1").defaultValue = max_gw;
+	    document.getElementById("gw2-vs2").defaultValue = max_gw;
 
 	    var elem_load_id = []
 	    data.filter(d => {
@@ -250,7 +255,7 @@
 		// for(i= 0; i < elem_load_id.length; i++){
 		//     elem_load_id[i].key == 302 ? elementsp2 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp2 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
 		// }
-		console.log(elem_load_id)
+		// console.log(elem_load_id)
 
 		document.getElementById("player1").innerHTML = elementsp1;
 		document.getElementById("player2").innerHTML = elementsp2;
@@ -259,20 +264,20 @@
 		    elem_load_id[i].key == 254 ? elementsp3 += "<option selected value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>" : elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>";
 		}
 
-		document.getElementById("player1_with").innerHTML = elementsp1;
+		document.getElementById("player1_with").innerHTML = elementsp3;
 		// document.getElementById("player2_without").innerHTML = elementsp2;
 		// console.log(elementsp2.filter(d=>{return d.str.contains}))
 
 		var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
-		console.log(p1_selected)
+		// console.log(p1_selected)
     	var elementsp4 = ""
 		for(i= 0; i < elem_load_id.length; i++){
-			console.log(elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1]))
+			// console.log(elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1]))
 			if (elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1])){
 		    elementsp4 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
 			}
 		}
-		console.log(elementsp4)
+		// console.log(elementsp4)
 		
 		document.getElementById("player2_without").innerHTML = elementsp4;
 
@@ -326,14 +331,15 @@
 
 		to_fill = `${data.filter(d => {return d.element == $("#player1").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2").val()})[0].position_short}`
 		load_stats(features,to_fill,"stat-select")
-		load_stats(features,to_fill,"stat-select-with")
+		to_fill_with = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
+		load_stats(features,to_fill_with,"stat-select-with")
 		
 		update(data)
 		update_2(data)
-
-		$("#player1_with")
-	        .on("change", function(){
-	        	to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
+		
+		$("#comparison_type").on("change", function(){
+			if ($("#comparison_type").val()=="with/without") {
+        		to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
 	        	load_stats(features,to_fill,"stat-select-with")
 	          	
 	          	var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
@@ -343,11 +349,96 @@
 				    elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
 					}
 				}
-				
 				document.getElementById("player2_without").innerHTML = elementsp3;
+				$("#position_select").hide();
+        		$("#pl1_without_div").show();
+        		$("#gw_vs_select").hide();
+        		$("#gws-without").show();
+
+        	} else if($("#comparison_type").val()=="position") {
+        		to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short}`
+	        	load_stats(features,to_fill,"stat-select-with")
+
+        		var positions = []
+        		var elementsp3 = ""
+			    data.filter(i => {return i.element == $("#player1_with").val()}).forEach(d=>{
+			    	positions.push(d.position)
+			    })
+			    positions = positions.filter(onlyUnique)
+			    // elementsp3 += "<option selected value='All'>All</option>"
+			    for (i=0;i<positions.length;i++){
+			    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
+			    }
+
+			    document.getElementById("pos_vs1").innerHTML = elementsp3;
+        		document.getElementById("pos_vs2").innerHTML = elementsp3;
+        		$("#position_select").show();
+        		$("#pl1_without_div").hide();
+        		$("#gw_vs_select").hide();
+        		$("#gws-without").hide();
+        	} else if ($("#comparison_type").val()=="gw-range"){
+        		$("#position_select").hide();
+        		$("#pl1_without_div").hide();
+        		$("#gw_vs_select").show();
+        		$("#gws-without").hide();
+        	}
+        	
+
+          	update_2(data)
+		})
+
+		$("#player1_with")
+	        .on("change", function(){
+	        	if ($("#comparison_type").val()=="with/without") {
+	        		to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player2_without").val()})[0].position_short}`
+		        	load_stats(features,to_fill,"stat-select-with")
+		          	
+		          	var p1_selected = $( "#player1_with option:selected" ).text().split(" ")
+		        	var elementsp3 = ""
+					for(i= 0; i < elem_load_id.length; i++){
+						if (elem_load_id[i].value.includes(p1_selected[p1_selected.length - 1])){
+					    elementsp3 += "<option value='"+ elem_load_id[i].key + "'>" + elem_load_id[i].value + "</option>"
+						}
+					}
+					document.getElementById("player2_without").innerHTML = elementsp3;
+					$("#position_select").hide();
+        			$("#pl1_without_div").show();
+        			$("#gw_vs_select").hide();
+        			$("#gws-without").show();
+	        	} else if($("#comparison_type").val()=="position") {
+	        		to_fill = `${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short} ${data.filter(d => {return d.element == $("#player1_with").val()})[0].position_short}`
+	        		load_stats(features,to_fill,"stat-select-with")
+
+	        		var positions = []
+	        		var elementsp3 = ""
+				    data.filter(i => {return i.element == $("#player1_with").val()}).forEach(d=>{
+				    	positions.push(d.position)
+				    })
+				    positions = positions.filter(onlyUnique)
+				    // elementsp3 += "<option selected value='All'>All</option>"
+				    for (i=0;i<positions.length;i++){
+				    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
+				    }
+				    document.getElementById("pos_vs1").innerHTML = elementsp3;
+        			document.getElementById("pos_vs2").innerHTML = elementsp3;
+        			$("#position_select").show();
+        			$("#pl1_without_div").hide();
+        			$("#gw_vs_select").hide();
+        			$("#gws-without").hide();
+	        	}
 
 	          	update_2(data)
 	        })
+	    $("#pos_vs1").on("change", function(){
+	    	update_2(data)
+	    })
+
+	    $("#pos_vs2").on("change", function(){
+	    	update_2(data)
+	    })
+	    $("#gw_vs_button").on("click", function(){
+	    	update_2(data)
+	    })
 
 		$("#player2_without")
 	        .on("change", () => {
@@ -457,34 +548,67 @@ function update_2 (data,chart_type) {
 	// d3.selectAll(".bars").remove()
 	// d3.selectAll(".labels").remove()
 
+	console.log(data)
 	var player1 = $('#player1_with option:selected').val()
     var player2 = $('#player2_without option:selected').val()
 
+    var pos_vs1 = $('#pos_vs1').val()
+    var pos_vs2 = $('#pos_vs2').val()
+
+    var gw1_vs1 = $('#gw1-vs1').val()
+    var gw1_vs2 = $('#gw1-vs2').val()
+    var gw2_vs1 = $('#gw2-vs1').val()
+    var gw2_vs2 = $('#gw2-vs2').val()
+
     // console.log($('#check option:checked').val())
     var gws_compare = []
-    data.filter(d => {return d.element == player2 && d.minutes == 0}).forEach(i=>{gws_compare.push(i.round)})
+    data.filter(d => {return d.element == player2 && d.minutes == 0}).forEach(i=>{
+    	gws_compare.push(i.round)
+    })
+    
     // console.log(gws_compare)
     // console.log(data)
     // console.log(data.filter(d => {return d.element == player2 && d.minutes == 0}))
-    if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player1;}).length == 0) {
-    	var filtered_p1 = data.filter(function(d) {
-	        return d.element == player1;
-		})
-    } else {
-    	var filtered_p1 = data.filter(function(d) {
-	        return gws_compare.indexOf(d.round) !== -1 && d.element == player1;
-		})
-    }
 
-    if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player2;}).length == 0) {
-    	var filtered_p2 = data.filter(function(d) {
-	        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+    if($("#comparison_type").val()=="with/without") {
+    	if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player1;}).length == 0) {
+	    	var filtered_p1 = data.filter(function(d) {
+		        return d.element == player1;
+			})
+	    } else {
+	    	var filtered_p1 = data.filter(function(d) {
+		        return gws_compare.indexOf(d.round) !== -1 && d.element == player1;
+			})
+	    }
+
+	    if (data.filter(function(d) {return gws_compare.indexOf(d.round) !== -1 && d.element == player2;}).length == 0) {
+	    	var filtered_p2 = data.filter(function(d) {
+		        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+			})
+	    } else {
+	    	var filtered_p2 = data.filter(function(d) {
+		        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+			})
+	    }
+    } else if ($("#comparison_type").val()=="position") {
+		var filtered_p1 = data.filter(function(d) {
+	        return d.element == player1 && d.position == pos_vs1
 		})
-    } else {
-    	var filtered_p2 = data.filter(function(d) {
-	        return gws_compare.indexOf(d.round) == -1 && d.element == player1;
+
+		var filtered_p2 = data.filter(function(d) {
+	        return d.element == player1 && d.position == pos_vs2
+		})
+    	
+    } else if ($("#comparison_type").val()=="gw-range") {
+    	var filtered_p1 = data.filter(function(d) {
+	        return d.element == player1 && d.round <= gw2_vs1 && d.round >= gw1_vs1
+		})
+
+		var filtered_p2 = data.filter(function(d) {
+	        return d.element == player1 && d.round <= gw2_vs2 && d.round >= gw1_vs2
 		})
     }
+    
 
 
  //    var gw_low = $("#gw-slider").slider("values",0)
@@ -493,26 +617,38 @@ function update_2 (data,chart_type) {
 	// var filtered_p1_old = data.filter(d => {
  //    	return d.element == player1 && d.round <= gw_high && d.round >= gw_low
  //    });
- 	let gws_together = ""
- 	for (i=0; i < gws_compare.length; i++){
- 		i == gws_compare.length-1 ? gws_together += `and ${gws_compare[i]}.` : gws_together += `${gws_compare[i]}, `
- 	}
- 	document.getElementById('gws-without').innerHTML = gws_together
-
- 	console.log(filtered_p1)
+ 	
  	document.getElementById("pl1_with").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${filtered_p1[0].code}.png`;
-    document.getElementById("pl1_without").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${data.filter(d => {return d.element == player2})[0].code}.png`;
+    // document.getElementById("pl1_without").src=`https://resources.premierleague.com/premierleague/photos/players/110x140/p${data.filter(d => {return d.element == player2})[0].code}.png`;
 	
 	console.log(filtered_p1)
 	// console.log(filtered_p1_old)
 	console.log(filtered_p2)
 
-	let p1_info_with = `${filtered_p1[0].web_name}'s stats without ${data.filter(d => {return d.element == player2})[0].web_name}`
-	let p1_info_without = `${filtered_p1[0].web_name}'s stats with ${data.filter(d => {return d.element == player2})[0].web_name}`
-	
+	if($("#comparison_type").val()=="with/without") { 
+		let p1_info_with = `${filtered_p1[0].web_name}'s stats without ${data.filter(d => {return d.element == player2})[0].web_name}`
+		let p1_info_without = `${filtered_p1[0].web_name}'s stats with ${data.filter(d => {return d.element == player2})[0].web_name}`
+		let gws_together = "Gameweeks not played together: "
+	 	for (i=0; i < gws_compare.length; i++){
+	 		i == gws_compare.length-1 ? gws_together += `and ${gws_compare[i]}.` : gws_together += `${gws_compare[i]}, `
+	 	}
+	 	document.getElementById('gws-without').innerHTML = gws_together
 
-	document.getElementById('p1-color-with-info').innerHTML = p1_info_with
-	document.getElementById('p1-color-without-info').innerHTML = p1_info_without
+		document.getElementById('p1-color-with-info').innerHTML = p1_info_with
+		document.getElementById('p1-color-without-info').innerHTML = p1_info_without
+	} else if($("#comparison_type").val()=="position") {
+		let p1_info_with = `${filtered_p1[0].web_name}'s stats at position ${pos_vs1}`
+		let p1_info_without = `${filtered_p1[0].web_name}'s stats position ${pos_vs2}`
+		
+		document.getElementById('p1-color-with-info').innerHTML = p1_info_with
+		document.getElementById('p1-color-without-info').innerHTML = p1_info_without
+	} else if($("#comparison_type").val()=="gw-range") {
+		let p1_info_with = `${filtered_p1[0].web_name}'s stats between ${gw1_vs1} - ${gw2_vs1}`
+		let p1_info_without = `${filtered_p1[0].web_name}'s stats between ${gw1_vs2} - ${gw2_vs2}`
+		
+		document.getElementById('p1-color-with-info').innerHTML = p1_info_with
+		document.getElementById('p1-color-without-info').innerHTML = p1_info_without
+	}	
     
     features = ['total_points', 'minutes','goals_scored', 'assists', 'clean_sheets', 'goals_conceded',
        'own_goals', 'penalties_saved', 'penalties_missed', 'yellow_cards','red_cards', 'saves',
@@ -1025,8 +1161,6 @@ function update (data,chart_type) {
 	} else {
 		stat_type == "total" ? RadarChart(".radarChart", insert[0], radarChartOptions) : stat_type == "per_game_started" ? RadarChart(".radarChart", insert[1], radarChartOptions) : RadarChart(".radarChart", insert[2], radarChartOptions);
 	}
-	
-	console.log(sample_trial)
 
 	//Call function to draw the Radar chart
 	
@@ -1744,7 +1878,6 @@ if (window.location.href.includes("user_id")) {
 	bank_number = 0
 	tot_pts = 0
 	let redirect_options = getUrlVars()["user_id"]
-	console.log(redirect_options)
 	update_players(redirect_options)
 } else {
 	//default

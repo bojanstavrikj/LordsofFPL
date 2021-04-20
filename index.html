@@ -274,30 +274,52 @@
 	<div class="container-fluid nopadding" style="border-bottom:1px solid #cecece; text-align: center; margin:auto;" id="comparison_div2">
 		<div class="row">
 			<div class="col">
-				<h2>Compare player with/without a teammate</h2>	
+				<h2>Compare a single player's stats</h2>	
 			</div>
 		</div>
 		<div class="row" >
 			<div class="col-md-4" id="comparison_2" style="margin:auto;">
 				<div class="row" style="text-align:center;">
 					<div class="col">
-						<label id="head" for="fname" style="font-size: 15px; font-weight:bold;">Select players</label> <i style ='margin-top:5px;' id="info-with-without" class="fas fa-info-circle"></i><br>
+						<label id="head" for="fname" style="font-size: 15px; font-weight:bold;">Select player</label> <i style ='margin-top:5px;' id="info-with-without" class="fas fa-info-circle"></i><br>
+					</div>
+					<div class="w-100"></div>
+					<div class="col">
+						<select id='comparison_type' style='width: 200px;'>
+							<option value="with/without">with/without player</option>
+							<option value="position">position</option>
+							<option value="gw-range">gw range</option>
+						</select>
 					</div>
 					<div class="w-100"></div>
 					<div class="col">
 						<select id='player1_with' style='width: 150px;'></select>
 					</div>
+					<div class="w-100"></div>
 					<div class="col">
-						<select id='player2_without' style='width: 150px;'></select>
-					</div>	
+						<img id="pl1_with" width=20%>
+					</div>
 				</div>
 				<div class="row">
-					<div class="col">
-						<img id="pl1_with" width=40%>
+					<div class="col" id="pl1_without_div">
+						<select id='player2_without' style='width: 150px;'></select>
+						<!-- <div class="w-100"></div>
+						<img id="pl1_without" width=0%> -->
 					</div>
-					<div class="col">
-						<img id="pl1_without" width=40%>
-					</div>	
+					<div class="w-100"></div>
+					<div class="col" style="display:none;" id="position_select">
+						<select id="pos_vs1"></select>
+						<select id="pos_vs2"></select>
+					</div>
+					<div class="w-100"></div>
+					<div class="col" style="display:none;" id="gw_vs_select">
+						GW: <input style='width: 30px; height:20px' value="1" id="gw1-vs1"></input>-
+						<input style='width: 30px; height:20px' id="gw2-vs1"></input>
+						VS
+						GW: <input style='width: 30px; height:20px' value="1" id="gw1-vs2"></input>-
+						<input style='width: 30px; height:20px'id="gw2-vs2"></input><br>
+						<button id="gw_vs_button">Show</button>
+					</div>
 				</div>
 				<div class="row">
 					<div class="col">
@@ -307,8 +329,7 @@
 						<div id="p1-color-without"><hr/></div>
 					</div>
 					<div class="w-100"></div>
-					<div class="col">
-						Gameweeks not played together:
+					<div class="col" id="gws-without-show">
 						<div id="gws-without"></div>
 						<!-- <div id="gws-with"></div> -->
 					</div>

@@ -146,7 +146,25 @@ button#team_id_button:hover {
   color: white;
 }
 
-button#add_to_team:hover, button#add_p1:hover, button#add_p2:hover {
+button#gw_vs_button{
+  /*width:100px;*/
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  /*padding: 8px 16px;*/
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+  background-color: white; 
+  color: black; 
+  border: 2px solid #4CAF50; 
+}
+
+button#gw_vs_button:hover, button#add_p1:hover, button#add_p2:hover {
   background-color: #4CAF50;
   color: white;
 }
