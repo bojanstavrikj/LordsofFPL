@@ -2023,6 +2023,20 @@ function update_players (team_id) {
 		.attr("x2", scale(pitch.width))
 		.attr("stroke", pitch.paintColor)
 
+	var pitchImage = pitchElement.append("image")
+		.attr("x",0)
+		.attr("y",-5)
+		.attr("width", 90)
+		.attr("height", 40)
+		.attr("xlink:href", "/FPL Mania.png")
+
+	var pitchImage2 = pitchElement.append("image")
+		.attr("x",310)
+		.attr("y",-5)
+		.attr("width", 90)
+		.attr("height", 40)
+		.attr("xlink:href", "/FPL Mania.png")
+
 	// corners
 	function addPath(pathData, parentElement){
 		parentElement.append("path")
