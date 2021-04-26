@@ -2105,7 +2105,8 @@ function update_players (team_id) {
 
     	gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
     	gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
-    	
+    	gw_prev = player_data.events.filter(d=>{return d.is_previous == true})[0].id
+
 		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
 	
 		d3.json(url, function(error, data) {
@@ -2136,23 +2137,32 @@ function update_players (team_id) {
 				        $("#transfer_cost")[0].innerHTML = String(0)
 				        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
+				        console.log(data)
 				        
+				        console.log(transfer_data)
 						if (transfer_data.filter(d=>{return d.event == gw}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
 							// freet.text(2)
-							$("#free_transfers")[0].innerHTML = String(2)
 							free_trans = 2
-						} if (transfer_data.filter(d=>{return d.event == gw}).length >= 1) {
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+						} else if (data.active_chip == "freehit") {
 							// freet.text(1)
-							$("#free_transfers")[0].innerHTML = String(1)
 							free_trans = 1
-						} if (data.active_chip == "freehit") {
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+							
+						} else if (data.active_chip == "wildcard") {
 							// freet.text(1)
-							$("#free_transfers")[0].innerHTML = String(1)
 							free_trans = 1
-						} if (data.active_chip == "wildcard") {
-							// freet.text(1)
-						$("#free_transfers")[0].innerHTML = String(1)
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+							
+						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 0){
+							free_trans = 2
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev-1}).length == 0){
+							free_trans = 2
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+						} else if (transfer_data.filter(d=>{return d.event == gw}).length > 1){
 							free_trans = 1
+							$("#free_transfers")[0].innerHTML = String(free_trans)
 						}
 
 						var user_data = []
