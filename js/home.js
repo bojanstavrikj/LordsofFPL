@@ -101,7 +101,7 @@
 		    	`<button type="button" id="close" style="float:right;">X</button><br>To find your team ID, go to the official fantasy premier league page and then go to the points tab.<br>
 		    	<img src="/data/img/points-page.png" style="width:100%"><br>
 		    The url should look something like this: <br> https://fantasy.premierleague.com/entry/xxxxxxx/event/27.<br>
-		    Take the 7 digit number (shown above as xxxxxxx), input it in the box below and click submit to see your team!`)
+		    Take the number from the url between entry/ and /event, shown above as xxxxxxx, input it in the box below and click submit to see your team!`)
 		      .style("left", (d3.event.pageX) + "px")
 		      .style("top", (d3.event.pageY + 10) + "px");
 
