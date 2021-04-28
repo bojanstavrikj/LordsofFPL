@@ -366,6 +366,7 @@
 			    })
 			    positions = positions.filter(onlyUnique)
 			    // elementsp3 += "<option selected value='All'>All</option>"
+			    elementsp3 += "<option value='"+ "All" + "'>" + "rest" + "</option>"
 			    for (i=0;i<positions.length;i++){
 			    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
 			    }
@@ -416,6 +417,7 @@
 				    })
 				    positions = positions.filter(onlyUnique)
 				    // elementsp3 += "<option selected value='All'>All</option>"
+				    elementsp3 += "<option value='"+ "All" + "'>" + "rest" + "</option>"
 				    for (i=0;i<positions.length;i++){
 				    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
 				    }
@@ -591,13 +593,34 @@ function update_2 (data,chart_type) {
 			})
 	    }
     } else if ($("#comparison_type").val()=="position") {
-		var filtered_p1 = data.filter(function(d) {
-	        return d.element == player1 && d.position == pos_vs1
-		})
+    	if(pos_vs1=="All"&&pos_vs2=="All"){
+    		var filtered_p1 = data.filter(function(d) {
+		        return d.element == player1
+			})
 
-		var filtered_p2 = data.filter(function(d) {
-	        return d.element == player1 && d.position == pos_vs2
-		})
+			var filtered_p2 = data.filter(function(d) {
+		        return d.element == player1
+			})	
+    	} else if(pos_vs1=="All"){
+    		var filtered_p1 = data.filter(function(d) {
+		        return d.element == player1 && d.position != pos_vs2
+			})
+
+			var filtered_p2 = data.filter(function(d) {
+		        return d.element == player1 && d.position == pos_vs2
+			})	
+    	} else if(pos_vs2=="All"){
+    		var filtered_p1 = data.filter(function(d) {
+		        return d.element == player1 && d.position == pos_vs1
+			})
+
+			var filtered_p2 = data.filter(function(d) {
+		        return d.element == player1 && d.position != pos_vs1
+			})	
+    	}
+    console.log(filtered_p1)
+    console.log(filtered_p2)
+		
     	
     } else if ($("#comparison_type").val()=="gw-range") {
     	var filtered_p1 = data.filter(function(d) {
@@ -637,8 +660,8 @@ function update_2 (data,chart_type) {
 		document.getElementById('p1-color-with-info').innerHTML = p1_info_with
 		document.getElementById('p1-color-without-info').innerHTML = p1_info_without
 	} else if($("#comparison_type").val()=="position") {
-		let p1_info_with = `${filtered_p1[0].web_name}'s stats at position ${pos_vs1}`
-		let p1_info_without = `${filtered_p1[0].web_name}'s stats position ${pos_vs2}`
+		let p1_info_with = `${filtered_p1[0].web_name}'s stats at position ${$( "#pos_vs1 option:selected" ).text()}`
+		let p1_info_without = `${filtered_p1[0].web_name}'s stats at position ${$( "#pos_vs2 option:selected" ).text()}`
 		
 		document.getElementById('p1-color-with-info').innerHTML = p1_info_with
 		document.getElementById('p1-color-without-info').innerHTML = p1_info_without
