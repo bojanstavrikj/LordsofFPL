@@ -366,7 +366,7 @@
 			    })
 			    positions = positions.filter(onlyUnique)
 			    // elementsp3 += "<option selected value='All'>All</option>"
-			    elementsp3 += "<option value='"+ "All" + "'>" + "rest" + "</option>"
+			    elementsp3 += "<option value='"+ "All" + "'>" + "all other positions" + "</option>"
 			    for (i=0;i<positions.length;i++){
 			    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
 			    }
@@ -417,7 +417,7 @@
 				    })
 				    positions = positions.filter(onlyUnique)
 				    // elementsp3 += "<option selected value='All'>All</option>"
-				    elementsp3 += "<option value='"+ "All" + "'>" + "rest" + "</option>"
+				    elementsp3 += "<option value='"+ "All" + "'>" + "all other positions" + "</option>"
 				    for (i=0;i<positions.length;i++){
 				    	elementsp3 += "<option value='"+ positions[i] + "'>" + positions[i] + "</option>"
 				    }
