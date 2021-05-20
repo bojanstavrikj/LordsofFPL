@@ -1393,7 +1393,7 @@ function popup_full_table (data,id) {
 
 function insert_next_games (data,fixtures,current,id) {
 
-	for (i=0;i<2;i++){
+	for (i=0;i<Math.min(fixtures.length, 2);i++){
 		if (fixtures[i].team_a_short_name == current[0].team_short) {
 			to_insert_fixtures = data.filter(d=> {return d.team_short == fixtures[i].team_h_short_name})
 		} if (fixtures[i].team_h_short_name == current[0].team_short) {
@@ -2184,6 +2184,9 @@ function update_players (team_id) {
 							free_trans = 2
 							$("#free_transfers")[0].innerHTML = String(free_trans)
 						} else if (transfer_data.filter(d=>{return d.event == gw}).length > 1){
+							free_trans = 1
+							$("#free_transfers")[0].innerHTML = String(free_trans)
+						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1){
 							free_trans = 1
 							$("#free_transfers")[0].innerHTML = String(free_trans)
 						}
