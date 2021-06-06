@@ -2127,7 +2127,12 @@ function update_players (team_id) {
     	if (error) throw error;
 
     	gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
-    	gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id
+    	try {
+    		gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id	
+    	} catch {
+    		gw_next = 38
+    	}
+    	
     	gw_prev = player_data.events.filter(d=>{return d.is_previous == true})[0].id
 
 		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
@@ -3031,8 +3036,13 @@ d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleag
 	if (error) throw error;
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, data) {
 	    if (error) throw error;
-
-	    var gw = full_data.events.filter(d=>{return d.is_next == true})[0].id
+	    
+	    try {
+	    	var gw = full_data.events.filter(d=>{return d.is_next == true})[0].id	
+	    } catch {
+	    	var gw = 38
+	    }
+	    
 	    
 	    update_fixtures(gw,full_data,data)
 
