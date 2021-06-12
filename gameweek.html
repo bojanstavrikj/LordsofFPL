@@ -55,7 +55,10 @@
 	                <a class="nav-link" href="index.html">Home</a>
 	            </li>
 	            <li class="nav-item">
-	                <a class="nav-link active" href="shop.html">Shop</a>
+	                <a class="nav-link active" href="gameweek.html">Gameweek</a>
+	            </li>
+	            <li class="nav-item">
+	                <a class="nav-link" href="shop.html">Shop</a>
 	            </li>
 	            <li class="nav-item">
 	                <a class="nav-link" href="about.html">About</a>
@@ -63,10 +66,13 @@
 	        </ul>
 	    </div>
 	</nav>
-	<div class="container-fluid">
+	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
 		<div class="row" id="select-menu">
 			<div class="col" >
-				<label style="font-size: 25px; font-weight: bold;" id="gameweek"></label>
+				<!-- <label style="font-size: 25px; font-weight: bold;" id="gameweek"></label> -->
+				Gameweek 
+				<select id="gw-selected" style='width: 50px;'>
+				</select>
 			</div>
 			<div class="w-100"></div>
 			<div class="col" id="most_captained">
@@ -108,35 +114,68 @@
 				<label id="average_score"></label>
 			</div>
 			<div class="col">
-				<label>Highest Score</label><br>
-				<label id="highest_score"></label>
-			</div>
-			<div class="col">
 				<label>Transfers Made</label><br>
 				<label id="transfers_made"></label>
 			</div>
-			<!-- <div class="col" id="most_vcaptained">
-				<label>Most Vice-Captained</label><br>
-				<img id="most_vicecaptained_img" width=20%><br>
-				<label id="most_vicecaptained_name"></label>
+			<div class="col">
+				<label>Bench Boost Played</label><br>
+				<label id="bench_boost"></label>
 			</div>
-			<div class="col" id="top-scorer">
-				<label>Highest Points</label><br>
-				<img id="top_scorrer_img" width=20%><br>
-				<label id="top_scorrer_name"></label>
-			</div> -->
+			<div class="col">
+				<label>Freehits Played</label><br>
+				<label id="freehit"></label>
+			</div>
+			<div class="col">
+				<label>Wildcards Played</label><br>
+				<label id="wildcard"></label>
+			</div>
+			<div class="col">
+				<label>3x Captain Played</label><br>
+				<label id="tripplecaptain"></label>
+			</div>
 		</div>
 	</div>
 	<div class="container-fluid" style="border-bottom:1px solid #cecece;">
 		<div class="row">
-			<div class="col" id="transfer_cost">
-				
+			<div class="col">
+				<h4>Highest Scoring Player</h4>
+			</div><br><br><br>
+			<div class="w-100"></div>
+			<div class="col-md-4 align-items-center">
+				<div class="row align-items-center">
+					<div class="col" style="border-bottom:1px solid #cecece;">
+						<label><strong>Active Chip</strong></label><br>
+						<label id="active_chip"></label>
+					</div>
+					<div class="w-100"></div>
+					<div class="col" style="border-bottom:1px solid #cecece;">
+						<label><strong>Highest Score</strong></label><br>
+						<label id="highest_score"></label>
+					</div>
+					<div class="w-100"></div>
+					<div class="col" style="border-bottom:1px solid #cecece;">
+						<label><strong>Transfer Cost</strong></label><br>
+						<label id="transfer_cost"></label>
+					</div>
+					<div class="w-100"></div>
+					<div class="col" style="border-bottom:1px solid #cecece;">
+						<label><strong>Transfers Made</strong></label><br>
+						<label id="transfers_made_hs"></label>
+					</div>
+				</div>
 			</div>
-			<div class="col" id="highest-scorer">
-				
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col" id="highest-scorer">
+						
+					</div>
+				</div>	
 			</div>
 		</div>
 	</div>
+	<!-- <div class="container-fluid" style="border-bottom:1px solid #cecece;">
+		
+	</div> -->
 	<footer class="footer">
 		<div class="container bottom_border">
 			<div class="row">
