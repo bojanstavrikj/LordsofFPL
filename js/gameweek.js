@@ -173,6 +173,17 @@ function update_gw_data (current_gw_data,data){
 		console.log(current_gw_data[0].highest_scoring_entry)
 		console.log(player_data.filter(d=>{ return d.id == current_gw_data[0].most_captained})[0])
 
+		d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${current_gw_data[0].highest_scoring_entry}/`, function(error, player_data) {
+	    	if (error) throw error;
+	    	console.log(player_data)
+	    	// arr = player_data.history.filter(d=> {return d.round == current_gw_data[0].id})
+	    	// sum = arr.reduce((acc, curr) => acc + curr.total_points, 0)
+
+	    	document.getElementById("team-name").innerHTML= `${player_data.name}`
+	    	document.getElementById("overall-rank").innerHTML= `${(d3.format(",d"))(player_data.summary_overall_rank)}`
+	    	document.getElementById("overall-points").innerHTML= `${(d3.format(",d"))(player_data.summary_overall_points)} pts`
+		})
+
 		// FOOTBALL PITCH TEAM SELECTION
 		// Call update functions bsaed on callbacks 
 		// function getUrlVars(){
@@ -371,7 +382,7 @@ function update_gw_data (current_gw_data,data){
 			  className: 'spinner', // The CSS class to assign to the spinner
 			};
 
-			var target = document.getElementById("pitch");
+			var target = document.getElementById("highest-scorer");
 			var spinner = new Spinner(opts).spin(target);
 
 			d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
@@ -760,7 +771,7 @@ function update_gw_data (current_gw_data,data){
 											multip = formation_images_load.filter(i =>{return i.position == d.pos})[0].multiplier
 											// fix_load = fix_load.filter(j=>{return j.gw==gw_next})
 											// fix_load.length == 2 ? output = `${fix_load[0].opponent} ${fix_load[1].opponent}` : fix_load.length == 0 ? output = "(blank)": output = `${fix_load[0].opponent}`
-											output = `${fix_load} x ${multip} = ${fix_load * multip}`
+											output = `${fix_load} x ${multip} = ${fix_load * multip} pts`
 											return output
 										})
 										.call(wrap, 50);
