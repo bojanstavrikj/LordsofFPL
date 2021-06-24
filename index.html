@@ -74,16 +74,24 @@
 					Transfer Planner FPL
 				</h4>
 			</div>
+			<div class="w-100"></div>
+			<div class="col">
+				<i class="fas fa-arrow-left" style="display:inline; margin-right: 30px;" id="previous_gw"></i>
+				<p style="display:inline;">Fixtures shown for GW: <a id="gw_planner"></a></p>
+				<i class="fas fa-arrow-right" style="display:inline; margin-left: 30px;" id="next_gw"></i>
+			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-4">
 				<div class="row" id="user-team-select">
 					<div class="col">
-						<h7><strong>Input Team ID </strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br>
-						<form id="team_id_form">
+						<h7><strong>Submit Team</strong></h7><i style ='margin-top:5px; float:right;' id="team_id_info" class="fas fa-info-circle"></i><br>
+						<!-- <form id="team_id_form">
 							<input type="search" name="user_id" id="team_id">
 							<button id="team_id_button" type="submit">Submit</button>
-						</form>
+						</form> -->
+							<!-- <input type="search" name="user_id" id="team_id_submit"> -->
+							<button id="team_id_button" type="submit">Save Team</button>
 					</div>
 					<div class="w-100"></div>
 					<div class="col user_transfers">
@@ -116,11 +124,6 @@
 			</div>
 			<div class="col-md-4" height="500px">
 				<div class="row">
-					<div class="col">
-						<i class="fas fa-arrow-left" style="display:inline; margin-right: 30px;" id="previous_gw"></i>
-						<p style="display:inline;">Fixtures shown for GW: <a id="gw_planner"></a></p>
-						<i class="fas fa-arrow-right" style="display:inline; margin-left: 30px;" id="next_gw"></i>
-					</div>
 					<div class="col" id="transfer_planner">
 						<div id="pitch"></div>
 					</div>
@@ -446,5 +449,5 @@
 	<script src="/js/radarChart.js"></script>
 	<script src='https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.0.1/spin.min.js'></script> 
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="crossorigin="anonymous"></script>	
-	<script src="/js/home.js"></script>
+	<script src="/js/home_gw1.js"></script>
 </html>

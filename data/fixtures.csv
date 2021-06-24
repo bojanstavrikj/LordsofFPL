@@ -1,1 +1,381 @@
 finished,event,team_h_difficulty,team_a_difficulty,team_a_name,team_a_short_name,team_h_name,team_h_short_name,date
+False,1,3,2,Arsenal,ARS,Brentford,BRE,2021-08-13
+False,1,3,4,Leeds,LEE,Man Utd,MUN,2021-08-14
+False,1,3,2,Brighton,BHA,Burnley,BUR,2021-08-14
+False,1,2,4,Crystal Palace,CRY,Chelsea,CHE,2021-08-14
+False,1,2,3,Southampton,SOU,Everton,EVE,2021-08-14
+False,1,2,4,Wolves,WOL,Leicester,LEI,2021-08-14
+False,1,2,2,Aston Villa,AVL,Watford,WAT,2021-08-14
+False,1,4,2,Liverpool,LIV,Norwich,NOR,2021-08-14
+False,1,4,2,West Ham,WHU,Newcastle,NEW,2021-08-15
+False,1,4,4,Man City,MCI,Spurs,TOT,2021-08-15
+False,2,4,4,Leicester,LEI,West Ham,WHU,2021-08-23
+False,2,4,4,Chelsea,CHE,Arsenal,ARS,2021-08-22
+False,2,3,3,Spurs,TOT,Wolves,WOL,2021-08-22
+False,2,4,2,Man Utd,MUN,Southampton,SOU,2021-08-22
+False,2,2,3,Watford,WAT,Brighton,BHA,2021-08-21
+False,2,2,3,Brentford,BRE,Crystal Palace,CRY,2021-08-21
+False,2,4,3,Everton,EVE,Leeds,LEE,2021-08-21
+False,2,2,3,Newcastle,NEW,Aston Villa,AVL,2021-08-21
+False,2,2,3,Burnley,BUR,Liverpool,LIV,2021-08-21
+False,2,2,5,Norwich,NOR,Man City,MCI,2021-08-21
+False,3,4,3,Chelsea,CHE,Liverpool,LIV,2021-08-28
+False,3,4,3,Man Utd,MUN,Wolves,WOL,2021-08-29
+False,3,2,4,Watford,WAT,Spurs,TOT,2021-08-29
+False,3,3,2,Leeds,LEE,Burnley,BUR,2021-08-29
+False,3,2,4,Crystal Palace,CRY,West Ham,WHU,2021-08-28
+False,3,2,3,Brentford,BRE,Aston Villa,AVL,2021-08-28
+False,3,2,2,Southampton,SOU,Newcastle,NEW,2021-08-28
+False,3,4,3,Everton,EVE,Brighton,BHA,2021-08-28
+False,3,3,5,Arsenal,ARS,Man City,MCI,2021-08-28
+False,3,4,2,Leicester,LEI,Norwich,NOR,2021-08-28
+False,4,2,2,Wolves,WOL,Watford,WAT,2021-09-11
+False,4,4,2,West Ham,WHU,Southampton,SOU,2021-09-11
+False,4,2,4,Newcastle,NEW,Man Utd,MUN,2021-09-11
+False,4,4,4,Man City,MCI,Leicester,LEI,2021-09-11
+False,4,4,3,Liverpool,LIV,Leeds,LEE,2021-09-11
+False,4,2,3,Burnley,BUR,Everton,EVE,2021-09-11
+False,4,2,4,Aston Villa,AVL,Chelsea,CHE,2021-09-11
+False,4,3,2,Brighton,BHA,Brentford,BRE,2021-09-11
+False,4,2,4,Norwich,NOR,Arsenal,ARS,2021-09-11
+False,4,3,3,Spurs,TOT,Crystal Palace,CRY,2021-09-11
+False,5,2,2,Watford,WAT,Norwich,NOR,2021-09-18
+False,5,2,3,Brentford,BRE,Wolves,WOL,2021-09-18
+False,5,4,4,Man Utd,MUN,West Ham,WHU,2021-09-18
+False,5,3,2,Leeds,LEE,Newcastle,NEW,2021-09-18
+False,5,4,4,Chelsea,CHE,Spurs,TOT,2021-09-18
+False,5,2,3,Crystal Palace,CRY,Liverpool,LIV,2021-09-18
+False,5,3,2,Arsenal,ARS,Burnley,BUR,2021-09-18
+False,5,2,5,Southampton,SOU,Man City,MCI,2021-09-18
+False,5,4,3,Leicester,LEI,Brighton,BHA,2021-09-18
+False,5,4,3,Everton,EVE,Aston Villa,AVL,2021-09-18
+False,6,2,2,Newcastle,NEW,Watford,WAT,2021-09-25
+False,6,2,2,Wolves,WOL,Southampton,SOU,2021-09-25
+False,6,2,4,Aston Villa,AVL,Man Utd,MUN,2021-09-25
+False,6,2,4,Burnley,BUR,Leicester,LEI,2021-09-25
+False,6,4,3,West Ham,WHU,Leeds,LEE,2021-09-25
+False,6,2,3,Norwich,NOR,Everton,EVE,2021-09-25
+False,6,3,3,Brighton,BHA,Crystal Palace,CRY,2021-09-25
+False,6,4,4,Man City,MCI,Chelsea,CHE,2021-09-25
+False,6,4,2,Liverpool,LIV,Brentford,BRE,2021-09-25
+False,6,3,4,Spurs,TOT,Arsenal,ARS,2021-09-25
+False,7,2,4,Brentford,BRE,West Ham,WHU,2021-10-02
+False,7,2,4,Aston Villa,AVL,Spurs,TOT,2021-10-02
+False,7,4,4,Everton,EVE,Man Utd,MUN,2021-10-02
+False,7,4,3,Man City,MCI,Liverpool,LIV,2021-10-02
+False,7,2,3,Newcastle,NEW,Wolves,WOL,2021-10-02
+False,7,4,3,Leicester,LEI,Crystal Palace,CRY,2021-10-02
+False,7,2,4,Southampton,SOU,Chelsea,CHE,2021-10-02
+False,7,2,2,Norwich,NOR,Burnley,BUR,2021-10-02
+False,7,3,3,Arsenal,ARS,Brighton,BHA,2021-10-02
+False,7,2,3,Watford,WAT,Leeds,LEE,2021-10-02
+False,8,3,2,Leeds,LEE,Southampton,SOU,2021-10-16
+False,8,3,2,Brighton,BHA,Norwich,NOR,2021-10-16
+False,8,3,2,Spurs,TOT,Newcastle,NEW,2021-10-16
+False,8,2,5,Burnley,BUR,Man City,MCI,2021-10-16
+False,8,4,2,Liverpool,LIV,Watford,WAT,2021-10-16
+False,8,4,3,West Ham,WHU,Everton,EVE,2021-10-16
+False,8,4,2,Chelsea,CHE,Brentford,BRE,2021-10-16
+False,8,2,3,Wolves,WOL,Aston Villa,AVL,2021-10-16
+False,8,2,4,Crystal Palace,CRY,Arsenal,ARS,2021-10-16
+False,8,4,4,Man Utd,MUN,Leicester,LEI,2021-10-16
+False,9,3,4,Spurs,TOT,West Ham,WHU,2021-10-23
+False,9,2,2,Burnley,BUR,Southampton,SOU,2021-10-23
+False,9,4,4,Liverpool,LIV,Man Utd,MUN,2021-10-23
+False,9,2,3,Wolves,WOL,Leeds,LEE,2021-10-23
+False,9,2,3,Watford,WAT,Everton,EVE,2021-10-23
+False,9,2,3,Newcastle,NEW,Crystal Palace,CRY,2021-10-23
+False,9,4,3,Man City,MCI,Brighton,BHA,2021-10-23
+False,9,4,2,Leicester,LEI,Brentford,BRE,2021-10-23
+False,9,2,4,Aston Villa,AVL,Arsenal,ARS,2021-10-23
+False,9,2,4,Norwich,NOR,Chelsea,CHE,2021-10-23
+False,10,3,2,Leeds,LEE,Norwich,NOR,2021-10-30
+False,10,4,3,Everton,EVE,Wolves,WOL,2021-10-30
+False,10,2,2,Southampton,SOU,Watford,WAT,2021-10-30
+False,10,4,4,Man Utd,MUN,Spurs,TOT,2021-10-30
+False,10,4,2,Chelsea,CHE,Newcastle,NEW,2021-10-30
+False,10,2,2,Brentford,BRE,Burnley,BUR,2021-10-30
+False,10,3,3,Brighton,BHA,Liverpool,LIV,2021-10-30
+False,10,3,4,Arsenal,ARS,Leicester,LEI,2021-10-30
+False,10,2,5,Crystal Palace,CRY,Man City,MCI,2021-10-30
+False,10,4,3,West Ham,WHU,Aston Villa,AVL,2021-10-30
+False,11,4,4,Liverpool,LIV,West Ham,WHU,2021-11-06
+False,11,2,2,Aston Villa,AVL,Southampton,SOU,2021-11-06
+False,11,4,4,Man City,MCI,Man Utd,MUN,2021-11-06
+False,11,4,3,Leicester,LEI,Leeds,LEE,2021-11-06
+False,11,3,3,Spurs,TOT,Everton,EVE,2021-11-06
+False,11,2,4,Burnley,BUR,Chelsea,CHE,2021-11-06
+False,11,2,3,Newcastle,NEW,Brighton,BHA,2021-11-06
+False,11,2,2,Norwich,NOR,Brentford,BRE,2021-11-06
+False,11,2,4,Watford,WAT,Arsenal,ARS,2021-11-06
+False,11,2,3,Wolves,WOL,Crystal Palace,CRY,2021-11-06
+False,12,2,2,Southampton,SOU,Norwich,NOR,2021-11-20
+False,12,4,3,West Ham,WHU,Wolves,WOL,2021-11-20
+False,12,4,2,Man Utd,MUN,Watford,WAT,2021-11-20
+False,12,3,4,Leeds,LEE,Spurs,TOT,2021-11-20
+False,12,2,2,Brentford,BRE,Newcastle,NEW,2021-11-20
+False,12,4,5,Everton,EVE,Man City,MCI,2021-11-20
+False,12,3,3,Arsenal,ARS,Liverpool,LIV,2021-11-20
+False,12,4,4,Chelsea,CHE,Leicester,LEI,2021-11-20
+False,12,2,2,Crystal Palace,CRY,Burnley,BUR,2021-11-20
+False,12,3,3,Brighton,BHA,Aston Villa,AVL,2021-11-20
+False,13,2,2,Wolves,WOL,Norwich,NOR,2021-11-27
+False,13,4,5,West Ham,WHU,Man City,MCI,2021-11-27
+False,13,2,3,Southampton,SOU,Liverpool,LIV,2021-11-27
+False,13,2,4,Watford,WAT,Leicester,LEI,2021-11-27
+False,13,2,3,Aston Villa,AVL,Crystal Palace,CRY,2021-11-27
+False,13,4,4,Man Utd,MUN,Chelsea,CHE,2021-11-27
+False,13,3,2,Spurs,TOT,Burnley,BUR,2021-11-27
+False,13,3,3,Leeds,LEE,Brighton,BHA,2021-11-27
+False,13,4,2,Everton,EVE,Brentford,BRE,2021-11-27
+False,13,2,4,Newcastle,NEW,Arsenal,ARS,2021-11-27
+False,14,4,2,Leicester,LEI,Southampton,SOU,2021-12-01
+False,14,2,2,Norwich,NOR,Newcastle,NEW,2021-12-01
+False,14,3,4,Arsenal,ARS,Man Utd,MUN,2021-11-30
+False,14,2,3,Burnley,BUR,Wolves,WOL,2021-11-30
+False,14,2,4,Brentford,BRE,Spurs,TOT,2021-12-01
+False,14,4,2,Chelsea,CHE,Watford,WAT,2021-11-30
+False,14,2,3,Crystal Palace,CRY,Leeds,LEE,2021-11-30
+False,14,4,3,Liverpool,LIV,Everton,EVE,2021-11-30
+False,14,4,3,Man City,MCI,Aston Villa,AVL,2021-11-30
+False,14,3,4,Brighton,BHA,West Ham,WHU,2021-11-30
+False,15,4,3,Liverpool,LIV,Wolves,WOL,2021-12-04
+False,15,4,4,Chelsea,CHE,West Ham,WHU,2021-12-04
+False,15,4,2,Man City,MCI,Watford,WAT,2021-12-04
+False,15,2,4,Norwich,NOR,Spurs,TOT,2021-12-04
+False,15,3,2,Brighton,BHA,Southampton,SOU,2021-12-04
+False,15,2,2,Burnley,BUR,Newcastle,NEW,2021-12-04
+False,15,2,4,Crystal Palace,CRY,Man Utd,MUN,2021-12-04
+False,15,2,3,Brentford,BRE,Leeds,LEE,2021-12-04
+False,15,3,3,Arsenal,ARS,Everton,EVE,2021-12-04
+False,15,4,3,Leicester,LEI,Aston Villa,AVL,2021-12-04
+False,16,2,5,Wolves,WOL,Man City,MCI,2021-12-11
+False,16,2,3,Aston Villa,AVL,Liverpool,LIV,2021-12-11
+False,16,2,4,Newcastle,NEW,Leicester,LEI,2021-12-11
+False,16,4,3,Everton,EVE,Crystal Palace,CRY,2021-12-11
+False,16,4,2,Man Utd,MUN,Norwich,NOR,2021-12-11
+False,16,4,2,West Ham,WHU,Burnley,BUR,2021-12-11
+False,16,3,3,Spurs,TOT,Brighton,BHA,2021-12-11
+False,16,2,2,Watford,WAT,Brentford,BRE,2021-12-11
+False,16,2,4,Southampton,SOU,Arsenal,ARS,2021-12-11
+False,16,3,4,Leeds,LEE,Chelsea,CHE,2021-12-11
+False,17,2,3,Newcastle,NEW,Liverpool,LIV,2021-12-15
+False,17,4,4,Everton,EVE,Chelsea,CHE,2021-12-15
+False,17,2,3,Southampton,SOU,Crystal Palace,CRY,2021-12-14
+False,17,2,2,Aston Villa,AVL,Norwich,NOR,2021-12-14
+False,17,3,5,Leeds,LEE,Man City,MCI,2021-12-15
+False,17,2,2,Watford,WAT,Burnley,BUR,2021-12-14
+False,17,2,3,Wolves,WOL,Brighton,BHA,2021-12-14
+False,17,4,2,Man Utd,MUN,Brentford,BRE,2021-12-14
+False,17,4,4,West Ham,WHU,Arsenal,ARS,2021-12-14
+False,17,3,4,Spurs,TOT,Leicester,LEI,2021-12-14
+False,18,4,3,Chelsea,CHE,Wolves,WOL,2021-12-18
+False,18,2,4,Norwich,NOR,West Ham,WHU,2021-12-18
+False,18,2,2,Crystal Palace,CRY,Watford,WAT,2021-12-18
+False,18,4,4,Liverpool,LIV,Spurs,TOT,2021-12-18
+False,18,2,2,Brentford,BRE,Southampton,SOU,2021-12-18
+False,18,4,2,Man City,MCI,Newcastle,NEW,2021-12-18
+False,18,3,3,Arsenal,ARS,Leeds,LEE,2021-12-18
+False,18,4,3,Leicester,LEI,Everton,EVE,2021-12-18
+False,18,2,3,Burnley,BUR,Aston Villa,AVL,2021-12-18
+False,18,3,4,Brighton,BHA,Man Utd,MUN,2021-12-18
+False,19,3,2,Arsenal,ARS,Norwich,NOR,2021-12-26
+False,19,2,4,Southampton,SOU,West Ham,WHU,2021-12-26
+False,19,2,4,Crystal Palace,CRY,Spurs,TOT,2021-12-26
+False,19,4,2,Man Utd,MUN,Newcastle,NEW,2021-12-26
+False,19,2,3,Watford,WAT,Wolves,WOL,2021-12-26
+False,19,3,3,Leeds,LEE,Liverpool,LIV,2021-12-26
+False,19,4,2,Everton,EVE,Burnley,BUR,2021-12-26
+False,19,2,3,Brentford,BRE,Brighton,BHA,2021-12-26
+False,19,4,3,Chelsea,CHE,Aston Villa,AVL,2021-12-26
+False,19,4,5,Leicester,LEI,Man City,MCI,2021-12-26
+False,20,4,2,West Ham,WHU,Watford,WAT,2021-12-28
+False,20,3,2,Spurs,TOT,Southampton,SOU,2021-12-28
+False,20,2,4,Burnley,BUR,Man Utd,MUN,2021-12-28
+False,20,4,4,Liverpool,LIV,Leicester,LEI,2021-12-28
+False,20,2,3,Aston Villa,AVL,Leeds,LEE,2021-12-28
+False,20,2,3,Newcastle,NEW,Everton,EVE,2021-12-28
+False,20,2,3,Norwich,NOR,Crystal Palace,CRY,2021-12-28
+False,20,3,4,Brighton,BHA,Chelsea,CHE,2021-12-28
+False,20,4,2,Man City,MCI,Brentford,BRE,2021-12-28
+False,20,2,4,Wolves,WOL,Arsenal,ARS,2021-12-28
+False,21,2,2,Newcastle,NEW,Southampton,SOU,2022-01-01
+False,21,2,4,Wolves,WOL,Man Utd,MUN,2022-01-01
+False,21,2,4,Norwich,NOR,Leicester,LEI,2022-01-01
+False,21,2,3,Burnley,BUR,Leeds,LEE,2022-01-01
+False,21,3,2,Spurs,TOT,Watford,WAT,2022-01-01
+False,21,4,3,West Ham,WHU,Crystal Palace,CRY,2022-01-01
+False,21,4,4,Liverpool,LIV,Chelsea,CHE,2022-01-01
+False,21,2,2,Aston Villa,AVL,Brentford,BRE,2022-01-01
+False,21,4,4,Man City,MCI,Arsenal,ARS,2022-01-01
+False,21,3,3,Brighton,BHA,Everton,EVE,2022-01-01
+False,22,3,4,Leeds,LEE,West Ham,WHU,2022-01-15
+False,22,3,4,Arsenal,ARS,Spurs,TOT,2022-01-15
+False,22,4,2,Everton,EVE,Norwich,NOR,2022-01-15
+False,22,2,2,Watford,WAT,Newcastle,NEW,2022-01-15
+False,22,2,3,Southampton,SOU,Wolves,WOL,2022-01-15
+False,22,2,3,Brentford,BRE,Liverpool,LIV,2022-01-15
+False,22,4,2,Leicester,LEI,Burnley,BUR,2022-01-15
+False,22,2,3,Crystal Palace,CRY,Brighton,BHA,2022-01-15
+False,22,4,3,Man Utd,MUN,Aston Villa,AVL,2022-01-15
+False,22,4,5,Chelsea,CHE,Man City,MCI,2022-01-15
+False,23,2,2,Norwich,NOR,Watford,WAT,2022-01-22
+False,23,4,2,Man City,MCI,Southampton,SOU,2022-01-22
+False,23,4,4,West Ham,WHU,Man Utd,MUN,2022-01-22
+False,23,3,4,Brighton,BHA,Leicester,LEI,2022-01-22
+False,23,2,3,Newcastle,NEW,Leeds,LEE,2022-01-22
+False,23,2,3,Aston Villa,AVL,Everton,EVE,2022-01-22
+False,23,3,4,Spurs,TOT,Chelsea,CHE,2022-01-22
+False,23,2,2,Wolves,WOL,Brentford,BRE,2022-01-22
+False,23,2,4,Burnley,BUR,Arsenal,ARS,2022-01-22
+False,23,4,3,Liverpool,LIV,Crystal Palace,CRY,2022-01-22
+False,24,4,2,Everton,EVE,Newcastle,NEW,2022-02-09
+False,24,2,5,Brentford,BRE,Man City,MCI,2022-02-09
+False,24,4,3,Leicester,LEI,Liverpool,LIV,2022-02-09
+False,24,2,4,Southampton,SOU,Spurs,TOT,2022-02-09
+False,24,3,3,Arsenal,ARS,Wolves,WOL,2022-02-08
+False,24,2,4,Watford,WAT,West Ham,WHU,2022-02-08
+False,24,2,2,Crystal Palace,CRY,Norwich,NOR,2022-02-08
+False,24,4,2,Man Utd,MUN,Burnley,BUR,2022-02-08
+False,24,4,3,Chelsea,CHE,Brighton,BHA,2022-02-08
+False,24,3,3,Leeds,LEE,Aston Villa,AVL,2022-02-08
+False,25,3,2,Brighton,BHA,Watford,WAT,2022-02-12
+False,25,2,4,Wolves,WOL,Spurs,TOT,2022-02-12
+False,25,4,2,Man City,MCI,Norwich,NOR,2022-02-12
+False,25,2,2,Aston Villa,AVL,Newcastle,NEW,2022-02-12
+False,25,2,4,Southampton,SOU,Man Utd,MUN,2022-02-12
+False,25,3,3,Leeds,LEE,Everton,EVE,2022-02-12
+False,25,3,4,Arsenal,ARS,Chelsea,CHE,2022-02-12
+False,25,4,2,Liverpool,LIV,Burnley,BUR,2022-02-12
+False,25,2,2,Crystal Palace,CRY,Brentford,BRE,2022-02-12
+False,25,4,4,West Ham,WHU,Leicester,LEI,2022-02-12
+False,26,3,5,Spurs,TOT,Man City,MCI,2022-02-19
+False,26,4,3,Leicester,LEI,Wolves,WOL,2022-02-19
+False,26,2,4,Newcastle,NEW,West Ham,WHU,2022-02-19
+False,26,4,2,Everton,EVE,Southampton,SOU,2022-02-19
+False,26,2,3,Norwich,NOR,Liverpool,LIV,2022-02-19
+False,26,2,4,Brentford,BRE,Arsenal,ARS,2022-02-19
+False,26,4,3,Chelsea,CHE,Crystal Palace,CRY,2022-02-19
+False,26,2,3,Burnley,BUR,Brighton,BHA,2022-02-19
+False,26,2,3,Watford,WAT,Aston Villa,AVL,2022-02-19
+False,26,4,3,Man Utd,MUN,Leeds,LEE,2022-02-19
+False,27,3,3,Spurs,TOT,Leeds,LEE,2022-02-26
+False,27,2,4,Wolves,WOL,West Ham,WHU,2022-02-26
+False,27,2,2,Norwich,NOR,Southampton,SOU,2022-02-26
+False,27,2,4,Watford,WAT,Man Utd,MUN,2022-02-26
+False,27,4,3,Man City,MCI,Everton,EVE,2022-02-26
+False,27,4,4,Liverpool,LIV,Arsenal,ARS,2022-02-26
+False,27,4,4,Leicester,LEI,Chelsea,CHE,2022-02-26
+False,27,2,3,Aston Villa,AVL,Brighton,BHA,2022-02-26
+False,27,2,2,Newcastle,NEW,Brentford,BRE,2022-02-26
+False,27,2,3,Burnley,BUR,Crystal Palace,CRY,2022-02-26
+False,28,2,3,Crystal Palace,CRY,Wolves,WOL,2022-03-05
+False,28,3,2,Arsenal,ARS,Watford,WAT,2022-03-05
+False,28,4,4,Everton,EVE,Spurs,TOT,2022-03-05
+False,28,2,2,Brentford,BRE,Norwich,NOR,2022-03-05
+False,28,3,2,Brighton,BHA,Newcastle,NEW,2022-03-05
+False,28,4,3,West Ham,WHU,Liverpool,LIV,2022-03-05
+False,28,3,4,Leeds,LEE,Leicester,LEI,2022-03-05
+False,28,4,2,Chelsea,CHE,Burnley,BUR,2022-03-05
+False,28,2,3,Southampton,SOU,Aston Villa,AVL,2022-03-05
+False,28,4,5,Man Utd,MUN,Man City,MCI,2022-03-05
+False,29,2,3,Norwich,NOR,Leeds,LEE,2022-03-12
+False,29,2,2,Watford,WAT,Southampton,SOU,2022-03-12
+False,29,3,4,Spurs,TOT,Man Utd,MUN,2022-03-12
+False,29,2,4,Aston Villa,AVL,West Ham,WHU,2022-03-12
+False,29,2,3,Wolves,WOL,Everton,EVE,2022-03-12
+False,29,4,3,Liverpool,LIV,Brighton,BHA,2022-03-12
+False,29,2,4,Newcastle,NEW,Chelsea,CHE,2022-03-12
+False,29,2,2,Burnley,BUR,Brentford,BRE,2022-03-12
+False,29,4,4,Leicester,LEI,Arsenal,ARS,2022-03-12
+False,29,4,3,Man City,MCI,Crystal Palace,CRY,2022-03-12
+False,30,3,3,Leeds,LEE,Wolves,WOL,2022-03-19
+False,30,4,2,Everton,EVE,Watford,WAT,2022-03-19
+False,30,4,4,West Ham,WHU,Spurs,TOT,2022-03-19
+False,30,4,2,Chelsea,CHE,Norwich,NOR,2022-03-19
+False,30,2,2,Crystal Palace,CRY,Newcastle,NEW,2022-03-19
+False,30,4,3,Man Utd,MUN,Liverpool,LIV,2022-03-19
+False,30,2,4,Brentford,BRE,Leicester,LEI,2022-03-19
+False,30,2,2,Southampton,SOU,Burnley,BUR,2022-03-19
+False,30,3,3,Arsenal,ARS,Aston Villa,AVL,2022-03-19
+False,30,3,5,Brighton,BHA,Man City,MCI,2022-03-19
+False,31,4,4,Leicester,LEI,Man Utd,MUN,2022-04-02
+False,31,2,3,Aston Villa,AVL,Wolves,WOL,2022-04-02
+False,31,4,4,Everton,EVE,West Ham,WHU,2022-04-02
+False,31,2,4,Newcastle,NEW,Spurs,TOT,2022-04-02
+False,31,2,3,Watford,WAT,Liverpool,LIV,2022-04-02
+False,31,2,3,Norwich,NOR,Brighton,BHA,2022-04-02
+False,31,3,3,Arsenal,ARS,Crystal Palace,CRY,2022-04-02
+False,31,2,4,Brentford,BRE,Chelsea,CHE,2022-04-02
+False,31,4,2,Man City,MCI,Burnley,BUR,2022-04-02
+False,31,2,3,Southampton,SOU,Leeds,LEE,2022-04-02
+False,32,2,2,Wolves,WOL,Newcastle,NEW,2022-04-09
+False,32,3,2,Leeds,LEE,Watford,WAT,2022-04-09
+False,32,4,2,Chelsea,CHE,Southampton,SOU,2022-04-09
+False,32,2,2,Burnley,BUR,Norwich,NOR,2022-04-09
+False,32,4,5,Liverpool,LIV,Man City,MCI,2022-04-09
+False,32,3,4,Brighton,BHA,Arsenal,ARS,2022-04-09
+False,32,4,3,Man Utd,MUN,Everton,EVE,2022-04-09
+False,32,4,2,West Ham,WHU,Brentford,BRE,2022-04-09
+False,32,3,3,Spurs,TOT,Aston Villa,AVL,2022-04-09
+False,32,2,4,Crystal Palace,CRY,Leicester,LEI,2022-04-09
+False,33,4,3,Man City,MCI,Wolves,WOL,2022-04-16
+False,33,2,4,Burnley,BUR,West Ham,WHU,2022-04-16
+False,33,2,2,Brentford,BRE,Watford,WAT,2022-04-16
+False,33,3,4,Brighton,BHA,Spurs,TOT,2022-04-16
+False,33,3,2,Arsenal,ARS,Southampton,SOU,2022-04-16
+False,33,2,4,Norwich,NOR,Man Utd,MUN,2022-04-16
+False,33,4,3,Chelsea,CHE,Leeds,LEE,2022-04-16
+False,33,2,3,Crystal Palace,CRY,Everton,EVE,2022-04-16
+False,33,4,3,Liverpool,LIV,Aston Villa,AVL,2022-04-16
+False,33,4,2,Leicester,LEI,Newcastle,NEW,2022-04-16
+False,34,2,4,Aston Villa,AVL,Leicester,LEI,2022-04-23
+False,34,2,5,Watford,WAT,Man City,MCI,2022-04-23
+False,34,4,3,Everton,EVE,Liverpool,LIV,2022-04-23
+False,34,2,2,Newcastle,NEW,Norwich,NOR,2022-04-23
+False,34,3,3,Leeds,LEE,Crystal Palace,CRY,2022-04-23
+False,34,2,3,Southampton,SOU,Brighton,BHA,2022-04-23
+False,34,2,2,Wolves,WOL,Burnley,BUR,2022-04-23
+False,34,3,2,Spurs,TOT,Brentford,BRE,2022-04-23
+False,34,4,4,Man Utd,MUN,Arsenal,ARS,2022-04-23
+False,34,4,4,West Ham,WHU,Chelsea,CHE,2022-04-23
+False,35,3,3,Brighton,BHA,Wolves,WOL,2022-04-30
+False,35,3,4,Arsenal,ARS,West Ham,WHU,2022-04-30
+False,35,2,2,Burnley,BUR,Watford,WAT,2022-04-30
+False,35,4,4,Leicester,LEI,Spurs,TOT,2022-04-30
+False,35,2,2,Crystal Palace,CRY,Southampton,SOU,2022-04-30
+False,35,4,2,Liverpool,LIV,Newcastle,NEW,2022-04-30
+False,35,2,4,Brentford,BRE,Man Utd,MUN,2022-04-30
+False,35,4,3,Man City,MCI,Leeds,LEE,2022-04-30
+False,35,4,3,Chelsea,CHE,Everton,EVE,2022-04-30
+False,35,2,3,Norwich,NOR,Aston Villa,AVL,2022-04-30
+False,36,2,5,Newcastle,NEW,Man City,MCI,2022-05-07
+False,36,4,2,West Ham,WHU,Norwich,NOR,2022-05-07
+False,36,4,4,Everton,EVE,Leicester,LEI,2022-05-07
+False,36,2,3,Watford,WAT,Crystal Palace,CRY,2022-05-07
+False,36,3,3,Spurs,TOT,Liverpool,LIV,2022-05-07
+False,36,2,2,Aston Villa,AVL,Burnley,BUR,2022-05-07
+False,36,4,3,Man Utd,MUN,Brighton,BHA,2022-05-07
+False,36,2,2,Southampton,SOU,Brentford,BRE,2022-05-07
+False,36,3,4,Leeds,LEE,Arsenal,ARS,2022-05-07
+False,36,2,4,Wolves,WOL,Chelsea,CHE,2022-05-07
+False,37,2,3,Norwich,NOR,Wolves,WOL,2022-05-15
+False,37,4,4,Man City,MCI,West Ham,WHU,2022-05-15
+False,37,2,4,Burnley,BUR,Spurs,TOT,2022-05-15
+False,37,4,2,Liverpool,LIV,Southampton,SOU,2022-05-15
+False,37,4,2,Leicester,LEI,Watford,WAT,2022-05-15
+False,37,4,4,Chelsea,CHE,Man Utd,MUN,2022-05-15
+False,37,3,3,Brighton,BHA,Leeds,LEE,2022-05-15
+False,37,2,3,Brentford,BRE,Everton,EVE,2022-05-15
+False,37,2,3,Crystal Palace,CRY,Aston Villa,AVL,2022-05-15
+False,37,3,2,Arsenal,ARS,Newcastle,NEW,2022-05-15
+False,38,2,5,Aston Villa,AVL,Man City,MCI,2022-05-22
+False,38,4,4,Everton,EVE,Arsenal,ARS,2022-05-22
+False,38,3,2,Leeds,LEE,Brentford,BRE,2022-05-22
+False,38,4,3,West Ham,WHU,Brighton,BHA,2022-05-22
+False,38,2,2,Newcastle,NEW,Burnley,BUR,2022-05-22
+False,38,2,4,Watford,WAT,Chelsea,CHE,2022-05-22
+False,38,4,3,Man Utd,MUN,Crystal Palace,CRY,2022-05-22
+False,38,2,4,Southampton,SOU,Leicester,LEI,2022-05-22
+False,38,2,3,Wolves,WOL,Liverpool,LIV,2022-05-22
+False,38,3,2,Spurs,TOT,Norwich,NOR,2022-05-22

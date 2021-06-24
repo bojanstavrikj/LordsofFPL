@@ -91,17 +91,39 @@
 		  })
 	
 	
-	var info_team_id = d3.select("#team_id_info")
+	// var info_team_id = d3.select("#team_id_info")
+	// 	.on('click.tooltip', function(d) {
+	// 	    tooltip.transition()
+	// 	      .duration(300)
+	// 	      .style("opacity", 1)
+	// 	      .style("pointer-events", "auto");
+	// 	    tooltip.html(
+	// 	    	`<button type="button" id="close" style="float:right;">X</button><br>To find your team ID, go to the official fantasy premier league page and then go to the points tab.<br>
+	// 	    	<img src="/data/img/points-page.png" style="width:100%"><br>
+	// 	    The url should look something like this: <br> https://fantasy.premierleague.com/entry/xxxxxxx/event/27.<br>
+	// 	    Take the number from the url between entry/ and /event, shown above as xxxxxxx, input it in the box below and click submit to see your team!`)
+	// 	      .style("left", (d3.event.pageX) + "px")
+	// 	      .style("top", (d3.event.pageY + 10) + "px");
+
+	// 	   d3.select("button#close").on("click",function() {
+	// 		    tooltip.transition()
+	// 		      .duration(100)
+	// 		      .style("opacity", 0)
+	// 		      .style("pointer-events", "none");
+	// 		  })
+	// 	  })
+		var info_team_id = d3.select("#team_id_info")
 		.on('click.tooltip', function(d) {
 		    tooltip.transition()
 		      .duration(300)
 		      .style("opacity", 1)
 		      .style("pointer-events", "auto");
 		    tooltip.html(
-		    	`<button type="button" id="close" style="float:right;">X</button><br>To find your team ID, go to the official fantasy premier league page and then go to the points tab.<br>
-		    	<img src="/data/img/points-page.png" style="width:100%"><br>
-		    The url should look something like this: <br> https://fantasy.premierleague.com/entry/xxxxxxx/event/27.<br>
-		    Take the number from the url between entry/ and /event, shown above as xxxxxxx, input it in the box below and click submit to see your team!`)
+		    	`<button type="button" id="close" style="float:right;">X</button><br>After you finish your transfer planning, and want to save the team you currently see in the planner click the save team button. 
+		This will generate a url with your selections, visiting that url on your next session will bring back the team that you have submitted. 
+		Every time you make some changes and want to save the team, click the save team button and it will generate a new link that you can save. 
+		Apologies for the inconvenience but that is the only way I am able to deliver this feature at the moment. When the season starts, things will go back to normal as before, where you can insert your team ID and see your team.<br><br>
+		With regards to the data in the radar charts below it is the data from the 2020/2021 season. There is no fresh data yet, so I will keep that as a reference for now. Once the season starts that will also be updated as the games get played.`)
 		      .style("left", (d3.event.pageX) + "px")
 		      .style("top", (d3.event.pageY + 10) + "px");
 
@@ -112,7 +134,9 @@
 			      .style("pointer-events", "none");
 			  })
 		  })
-		
+
+		// $("#team_id_info").click()
+
 
 	var info_short = d3.select("#table-select-info")
 		.on('click.tooltip', function(d) {
@@ -1227,23 +1251,23 @@ function update (data,chart_type) {
 	current_gw_p2 = current_p2.slice(Math.max(current_p2.length - 1, 0))
 	
 	
-	let p1_info = `(${filtered_p1[0].position_short})`
-	p1_info += `<br><strong>Current price:</strong> £${(d3.format(".1f"))(current_gw_p1[0].value)}`
-	p1_info += `<br><strong>Selected by (%):</strong> ${(d3.format(".1f"))(current_gw_p1[0].selected_by_percent)}`
-	p1_info += `<br><strong>Penalty order:</strong> ${filtered_p1[0].penalties_order == 0 ? "Not on penalties!" :(d3.format(".0f"))(filtered_p1[0].penalties_order)}`
-	p1_info += `<br><strong>Direct freekicks order:</strong> ${filtered_p1[0].direct_freekicks_order == 0 ? "Not on freekicks!" :(d3.format(".0f"))(filtered_p1[0].direct_freekicks_order)}`
-	p1_info += `<br><strong>Corners and indirect freekicks order:</strong> ${filtered_p1[0].corners_and_indirect_freekicks_order == 0 ? "Not on corners!" :(d3.format(".0f"))(filtered_p1[0].corners_and_indirect_freekicks_order)}`
+	// let p1_info = `(${filtered_p1[0].position_short})`
+	// p1_info += `<br><strong>Current price:</strong> £${(d3.format(".1f"))(current_gw_p1[0].value)}`
+	// p1_info += `<br><strong>Selected by (%):</strong> ${(d3.format(".1f"))(current_gw_p1[0].selected_by_percent)}`
+	// p1_info += `<br><strong>Penalty order:</strong> ${filtered_p1[0].penalties_order == 0 ? "Not on penalties!" :(d3.format(".0f"))(filtered_p1[0].penalties_order)}`
+	// p1_info += `<br><strong>Direct freekicks order:</strong> ${filtered_p1[0].direct_freekicks_order == 0 ? "Not on freekicks!" :(d3.format(".0f"))(filtered_p1[0].direct_freekicks_order)}`
+	// p1_info += `<br><strong>Corners and indirect freekicks order:</strong> ${filtered_p1[0].corners_and_indirect_freekicks_order == 0 ? "Not on corners!" :(d3.format(".0f"))(filtered_p1[0].corners_and_indirect_freekicks_order)}`
 
-	document.getElementById('p1-info').innerHTML = p1_info
+	// document.getElementById('p1-info').innerHTML = p1_info
 
-	let p2_info = `(${filtered_p2[0].position_short})`
-	p2_info += `<br><strong>Current price:</strong> £${(d3.format(".1f"))(current_gw_p2[0].value)}`
-	p2_info += `<br><strong>Selected by (%):</strong> ${(d3.format(".1f"))(current_gw_p2[0].selected_by_percent)}`
-	p2_info += `<br><strong>Penalty order:</strong> ${filtered_p2[0].penalties_order == 0 ? "Not on penalties!" :(d3.format(".0f"))(filtered_p2[0].penalties_order)}`
-	p2_info += `<br><strong>Direct freekicks order:</strong> ${filtered_p2[0].direct_freekicks_order == 0 ? "Not on freekicks!" :(d3.format(".0f"))(filtered_p2[0].direct_freekicks_order)}`
-	p2_info += `<br><strong>Corners and indirect freekicks order:</strong> ${filtered_p2[0].corners_and_indirect_freekicks_order == 0 ? "Not on corners!" :(d3.format(".0f"))(filtered_p2[0].corners_and_indirect_freekicks_order)}`
+	// let p2_info = `(${filtered_p2[0].position_short})`
+	// p2_info += `<br><strong>Current price:</strong> £${(d3.format(".1f"))(current_gw_p2[0].value)}`
+	// p2_info += `<br><strong>Selected by (%):</strong> ${(d3.format(".1f"))(current_gw_p2[0].selected_by_percent)}`
+	// p2_info += `<br><strong>Penalty order:</strong> ${filtered_p2[0].penalties_order == 0 ? "Not on penalties!" :(d3.format(".0f"))(filtered_p2[0].penalties_order)}`
+	// p2_info += `<br><strong>Direct freekicks order:</strong> ${filtered_p2[0].direct_freekicks_order == 0 ? "Not on freekicks!" :(d3.format(".0f"))(filtered_p2[0].direct_freekicks_order)}`
+	// p2_info += `<br><strong>Corners and indirect freekicks order:</strong> ${filtered_p2[0].corners_and_indirect_freekicks_order == 0 ? "Not on corners!" :(d3.format(".0f"))(filtered_p2[0].corners_and_indirect_freekicks_order)}`
 
-	document.getElementById('p2-info').innerHTML = p2_info
+	// document.getElementById('p2-info').innerHTML = p2_info
 	
 
     d3.select("#comparison_div").selectAll("table").remove()
@@ -1407,7 +1431,7 @@ function insert_next_games (data,fixtures,current,id) {
 		if (to_insert_fixtures.length == 0){
 			blank_gw = d3.select(id).append('text')
 				.attr("id","blank_text")
-				.text(`${fixtures[i].team_h_short_name} blanks in GW ${fixtures[i].event}`)
+				.text(`${fixtures[i].team_h_short_name} just got promoted, no data yet!`)
 		} else {
 			for (j=0; j<to_insert_fixtures.length; j++){
 				next_gws_team.push({'team':`${to_insert_fixtures[j].team_short}`, 'xGA':to_insert_fixtures[j].xGA,'GA':to_insert_fixtures[j].missed, 'xG':to_insert_fixtures[j].xG,'G':to_insert_fixtures[j].scored}) 
@@ -1937,7 +1961,11 @@ if (window.location.href.includes("user_id")) {
 	tot_pts = 0
 	let redirect_options = getUrlVars()["user_id"]
 	update_players(redirect_options)
-} else {
+} else if (window.location.href.includes("select")){
+	console.log(getUrlVars()["select"])
+	update_players(getUrlVars()["select"])
+}
+else {
 	//default
 	all_uniq_trans = []
 	bank_number = 0
@@ -1970,6 +1998,7 @@ var unique_positions_missing = []
 var all_uniq_trans = []
 var bank_number = 0
 var tot_pts = 0
+
 function update_players (team_id) {
 	$("#pitch").empty()
 
@@ -2128,18 +2157,30 @@ function update_players (team_id) {
 	d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/bootstrap-static/", function(error, player_data) {
     	if (error) throw error;
 
-    	gw = player_data.events.filter(d=>{return d.is_current == true})[0].id
+    	gw = player_data.events.filter(d=>{return d.is_current == false})[0].id
     	try {
     		gw_next = player_data.events.filter(d=>{return d.is_next == true})[0].id	
     	} catch {
     		gw_next = 38
     	}
     	
-    	gw_prev = player_data.events.filter(d=>{return d.is_previous == true})[0].id
+    	gw_prev = player_data.events.filter(d=>{return d.is_previous == false})[0].id
 
-		var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
-	
-		d3.json(url, function(error, data) {
+		// var url = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/event/${gw}/picks/`;
+
+		// {"picks":[{"element":233},{"element":277},{"element":237},{"element":275},{"element":168},{"element":69},{"element":267},{"element":196},{"element":177},{"element":413},{"element":296},{"element":376},{"element":220},{"element":75},{"element":290}],"entry_history":[{"bank":100}]}
+		console.log(team_id.toString().split('_'))
+		selection_unique = team_id.toString().split('_')
+		load_picks_list = []
+		
+		for(i=0;i<selection_unique.length;i++){
+			load_picks_list.push({"element":Number(selection_unique[i])})
+		}
+		console.log(load_picks_list)
+		var load_picks = {"picks":load_picks_list}
+		console.log(load_picks.picks)	
+
+		d3.json('data/new_picks.json', function(error, data) {
 		  	if (error) {
 		  		$("#error-message").empty()
 				$("#error-message")[0].innerHTML = `Looks like you have entered an incorrect team ID. For information on how to find your team ID, please click on the info icon above the submit button. If this doesn't work, please contact me through the form in the footer below!`
@@ -2151,52 +2192,74 @@ function update_players (team_id) {
 		       $("#error-message").show()
 		  		throw error
 		  	};
-
-	    	d3.json(`https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`, function(error,transfer_data){
+		  	// transfer_data = `https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/entry/${team_id}/transfers/`
+	    	
+	    	d3.json("data/transfers.json", function(error,transfer_data){
 	      		d3.csv("/data/gw1_prices.csv",function(error,gw1_prices){
 	      			d3.json("https://peaceful-harbor-25221.herokuapp.com/https://fantasy.premierleague.com/api/fixtures/", function(error, fixtures) {
 	    				if (error) throw error;
 
-				        my_picks = []
+
+	    				if (window.location.href.includes("select")){
+	    					data = load_picks
+	    				} else{
+	    					$("#error-message").empty()
+							$("#error-message")[0].innerHTML = `<strong>PLEASE READ</strong> <br> After you finish your transfer planning, and want to save the team you currently see in the planner click the save team button. 
+							This will generate a url with your selections, visiting that url on your next session will bring back the team that you have submitted. 
+							Every time you make some changes and want to save the team, click the save team button and it will generate a new link that you can save. 
+							Apologies for the inconvenience but that is the only way I am able to deliver this feature at the moment. When the season starts, things will go back to normal as before, where you can insert your team ID and see your team.<br><br>
+							With regards to the data in the radar charts below it is the data from the 2020/2021 season. There is no fresh data yet, so I will keep that as a reference for now. Once the season starts that will also be updated as the games get played.`
+							$( "#error-message" ).dialog({
+						      height: 250,
+						      width: window.innerWidth/1.5,
+						      modal: true
+						    });
+						   $("#error-message").show()
+	    				}
+
+	    				
+
+	    				var my_picks = []
 				        data.picks.forEach(d=>{
 			        		my_picks.push(d.element)
 				        })
+	    			
 				        
 				        // freet = d3.select("#free_transfers").append("text")
 				        // point_cost = d3.select("#transfer_cost").append("text").text(0)
 				        $("#transfer_cost")[0].innerHTML = String(0)
 				        element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
-				        console.log(data)
-				        
-				        console.log(transfer_data)
-						if (transfer_data.filter(d=>{return d.event == gw}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
-							// freet.text(2)
-							free_trans = 2
-							$("#free_transfers")[0].innerHTML = String(free_trans)
-						} else if (data.active_chip == "freehit") {
-							// freet.text(1)
-							free_trans = 1
-							$("#free_transfers")[0].innerHTML = String(free_trans)
+						// if (transfer_data.filter(d=>{return d.event == gw}).length == 0 && data.active_chip != "freehit" && data.active_chip != "wildcard") {
+						// 	// freet.text(2)
+						// 	free_trans = 2
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
+						// } else if (data.active_chip == "freehit") {
+						// 	// freet.text(1)
+						// 	free_trans = 1
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
 							
-						} else if (data.active_chip == "wildcard") {
-							// freet.text(1)
-							free_trans = 1
-							$("#free_transfers")[0].innerHTML = String(free_trans)
+						// } else if (data.active_chip == "wildcard") {
+						// 	// freet.text(1)
+						// 	free_trans = 1
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
 							
-						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 0){
-							free_trans = 2
-							$("#free_transfers")[0].innerHTML = String(free_trans)
-						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev-1}).length == 0){
-							free_trans = 2
-							$("#free_transfers")[0].innerHTML = String(free_trans)
-						} else if (transfer_data.filter(d=>{return d.event == gw}).length > 1){
-							free_trans = 1
-							$("#free_transfers")[0].innerHTML = String(free_trans)
-						} else if (transfer_data.filter(d=>{return d.event == gw}).length == 1){
-							free_trans = 1
-							$("#free_transfers")[0].innerHTML = String(free_trans)
-						}
+						// } else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 0){
+						// 	free_trans = 2
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
+						// } else if (transfer_data.filter(d=>{return d.event == gw}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev}).length == 1 && transfer_data.filter(d=>{return d.event == gw_prev-1}).length == 0){
+						// 	free_trans = 2
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
+						// } else if (transfer_data.filter(d=>{return d.event == gw}).length > 1){
+						// 	free_trans = 1
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
+						// } else if (transfer_data.filter(d=>{return d.event == gw}).length == 1){
+						// 	free_trans = 1
+						// 	$("#free_transfers")[0].innerHTML = String(free_trans)
+						// }
+
+						free_trans = 100
+						$("#free_transfers")[0].innerHTML = String(free_trans)
 
 						var user_data = []
 						for (i=0; i<player_data.elements.length; i++) {
@@ -2221,12 +2284,12 @@ function update_players (team_id) {
 							var ch_play = user_data.filter(d=> {return d.id == data.picks[i].element})[0].chance_of_playing_next_round
 							var price_now = user_data.filter(d=> {return d.id == data.picks[i].element})[0].value
 							
-							if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
-								price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
-								// price_purchase = 1.0
-							} else {
-								price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
-							}
+							// if(transfer_data.filter(d=> {return d.element_in == data.picks[i].element}).length == 0) {
+							// 	price_purchase = gw1_prices.filter(d=> {return d.element == data.picks[i].element})[0].value/10
+							// 	// price_purchase = 1.0
+							// } else {
+							// 	price_purchase = transfer_data.filter(d=> {return d.element_in == data.picks[i].element})[0].element_in_cost/10
+							// }
 							
 							var team = user_data.filter(d=> {return d.id == data.picks[i].element})[0].team
 							team_name = player_data.teams.filter(d => {return d.id == team})[0].short_name
@@ -2256,10 +2319,10 @@ function update_players (team_id) {
 								}
 							}
 
-							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_purchase,"team":team_name,"opponent_all":opp_all,"total_points":live_points})
+							images_load.push({"player_id":data.picks[i].element,"position":data.picks[i].position,"position_name":position_name,"url":url,"name":name,"ch_play":ch_play == null ? 100 : ch_play,"value":price_now, "value_purchase":price_now,"team":team_name,"opponent_all":opp_all,"total_points":live_points})
 						}
 						
-						$("#gw_points")[0].innerHTML = String(tot_pts)
+						$("#gw_points")[0].innerHTML = String(0)
 						
 				        gkp = images_load.filter(d => {return d.position_name =="GKP"})
 				        def = images_load.filter(d => {return d.position_name =="DEF"})
@@ -2268,22 +2331,29 @@ function update_players (team_id) {
 				        
 				        player_order = [gkp,def,mid,fwd]
 				        formation_images_load = []
+
+				        bank_number = 100
 				        
 						m = 1
 						for (let j=0; j<player_order.length;j++){
 						  	for (let i=0; i < player_order[j].length; i++) {
 						    	formation_images_load.push({"player_id":player_order[j][i].player_id,"position":m,"position_name":player_order[j][i].position_name,"url":player_order[j][i].url,"name":player_order[j][i].name,"ch_play":player_order[j][i].ch_play,"value":player_order[j][i].value,"value_purchase":player_order[j][i].value_purchase,"team":player_order[j][i].team,"opponent_all":player_order[j][i].opponent_all,"total_points":player_order[j][i].total_points})
 
+						    	bank_number -= player_order[j][i].value
+
 						  		my_picks_team.push({"player_id":player_order[j][i].player_id,"team":player_order[j][i].team,"position":m})
 						    	m++
 						  	}
 						}
+
+						console.log(formation_images_load)
 				        // console.log(m)
 				        // console.log(my_picks_team)
 
 				        // bank = d3.select("#bank").append("text")
-				        bank_number = data.entry_history.bank/10
-
+				        console.log(data.entry_history)
+				        // bank_number = data.entry_history.bank/10
+				        // bank_number = 100
 				        // team_value = d3.select("#team_value").append("text")
 				        
 				        // console.log(images_load)
@@ -2490,7 +2560,8 @@ function update_players (team_id) {
 									purch_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value_purchase
 									curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
 									diff = (curr_val - purch_val)*0.5
-									return diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+									// diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
+									return `£${(d3.format(".1f"))(curr_val)}`
 								});
 
 						player_name.selectAll("text")
@@ -2631,6 +2702,10 @@ function update_players (team_id) {
 
 			            $("#bank")[0].innerHTML = String((d3.format(".1f"))(bank_number))
 			            element_color("bank",bank_number,"bank")
+
+			            // {"picks":[{"element":233},{"element":277},{"element":237},{"element":275},{"element":168},{"element":69},{"element":267},{"element":196},{"element":177},{"element":413},{"element":296},{"element":376},{"element":220},{"element":75},{"element":290}]}
+
+			            
 
 			        spinner.stop();
 		            })
@@ -2803,9 +2878,7 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 			    tooltip_actions.html(
 			    	`<button type="button" id="closeplayer" style="float:right;">X</button>
 			    	<br>
-			    	<button type="button" id="add_to_team">Add to my team.</button><br>
-				    <button type="button" id="add_p1">Add for comparison (p1).</button><br>
-				    <button type="button" id="add_p2">Add for comparison (p2).</button><br>`)
+			    	<button type="button" id="add_to_team">Add to my team.</button><br>`)
 				.style("left", (d3.event.pageX) + "px")
 				.style("top", (d3.event.pageY - 120) + "px");
 
@@ -2944,9 +3017,22 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 				              	formation_images_load.push({"player_id":d.id,"position":attrs.pos,"position_name":d.position,"url":image_url,"name":d.name,"ch_play":d.ch_play,"value":d.value,"value_purchase":d.value,"team":d.team,"opponent_all":d.opponent})
 
 				              	formation_images_load.sort((a, b) => (a.position > b.position) ? 1 : -1)
+
+				              	players_selected =""
+					            for (i=0;i<formation_images_load.length;i++){
+					            	// players_selected.push({"element":formation_images_load[0].player_id})
+					            	i==14 ? players_selected+=`${formation_images_load[i].player_id}` : players_selected+=`${formation_images_load[i].player_id}_`
+					            }
+					            console.log(players_selected)
+
+					            // window.location.href = "index.html?select="+players_selected+"/";
+					            document.getElementById("team_id_button").onclick = function () {
+								    window.location.href = "index.html?select="+players_selected
+								};
 							}
 						}
 						
+
 						
 		              	
 					} else {
