@@ -2561,7 +2561,7 @@ function update_players (team_id) {
 									curr_val = formation_images_load.filter(i =>{return i.position == d.pos})[0].value
 									diff = (curr_val - purch_val)*0.5
 									// diff == 0 ? (d3.format(".1f"))(curr_val) : (d3.format(".1f"))(floor10((curr_val - diff),-1))
-									return `£${(d3.format(".1f"))(curr_val)}`
+									return curr_val
 								});
 
 						player_name.selectAll("text")
