@@ -2259,7 +2259,7 @@ function update_players (team_id) {
 						// }
 
 						free_trans = 100
-						$("#free_transfers")[0].innerHTML = String(free_trans)
+						$("#free_transfers")[0].innerHTML = String("Unlimited")
 
 						var user_data = []
 						for (i=0; i<player_data.elements.length; i++) {
@@ -2493,8 +2493,8 @@ function update_players (team_id) {
 									// console.log(all_uniq_trans)
 
 									tot_trans = free_trans - all_uniq_trans.length
-									tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-									tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+									// tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+									// tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
 
 									element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 
@@ -2951,8 +2951,8 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 							              	}
 											// free_trans += unique_positions_missing.length
 											tot_trans = free_trans - all_uniq_trans.length
-											tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-											tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+											// tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+											// tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
 											element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 											
 
@@ -2969,8 +2969,8 @@ function full_table_2 (data,player_picks,player_info,player_name,playersContaine
 							    //           		// console.log(all_uniq_trans)
 							    //           	}
 							              	tot_trans = free_trans - all_uniq_trans.length
-											tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
-											tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
+											// tot_trans > 0 ? $("#free_transfers")[0].innerHTML = String(tot_trans) : $("#free_transfers")[0].innerHTML = String(0)
+											// tot_trans < 0 ? $("#transfer_cost")[0].innerHTML = String(tot_trans * 4) : $("#transfer_cost")[0].innerHTML = String(0)
 											element_color("transfer_cost",$("#transfer_cost")[0].innerHTML,"transfers")
 											
 											return d.price/10
